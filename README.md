@@ -219,6 +219,7 @@ pacman -Syu gdisk ntfs-3g
 > **ArchLinux-Keyring aktulisieren**
 ```bash
 pacman -Syyu archlinux-keyring
+pacman-key --refresh-keys
 ```
 
 > **Swappiness**\
@@ -253,6 +254,14 @@ Defaults editor=/usr/bin/nano, !env_editor
 ```
 ```bash
 cat /etc/sudoers
+nano /home/<username>/.bashrc
+```
+Inhalt anpassen:
+```text
+export VISUAL=nano
+export EDITOR="$VISUAL"
+```
+```bash
 reboot
 ```
 mit neuem Benutzer anmelden
@@ -287,7 +296,7 @@ Target=pacman-mirrorlist
 Description=Updating pacman-mirrorlist with reflector and removing pacnew...
 When=PostTransaction
 Depends=reflector
-Exec=/bin/sh -c "reflector --coutry 'Germany' --protocol http --age 1 --score 10 --sort rate --save /etc/pacman.d/mirrorlist; rm -f /etc/pacman.d/mirrorlist.pacnew"
+Exec=/bin/sh -c "reflector --coutry 'Germany' --protocol https --age 1 --score 10 --sort rate --save /etc/pacman.d/mirrorlist; rm -f /etc/pacman.d/mirrorlist.pacnew"
 ```
 Reinstallieren:
 ```bash
@@ -305,7 +314,7 @@ Wants=network-online.target
 After=network-online.target
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/reflector --country 'Germany' --protocol http --age 1 --score 10 --sort rate --save /etc/pacman.d/mirrorlist
+ExecStart=/usr/bin/reflector --country 'Germany' --protocol https --age 1 --score 10 --sort rate --save /etc/pacman.d/mirrorlist
 [Install]
 RequiredBy=multi-user.target
 ```
@@ -322,15 +331,47 @@ mkdir ~/aur
 cd aur
 curl -O https://github.com/polygamma.gpg
 gpg --import polygamma.gpg
-rm polygamma.gpg
+rm -rf polygamma.gpg
 git clone https://aur.archlinux.org/aurman-git.git
 cd aurman-git
-makepkg -si
+makepkg --cleanbuild --install --syncdeps --needed --noconfirm --clean
 cd ../..
 rm -rf aur
 ls
+mkdir -p ~/.config/aurman/
+sudo nano ~/.config/aurman/aurman_config
+```
+Inhalt:
+```text
+[miscellaneous]
+devel
+keyserver=hkp://ipv4.pool.sks-keyservers.net:11371
+noedit
+pgp_fetch
+solution_way
+use_ask
+```
+```bash
 aurman -Syyu
 ```
+
+> **Makepkg optimieren**
+```bash
+aurman -Syu ccache libarchive zst
+sudo nano /etc/makepkg.conf
+```
+Inhalt anpassen: `ccache`, `-march=native`, `--threads=0`, `-j$(nproc)`, `.pkg.tar.zst`
+```text
+BUILDENV=(!distcc color ccache check !sign)
+CFLAGS="-march=native -O2 -pipe -fstack-protector-strong -fno-plt"
+COMPRESSZST=(zstd -c -z -q - --threads=0)
+MAKEFLAGS="-j$(nproc)"
+PKGEXT='.pkg.tar.zst'
+```
+```bash
+sudo nano ~/.bashrc
+```
+Inhalt in `PATH` erweitern um `/usr/lib/ccache/bin/`, Trennzeichen ist `:`
 
 > **Fehlende Treiber Pakete**
 ```bash
