@@ -218,6 +218,13 @@ pacman -Syu gdisk ntfs-3g
 
 > **ArchLinux-Keyring aktulisieren**
 ```bash
+nano /etc/pacman.d/gnupg/gpg.conf
+```
+Inhalt anpassen:
+```text
+keyserver hkp://ipv4.pool.sks-keyservers.net:11371
+```
+```bash
 pacman -Syyu archlinux-keyring
 pacman-key --refresh-keys
 ```
@@ -420,6 +427,16 @@ sudo chown gdm:gdm /var/lib/gdm/.config/monitors.xml
 ping 1.1.1.1
 aurman -Syyu
 aurman -Syu vlc ntp
+```
+
+> **für Intel Grafik**\
+statt Nvidia-Treiber und -Software
+```bash
+aurman -Syu mesa lib32-mesa xf86-video-intel
+```
+
+> **IPv6 bei VPN deaktivieren**
+```bash
 sudo nano /etc/NetworkManager/dispatcher.d/10-vpn-ipv6
 ```
 Inhalt anpassen:
@@ -436,10 +453,55 @@ case "$2" in
 esac
 ```
 
-> **für Intel Grafik**\
-statt Nvidia-Treiber und -Software
+> **IPv6 allgemein ausschalten**\
+Alternative:
 ```bash
-aurman -Syu mesa lib32-mesa xf86-video-intel
+ip -link
+sudo nano /etc/sysctl.d/40-ipv6.conf
+```
+für alle Netzwerkkarten neue Zeile, `<nic>` jeweils ersetzen:
+```text
+net.ipv6.conf.all.disable_ipv6 = 1
+net.ipv6.conf.<nic>.disable_ipv6 = 1
+```
+```bash
+sudo systemctl restart systemd-sysctl.service
+sudo nano /etc/hosts
+```
+Inhalt anpassen: `#::1`, alle IPv6-Adressen auskommentieren
+```bash
+sudo nano /etc/dhcpcd.conf
+```
+Inhalt anpassen:
+```text
+noipv6rs
+noipv6
+```
+```bash
+systemctl edit ntpd.service
+```
+im erscheinenden Editor:
+```text
+[Service]
+ExecStart=
+ExecStart=/usr/bin/ntpd -4 -g -u ntp:ntp
+```
+```bash
+sudo nano /etc/systemd/network/20-wired.network
+sudo nano /etc/systemd/network/25-wireless.network
+```
+Inhalt jeweils anpassen bzw. hinzufügen:
+```text
+[Network]
+LinkLocalAddressing=ipv4
+IPv6AcceptRA=no
+```
+```bash
+/etc/gai.conf
+```
+Inhalt anpassen:
+```text
+precedence ::ffff:0:0/96  100
 ```
 
 > **Firewall**
