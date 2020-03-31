@@ -80,7 +80,7 @@ Anpassen, sodass nur noch deutsche Mirror vorhanden
 
 > **Basissystem übertragen**
 ```bash
-pacstrap /mnt base linux linux-firmware nano
+pacstrap /mnt base linux dkms linux-firmware nano
 ```
 
 > **Mounttable**
@@ -222,8 +222,8 @@ pacman -Syyu archlinux-keyring
 pacman-key --refresh-keys
 ```
 
-> **Swappiness**\
-auf `0` setzen, wenn nicht verwendet; prüfen:
+> **Swap**\
+Swappiness auf `0` setzen, wenn Swap nicht verwendet; prüfen:
 ```bash
 sysctl vm.swappiness
 nano /etc/sysctl.d/99-swappiness.conf
@@ -235,6 +235,18 @@ vm.swappiness=0
 ```bash
 reboot
 sysctl vm.swappiness
+```
+**alternativ: Swapfile einrichten**
+```bash
+fallocate -l 4G /swapfile
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+sudo nano /etc/fstab
+```
+Inhalt anpassen:
+```text
+/swapfile none swap defaults 0 0
 ```
 
 > **Benutzer hinzufügen und sudo einrichten**
@@ -352,7 +364,7 @@ solution_way
 use_ask
 ```
 ```bash
-aurman -Syyu
+aurman -Syyu downgrade
 ```
 
 > **Makepkg optimieren**
@@ -382,12 +394,12 @@ mkinitcpio -p linux
 > **GUI**
 ```bash
 aurman -Syu xorg
-aurman -Syu nvidia nvidia-utils
+aurman -Syu nvidia nvidia-utils lib32-nvidia-utils
 aurman -Syu gnome gnome-extra
 sudo systemctl enable gdm.service
 aurman -Syu gdm3setup gdm3setup-utils
 aurman -Syu nvidia-settings
-aurman -Syu networkmanager-openvpn
+aurman -Syu networkmanager networkmanager-openvpn
 sudo systemctl enable NetworkManager.service
 aurman -Syu firefox firefox-i18n-de
 reboot
@@ -408,6 +420,26 @@ sudo chown gdm:gdm /var/lib/gdm/.config/monitors.xml
 ping 1.1.1.1
 aurman -Syyu
 aurman -Syu vlc ntp
+sudo nano /etc/NetworkManager/dispatcher.d/10-vpn-ipv6
+```
+Inhalt anpassen:
+```text
+#!/bin/sh
+
+case "$2" in
+	vpn-up)
+		echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6
+		;;
+	vpn-down)
+		echo 0 > /proc/sys/net/ipv6/conf/all/disable_ipv6
+		;;
+esac
+```
+
+> **für Intel Grafik**\
+statt Nvidia-Treiber und -Software
+```bash
+aurman -Syu mesa lib32-mesa xf86-video-intel
 ```
 
 > **Firewall**
@@ -424,6 +456,9 @@ sudo nano /etc/default/ufw
 Inhalt anpassen: von `"DROP"` auf
 ```text
 DEFAULT_FORWARD_POLICY "ACCEPT"
+```
+```bash
+aurman -Syu gufw
 ```
 
 > **SSD Trim**
@@ -445,6 +480,11 @@ Out /home/${USER}
 ```bash
 sudo systemctl start org.cups.cupsd.service
 sudo systemctl enable org.cups.cupsd.service
+```
+
+> **Bash Completion**
+```bash
+aurman -Syu bash-completion
 ```
 
 ## Design und Weiteres
