@@ -435,6 +435,12 @@ statt Nvidia-Treiber und -Software
 aurman -Syu mesa lib32-mesa xf86-video-intel
 ```
 
+> **Gnome Einstellungen**
+```bash
+aurman -Syu dconf dconf-editor
+```
+`gsettings` zum Ändern der Einstellungen verwenden
+
 > **IPv6 bei VPN deaktivieren**
 ```bash
 sudo nano /etc/NetworkManager/dispatcher.d/10-vpn-ipv6
