@@ -1,6 +1,7 @@
 # ArchLinux Installation
-Dieser Guide basiert auf verschiedenen Informationen
-der [ArchWiki-Webseite](https://wiki.archlinux.org/).
+Dieser Guide basiert auf verschiedenen Informationen folgender Quellen:
+ - [ArchWiki-Webseite](https://wiki.archlinux.org/)
+ - [ArchLinux Installationsskript](https://github.com/polygamma/arch-script/)
 
 ## Vorbereitung
 ### Allgemeines
