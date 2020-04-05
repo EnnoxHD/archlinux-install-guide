@@ -549,10 +549,44 @@ sudo systemctl enable org.cups.cupsd.service
 aurman -Syu bash-completion
 ```
 
+> **VirtualBox Host**
+```bash
+aurman -Syu virtualbox virtualbox-guest-iso virtualbox-host-modules-arch virtualbox-ext-oracle
+sudo nano /etc/modules-load.d/virtualbox.conf
+```
+Inhalt:
+```text
+vboxdrv
+vboxnetadp
+vboxnetflt
+vboxpci
+```
+```bash
+gpasswd -a <user> vboxusers
+reboot
+```
+
 ## Design und Weiteres
 - McMojave Theme
 - Capitaine Cursors
 - Firefox Add-On für Gnome Shell Erweiterungen
+
+## VirtualBox Guest
+> mit X-Server:
+```bash
+aurman -Syu virtualbox-guest-utils xf86-video-vmware
+```
+> ohne X-Server:
+```bash
+aurman -Syu virtualbox-guest-utils-nox
+```
+> Weiteres
+```bash
+sudo systemctl enable vboxservice.service
+gpasswd -a <user> vboxsf
+sudo chmod 755 /media
+reboot
+```
 
 ## GRUB in Windows EFI Partition für Multiboot Menü
 Noch nicht abschließend!
