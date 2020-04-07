@@ -561,6 +561,22 @@ aurman -Syu imagescan
 aurman -Syu bash-completion
 ```
 
+> **Powerline**
+```bash
+aurman -Syu powerline powerline-fonts
+nano ~/.bashrc
+```
+Inhalt anpassen:
+```text
+powerline-daemon -q
+POWERLINE_BASH_CONTINUATION=1
+POWERLINE_BASH_SELECT=1
+. /usr/share/powerline/bindings/bash/powerline.sh
+```
+Shell neustarten und weiteres Customizen
+ - [ArchWiki: Powerline](https://wiki.archlinux.org/index.php/Powerline#Customizing)
+ - [Powerline Documentation](https://powerline.readthedocs.io/en/master/configuration.html)
+
 > **VirtualBox Host**
 ```bash
 aurman -Syu virtualbox virtualbox-guest-iso virtualbox-host-modules-arch virtualbox-ext-oracle
