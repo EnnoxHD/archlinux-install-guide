@@ -551,6 +551,11 @@ sudo systemctl start org.cups.cupsd.service
 sudo systemctl enable org.cups.cupsd.service
 ```
 
+> **Scanner**
+```bash
+aurman -Syu imagescan
+```
+
 > **Bash Completion**
 ```bash
 aurman -Syu bash-completion
