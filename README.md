@@ -81,7 +81,7 @@ Anpassen, sodass nur noch deutsche Mirror vorhanden
 
 > **Basissystem übertragen**
 ```bash
-pacstrap /mnt base linux dkms linux-firmware nano
+pacstrap /mnt base linux linux-firmware nano dkms
 ```
 
 > **Mounttable**
