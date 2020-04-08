@@ -86,7 +86,7 @@ pacstrap /mnt base linux dkms linux-firmware nano
 
 > **Mounttable**
 ```bash
-genfstab /mnt >> /mnt/etc/genfstab
+genfstab /mnt >> /mnt/etc/fstab
 cat /mnt/etc/fstab
 ```
 
