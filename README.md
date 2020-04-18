@@ -2,6 +2,7 @@
 Dieser Guide basiert auf verschiedenen Informationen folgender Quellen:
  - [ArchWiki-Webseite](https://wiki.archlinux.org/)
  - [ArchLinux Installationsskript](https://github.com/polygamma/arch-script/)
+ - [Google Drive Tool Installation](https://github.com/Dishendramishra/linux-setup#google-drive)
 
 ## Vorbereitung
 ### Allgemeines
@@ -572,7 +573,7 @@ aurman -Syu keepass
 
 >**Google Drive**
 ```bash
-aurman -Syu grive
+aurman -Syu grive-git
 ```
 Einrichtung:
  - [Video](https://www.youtube.com/watch?v=TzO8FyGu4U0)
