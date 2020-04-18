@@ -212,11 +212,6 @@ reboot
 ```
 
 ## Systemkonfiguration
-> **Festplatten-Utilities**
-```bash
-pacman -Syu gdisk ntfs-3g
-```
-
 > **ArchLinux-Keyring aktulisieren**
 ```bash
 nano /etc/pacman.d/gnupg/gpg.conf
@@ -436,6 +431,15 @@ statt Nvidia-Treiber und -Software
 aurman -Syu mesa lib32-mesa xf86-video-intel
 ```
 
+> **für Vulkan Unterstützung**
+```bash
+aurman -Syu vulkan-icd-loader lib32-vulkan-icd-loader
+```
+für Entwicklung zusätzlich:
+```bash
+aurman -Syu vulkan-headers vulkan-validation-layers vulkan-tools
+```
+
 > **Gnome Einstellungen**
 ```bash
 aurman -Syu dconf dconf-editor
@@ -556,6 +560,28 @@ sudo systemctl enable org.cups.cupsd.service
 aurman -Syu imagescan
 ```
 
+> **Festplatten-Utilities**
+```bash
+pacman -Syu gdisk ntfs-3g veracrypt
+```
+
+> **Passwortcontainer**
+```bash
+aurman -Syu keepass
+```
+
+>**Google Drive**
+```bash
+aurman -Syu grive
+```
+Einrichtung:
+ - [Video](https://www.youtube.com/watch?v=TzO8FyGu4U0)
+ - [Anleitung](https://github.com/Dishendramishra/linux-setup#google-drive)
+```bash
+grive -a --id <id> --secret <secret>
+<authentication_code>
+```
+
 > **Bash Completion**
 ```bash
 aurman -Syu bash-completion
@@ -594,10 +620,11 @@ gpasswd -a <user> vboxusers
 reboot
 ```
 
-## Design und Weiteres
+## Design
 - McMojave Theme
 - Capitaine Cursors
-- Firefox Add-On für Gnome Shell Erweiterungen
+- Numix Circle Icon Theme
+- Numix Folders
 
 ## VirtualBox Guest
 > mit X-Server:
