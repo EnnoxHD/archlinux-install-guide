@@ -100,7 +100,7 @@ arch-chroot /mnt
 > **Zeit und Lokalisierung**
 ```bash
 ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
-hwclock --sysothc
+hwclock --systohc
 nano /etc/locale.gen
 ```
 einkommentieren von: `en_US.UTF-8 UTF-8` (minimal) und `de_DE.UTF-8 UTF-8`
@@ -130,7 +130,7 @@ Inhalt:
 ```
 Installation von Netzwerkmanagern
 ```bash
-pacman -S netctl systemd-resolvconf wpa-supplicant
+pacman -S netctl dhcpcd systemd-resolvconf wpa-supplicant
 ```
 Fix für netctl / systemd (möglicherweise nicht mehr relevant):
 ```bash
@@ -312,7 +312,7 @@ Target=pacman-mirrorlist
 Description=Updating pacman-mirrorlist with reflector and removing pacnew...
 When=PostTransaction
 Depends=reflector
-Exec=/bin/sh -c "reflector --coutry 'Germany' --protocol https --age 1 --score 10 --sort rate --save /etc/pacman.d/mirrorlist; rm -f /etc/pacman.d/mirrorlist.pacnew"
+Exec=/bin/sh -c "reflector --country 'Germany' --protocol http --age 1 --score 10 --sort rate --save /etc/pacman.d/mirrorlist; rm -f /etc/pacman.d/mirrorlist.pacnew"
 ```
 Reinstallieren:
 ```bash
@@ -330,7 +330,7 @@ Wants=network-online.target
 After=network-online.target
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/reflector --country 'Germany' --protocol https --age 1 --score 10 --sort rate --save /etc/pacman.d/mirrorlist
+ExecStart=/usr/bin/reflector --country 'Germany' --protocol http --age 1 --score 10 --sort rate --save /etc/pacman.d/mirrorlist
 [Install]
 RequiredBy=multi-user.target
 ```
@@ -347,9 +347,9 @@ mkdir ~/aur
 cd aur
 curl -O https://github.com/polygamma.gpg
 gpg --import polygamma.gpg
-rm -rf polygamma.gpg
-git clone https://aur.archlinux.org/aurman-git.git
-cd aurman-git
+rm -f polygamma.gpg
+git clone https://aur.archlinux.org/aurman.git
+cd aurman
 makepkg --cleanbuild --install --syncdeps --needed --noconfirm --clean
 cd ../..
 rm -rf aur
@@ -373,7 +373,7 @@ aurman -Syyu downgrade
 
 > **Makepkg optimieren**
 ```bash
-aurman -Syu ccache libarchive zst
+aurman -Syu ccache libarchive zstd
 sudo nano /etc/makepkg.conf
 ```
 Inhalt anpassen: `ccache`, `-march=native`, `--threads=0`, `-j$(nproc)`, `.pkg.tar.zst`
@@ -539,7 +539,6 @@ aurman -Syu gufw
 ```bash
 sudo systemctl start fstrim.service
 sudo systemctl status fstrim.service
-sudo systemctl enable fstrim.service
 ```
 
 > **Drucker**
