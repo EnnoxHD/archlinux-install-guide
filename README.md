@@ -149,6 +149,7 @@ nano /etc/mkinitcpio.conf
 Inhalt anpassen:
 ```text
 HOOKS=(base systemd autodetect keyboard sd-console modconf block sd-encrypt filesystems fsck)
+COMPRESSION="zstd"
 ```
 ```bash
 mkinitcpio -p linux
