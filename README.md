@@ -150,6 +150,9 @@ EnableNetworkConfiguration=true
 [Network]
 NameResolvingService=systemd
 ```
+```bash
+systemctl enable iwd.service
+```
 
 > **Initramfs**
 ```bash
