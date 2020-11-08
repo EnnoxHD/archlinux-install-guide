@@ -214,6 +214,12 @@ pacman -S intel-ucode
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
+> **Root-Password**
+```bash
+passwd
+```
+Passwort für root festlegen
+
 > **Erster Neustart**\
 Test für Bootloader und alle installierten Komponenten
 ```bash
