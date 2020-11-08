@@ -63,7 +63,7 @@ gdisk /dev/<GerätFP>
 efi Partition (`ef00`), root Partition\
 für root Partition:
 ```bash
-cryptsetup -y -v --type luks1 --cipher aes-xts-plain64 --key-size 512 --hash sha256 --iter-time 2000 --use-urandom luksFormat /dev/<rootPart>
+cryptsetup -y -v --type luks1 --cipher aes-xts-plain64 --key-size 512 --hash sha512 --iter-time 2000 --use-urandom luksFormat /dev/<rootPart>
 cryptsetup open /dev/<rootPart> cryptroot
 mkfs.ext4 /dev/mapper/cryptroot
 mount /dev/mapper/cryptroot /mnt
@@ -175,9 +175,9 @@ nano /etc/default/grub
 ```
 Inhalt anpassen:
 ```text
-GRUB_ENABLE_CRYPTODISK=y
 GRUB_TIMEOUT=1
-GRUB_CMDLINE_LINUX="rd.luks.name=<UUID>=cryptroot root=/dev/mapper/cryptroot rd.luks.options=<UUID>=cipher=aes-xts-plain64:sha256,size=512"
+GRUB_CMDLINE_LINUX="rd.luks.name=<UUID>=cryptroot root=/dev/mapper/cryptroot rd.luks.options=<UUID>=cipher=aes-xts-plain64:sha512,size=512"
+GRUB_ENABLE_CRYPTODISK=y
 ```
 
 > **Keyfile**\
@@ -185,8 +185,8 @@ um nur einmal das Passwort beim Startvorgang angeben zu müssen
 ```bash
 dd bs=512 count=4 if=/dev/random of=/crypto_keyfile.bin iflag=fullblock
 chmod 600 /crypto_keyfile.bin
-chmod 600 /boot/initramfs-linux *
-cryptsetup luksAddKey /dev/<luksPart>/crypto_keyfile.bin
+chmod 600 /boot/initramfs-linux*
+cryptsetup luksAddKey /dev/<luksPart> /crypto_keyfile.bin
 nano /etc/mkinitcpio.conf
 ```
 Inhalt anpassen:
@@ -218,7 +218,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 Test für Bootloader und alle installierten Komponenten
 ```bash
 exit
-umount -R /mount
+umount -R /mnt
 reboot
 ```
 
