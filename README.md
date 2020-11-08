@@ -76,15 +76,9 @@ mount /dev/<efiPart> /mnt/efi
 ```
 
 ### Installation des Basissystems
-> **Package-Mirrors**
-```bash
-nano /etc/pacman.d/mirrorlist
-```
-Anpassen, sodass nur noch deutsche Mirror vorhanden
-
 > **Basissystem übertragen**
 ```bash
-pacstrap /mnt base linux linux-firmware nano dkms
+pacstrap /mnt base linux linux-firmware mkinitcpio nano dkms
 ```
 
 > **Mounttable**
