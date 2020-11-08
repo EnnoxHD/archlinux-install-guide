@@ -152,6 +152,7 @@ NameResolvingService=systemd
 ```
 ```bash
 systemctl enable iwd.service
+systemctl enable systemd-resolved.service
 ```
 
 > **Initramfs**
