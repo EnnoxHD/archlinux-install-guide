@@ -124,18 +124,30 @@ Inhalt:
 ::1 localhost
 127.0.1.1 <hostname>.localdomain <hostname>
 ```
-Installation von Netzwerkmanagern
+Installation vom Netzwerkmanager
 ```bash
-pacman -S netctl dhcpcd systemd-resolvconf wpa_supplicant
-```
-Fix für netctl / systemd (möglicherweise nicht mehr relevant):
-```bash
-ln -s /usr/lib/systemd/system/systemd-resolve.service /usr/lib/systemd/system/dbus-org.freedesktop.resolve1.service
+pacman -S iwd systemd-resolvconf
 ```
 ```bash
-cp /etc/netctl/examples/wireless-wpa-static /etc/netctl/<Netzwerkadapter>-<WLAN-SSID>
-wpa_passphrase <SSID> <Password> >> /etc/netctl/<Netzwerkadapter>-<WLAN-SSID>
-nano /etc/netctl/<Netzwerkadapter>-<WLAN-SSID>
+exit
+mkdir /mnt/var/lib/iwd
+cp /var/lib/iwd/<SSID>.<type> /mnt/var/lib/iwd/
+arch-chroot /mnt
+nano /var/lib/iwd/<SSID>.<type>
+```
+Inhalt anpassen:
+```text
+[Security]
+PreSharedKey=<PreSharedKey>
+```
+```bash
+nano /etc/iwd/main.conf
+```
+```text
+[General]
+EnableNetworkConfiguration=true
+[Network]
+NameResolvingService=systemd
 ```
 
 > **Initramfs**
