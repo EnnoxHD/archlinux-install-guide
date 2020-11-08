@@ -126,7 +126,7 @@ Inhalt:
 ```
 Installation von Netzwerkmanagern
 ```bash
-pacman -S netctl dhcpcd systemd-resolvconf wpa-supplicant
+pacman -S netctl dhcpcd systemd-resolvconf wpa_supplicant
 ```
 Fix für netctl / systemd (möglicherweise nicht mehr relevant):
 ```bash
