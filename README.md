@@ -141,6 +141,7 @@ Inhalt anpassen:
 PreSharedKey=<PreSharedKey>
 ```
 ```bash
+mkdir /etc/iwd
 nano /etc/iwd/main.conf
 ```
 ```text
