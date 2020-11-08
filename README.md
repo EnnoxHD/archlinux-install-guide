@@ -22,22 +22,24 @@ Wenn Einträge vorhanden sind, kann fortgefahren werden.
 Ansonsten wurde im BIOS-Modus gebootet.
 
 ### Internetverbindung herstellen
-> **Name des Netzwerkadapters ermitteln:**
-```bash
-ip link
-```
-Die Ausgabe des Befehls ist auszuwerten.
 
 > **Netzwerkverbindung herstellen:**
 ```bash
-cp /etc/netctl/examples/wireless-wpa-static /etc/netctl/<Netzwerkadapter>-<WLAN-SSID>
-nano /etc/netctl/<Netzwerkadapter>-<WLAN-SSID>
-netctl start <Netzwerkadapter>-<WLAN-SSID>
+iwctl
+device list
+station <device> scan
+station <device> get-networks
+station <device> connect <SSID>
+```
+Das Passwort eingeben und bestätigen.
+```bash
+dhcpcd
 ```
 
 > **Internetverbindung prüfen**
 ```bash
 ping 1.1.1.1
+ping google.com
 ```
 
 > **Netzwerkzeit beziehen**
