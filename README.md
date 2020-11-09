@@ -57,10 +57,21 @@ dd if=/dev/urandom of=/dev/<GerätFP> bs=4096 status=progress
 ## Installation
 ### Partitionierung und Dateisysteme
 > **Partitionierung**
+efi Partition (`ef00`), root Partition (`8300`)
 ```bash
 gdisk /dev/<GerätFP>
+n
+1
+<Enter>
++512M
+ef00
+n
+2
+<Enter>
+<Enter>
+<Enter>
+w
 ```
-efi Partition (`ef00`), root Partition\
 für root Partition:
 ```bash
 cryptsetup -y -v --type luks1 --cipher aes-xts-plain64 --key-size 512 --hash sha512 --iter-time 2000 --use-urandom luksFormat /dev/<rootPart>
