@@ -135,7 +135,7 @@ Inhalt:
 ::1 localhost
 127.0.1.1 <hostname>.localdomain <hostname>
 ```
-Installation vom Netzwerkmanager
+Einrichtung von Netzwerkdiensten
 ```bash
 pacman -S iwd systemd-resolvconf
 ```
@@ -162,7 +162,22 @@ EnableNetworkConfiguration=true
 NameResolvingService=systemd
 ```
 ```bash
+nano /etc/systemd/network/ethernet.network
+```
+```text
+[Match]
+Name=en*
+[Network]
+DHCP=yes
+LinkLocalAddressing=no
+IPv6AcceptRA=no
+IPv6PrivacyExtensions=true
+[DHCP]
+Anonymize=true
+```
+```bash
 systemctl enable iwd.service
+systemctl enable systemd-networkd.service
 systemctl enable systemd-resolved.service
 ```
 
