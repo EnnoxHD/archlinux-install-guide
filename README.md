@@ -89,7 +89,7 @@ mount /dev/<efiPart> /mnt/efi
 ### Installation des Basissystems
 > **Basissystem übertragen**
 ```bash
-pacstrap /mnt base linux linux-firmware mkinitcpio nano dkms
+pacstrap /mnt base linux linux-firmware mkinitcpio dkms linux-headers nano
 ```
 
 > **Mounttable**
