@@ -269,7 +269,8 @@ keyserver hkp://ipv4.pool.sks-keyservers.net:11371
 ```
 ```bash
 pacman -Syyu archlinux-keyring
-pacman-key --refresh-keys
+pacman-key --init
+pacman-key --populate archlinux
 ```
 
 > **Swap**\
