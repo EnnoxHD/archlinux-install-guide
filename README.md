@@ -273,30 +273,17 @@ pacman-key --init
 pacman-key --populate archlinux
 ```
 
-> **Swap**\
-Swappiness auf `0` setzen, wenn Swap nicht verwendet; prüfen:
-```bash
-sysctl vm.swappiness
-nano /etc/sysctl.d/99-swappiness.conf
-```
-Inhalt anpassen:
-```text
-vm.swappiness=0
-```
-```bash
-reboot
-sysctl vm.swappiness
-```
-**alternativ: Swapfile einrichten**
+> **Swapfile einrichten**
 ```bash
 fallocate -l 4G /swapfile
 chmod 600 /swapfile
 mkswap /swapfile
 swapon /swapfile
-sudo nano /etc/fstab
+nano /etc/fstab
 ```
 Inhalt anpassen:
 ```text
+# SWAP
 /swapfile none swap defaults 0 0
 ```
 
