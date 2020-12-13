@@ -291,25 +291,24 @@ Inhalt anpassen:
 ```bash
 useradd -m <username>
 passwd <username>
-pacman -Syu sudo
 ls /home
-nano /etc/sudoers
+pacman -Syu sudo
+EDITOR=nano visudo
 ```
 Inhalt anpassen:
 ```text
-EDITOR=nano visudo
 Defaults env_reset
 Defaults editor=/usr/bin/nano, !env_editor
+Defaults lecture=never
 <username> ALL=(ALL) ALL
 ```
 ```bash
-cat /etc/sudoers
 nano /home/<username>/.bashrc
 ```
 Inhalt anpassen:
 ```text
-export VISUAL=nano
-export EDITOR="$VISUAL"
+export EDITOR=nano
+export VISUAL="$EDITOR"
 ```
 ```bash
 reboot
