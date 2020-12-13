@@ -9,7 +9,7 @@ Dieser Guide basiert auf verschiedenen Informationen folgender Quellen:
 
 > **Laden des benötigten Tastaturlayouts:**
 ```bash
-loadkeys de-latin1
+loadkeys de-latin1-nodeadkeys
 ```
 Wird nur für die komfortablere Eingabe auf der Tastatur verwendet.
 Als Standard ist die englische QWERTY-Tastatur eingestellt.
@@ -119,7 +119,7 @@ Inhalt: `LANG=de_DE.UTF-8`
 ```bash
 nano /etc/vconsole.conf
 ```
-Inhalt: `KEYMAP=de-latin1`
+Inhalt: `KEYMAP=de-latin1-nodeadkeys`
 
 > **Netzwerk**
 ```bash
@@ -681,7 +681,7 @@ reboot
 Noch nicht abschließend!
 > Boot aus ArchLinux Live-CD
 ```bash
-loadkeys de-latin1
+loadkeys de-latin1-nodeadkeys
 ls /sys/firmware/efi/efivars
 ip link
 cp /etc/netctl/examples/wireless-wpa-static /etc/netctl/<Netzwerkadapter>-<WLAN-SSID>
