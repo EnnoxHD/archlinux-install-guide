@@ -428,7 +428,7 @@ mkinitcpio -p linux
 
 > **Batterie und Thermometer**
 ```bash
-sudo aurman -Syu acpi
+aurman -Syu acpi
 ```
 
 > **GUI**
