@@ -426,6 +426,11 @@ aurman -Syu wd719x-firmware aic94xx-firmware
 mkinitcpio -p linux
 ```
 
+> **Batterie und Thermometer**
+```bash
+sudo aurman -Syu acpi
+```
+
 > **GUI**
 ```bash
 aurman -Syu xorg
