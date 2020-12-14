@@ -349,7 +349,7 @@ Exec=/bin/sh -c "reflector --country 'Germany' --protocol http --age 1 --score 1
 ```
 Reinstallieren:
 ```bash
-pacman -S pacman-mirrorlist
+sudo pacman -S pacman-mirrorlist
 ```
 bei jedem Boot, wenn Netzwerk aktiv
 ```bash
@@ -368,9 +368,7 @@ ExecStart=/usr/bin/reflector --country 'Germany' --protocol http --age 1 --score
 RequiredBy=multi-user.target
 ```
 ```bash
-systemctl enable reflector.service
-systemctl start reflector.service
-systemctl status reflector.service
+sudo systemctl enable reflector.service
 ```
 
 > **AUR (Arch User Repository)**
