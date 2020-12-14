@@ -397,11 +397,12 @@ use_ask
 ```
 ```bash
 aurman -Syy
+aurman -S aurman
 ```
 
 > **Makepkg optimieren**
 ```bash
-aurman -Syu ccache libarchive zstd
+aurman -Syu ccache
 sudo nano /etc/makepkg.conf
 ```
 Inhalt anpassen: `ccache`, `-march=native`, `--threads=0`, `-j$(nproc)`, `.pkg.tar.zst`
