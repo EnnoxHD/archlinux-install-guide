@@ -405,18 +405,26 @@ aurman -S aurman
 aurman -Syu ccache
 sudo nano /etc/makepkg.conf
 ```
-Inhalt anpassen: `ccache`, `-march=native`, `--threads=0`, `-j$(nproc)`, `.pkg.tar.zst`
+Inhalt anpassen: `-march=native`, `"$CFLAGS"`, `-j$(nproc)`, `ccache`, `--threads=0`, `.pkg.tar.zst`
 ```text
-BUILDENV=(!distcc color ccache check !sign)
-CFLAGS="-march=native -O2 -pipe -fstack-protector-strong -fno-plt"
-COMPRESSZST=(zstd -c -z -q - --threads=0)
+CFLAGS="-march=native -O2 -pipe -fno-plt"
+CXXFLAGS="$CFLAGS"
 MAKEFLAGS="-j$(nproc)"
+BUILDENV=(!distcc color ccache check !sign)
+COMPRESSZST=(zstd -c -z -q - --threads=0)
 PKGEXT='.pkg.tar.zst'
 ```
 ```bash
 sudo nano ~/.bashrc
 ```
-Inhalt in `PATH` erweitern um `/usr/lib/ccache/bin/`, Trennzeichen ist `:`
+Inhalt erweitern um:
+```text
+export PATH="/usr/lib/ccache/bin/:$PATH"
+```
+```bash
+exit
+```
+Erneut anmelden
 
 > **Packages downgraden**
 ```bash
