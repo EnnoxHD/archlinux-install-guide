@@ -374,17 +374,14 @@ sudo systemctl enable reflector.service
 > **AUR (Arch User Repository)**
 ```bash
 sudo pacman -Syu --needed base-devel git
-mkdir ~/aur
-cd aur
 curl -O https://github.com/polygamma.gpg
 gpg --import polygamma.gpg
-rm -f polygamma.gpg
+rm polygamma.gpg
 git clone https://aur.archlinux.org/aurman.git
 cd aurman
 makepkg --cleanbuild --install --syncdeps --needed --noconfirm --clean
-cd ../..
-rm -rf aur
-ls
+cd ..
+rm -rf aurman
 mkdir -p ~/.config/aurman/
 sudo nano ~/.config/aurman/aurman_config
 ```
@@ -399,7 +396,7 @@ solution_way
 use_ask
 ```
 ```bash
-aurman -Syyu downgrade
+aurman -Syy
 ```
 
 > **Makepkg optimieren**
@@ -419,6 +416,11 @@ PKGEXT='.pkg.tar.zst'
 sudo nano ~/.bashrc
 ```
 Inhalt in `PATH` erweitern um `/usr/lib/ccache/bin/`, Trennzeichen ist `:`
+
+> **Packages downgraden**
+```bash
+aurman -Syu downgrade
+```
 
 > **Fehlende Treiber Pakete**
 ```bash
