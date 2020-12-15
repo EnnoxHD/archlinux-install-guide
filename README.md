@@ -405,10 +405,12 @@ aurman -S aurman
 aurman -Syu ccache
 sudo nano /etc/makepkg.conf
 ```
-Inhalt anpassen: `-march=native`, `"$CFLAGS"`, `-j$(nproc)`, `ccache`, `--threads=0`, `.pkg.tar.zst`
+Inhalt anpassen: `-march=native`, `"$CFLAGS"`, `opt-level=3 -C target-cpu=native`,
+`-j$(nproc)`, `ccache`, `--threads=0`, `.pkg.tar.zst`
 ```text
 CFLAGS="-march=native -O2 -pipe -fno-plt"
 CXXFLAGS="$CFLAGS"
+RUSTFLAGS="-C opt-level=3 -C target-cpu=native"
 MAKEFLAGS="-j$(nproc)"
 BUILDENV=(!distcc color ccache check !sign)
 COMPRESSZST=(zstd -c -z -q - --threads=0)
