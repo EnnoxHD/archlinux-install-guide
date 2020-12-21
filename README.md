@@ -433,10 +433,9 @@ Erneut anmelden
 aurman -Syu downgrade
 ```
 
-> **Fehlende Treiber Pakete**
+> **USB Infos**
 ```bash
-aurman -Syu wd719x-firmware aic94xx-firmware
-mkinitcpio -p linux
+aurman -Syu usbutils
 ```
 
 > **Batterie und Thermometer**
