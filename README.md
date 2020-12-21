@@ -259,6 +259,12 @@ reboot
 ```
 
 ## Systemkonfiguration
+> **Netzwerkzeit beziehen**
+```bash
+timedatectl set-ntp true
+timedatectl status
+```
+
 > **ArchLinux-Keyring aktulisieren**
 ```bash
 nano /etc/pacman.d/gnupg/gpg.conf
