@@ -261,8 +261,19 @@ reboot
 ## Systemkonfiguration
 > **Netzwerkzeit beziehen**
 ```bash
+nano /etc/systemd/timesyncd.conf
+```
+Inhalt anpassen:
+```text
+[Time]
+NTP=0.de.pool.ntp.org 1.de.pool.ntp.org 2.de.pool.ntp.org 3.de.pool.ntp.org
+FallbackNTP=0.arch.pool.ntp.org 1.arch.pool.ntp.org 2.arch.pool.ntp.org 3.arch.pool.ntp.org
+```
+```bash
 timedatectl set-ntp true
 timedatectl status
+timedatectl timesync-status
+timedatectl show-timesync --all
 ```
 
 > **ArchLinux-Keyring aktulisieren**
