@@ -484,12 +484,6 @@ sudo chown gdm:gdm /var/lib/gdm/.config/monitors.xml
 - mit WLAN verbinden
 - Audio einrichten
 - Energiemanagement einstellen
-- Terminal:
-```bash
-ping 1.1.1.1
-aurman -Syyu
-aurman -Syu vlc ntp
-```
 
 > **für Intel Grafik**\
 statt Nvidia-Treiber und -Software
