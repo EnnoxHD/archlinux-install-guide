@@ -304,6 +304,19 @@ Inhalt anpassen:
 /swapfile none swap defaults 0 0
 ```
 
+> **WLAN Frequenzen und Signalstärke regulieren**
+```bash
+pacman -Syu wireless-regdb
+nano /etc/conf.d/wireless-regdom
+```
+Anpassen:
+```text
+WIRELESS_REGDOM="DE"
+```
+```bash
+reboot
+```
+
 > **Benutzer hinzufügen und sudo einrichten**
 ```bash
 useradd -m <username>
