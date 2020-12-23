@@ -473,6 +473,11 @@ aurman -Syu usbutils
 aurman -Syu acpi
 ```
 
+> **Xorg-Server**
+```bash
+aurman -Syu xorg-server
+```
+
 > **Grafiktreiber**\
 für NVIDIA:
 ```bash
@@ -485,11 +490,6 @@ aurman -Syu xf86-video-intel mesa lib32-mesa
 für AMD:
 ```bash
 aurman -Syu xf86-video-amdgpu mesa lib32-mesa
-```
-
-> **Xorg-Server**
-```bash
-aurman -Syu xorg-server
 ```
 
 > **GUI**
