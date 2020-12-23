@@ -487,9 +487,13 @@ für AMD:
 aurman -Syu xf86-video-amdgpu mesa lib32-mesa
 ```
 
+> **Xorg-Server**
+```bash
+aurman -Syu xorg-server
+```
+
 > **GUI**
 ```bash
-aurman -Syu xorg
 aurman -Syu gnome gnome-extra
 sudo systemctl enable gdm.service
 aurman -Syu gdm3setup gdm3setup-utils
