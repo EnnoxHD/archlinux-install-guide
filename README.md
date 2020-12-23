@@ -473,10 +473,23 @@ aurman -Syu usbutils
 aurman -Syu acpi
 ```
 
+> **Grafiktreiber**\
+für NVIDIA:
+```bash
+aurman -Syu nvidia nvidia-utils lib32-nvidia-utils
+```
+für Intel:
+```bash
+aurman -Syu xf86-video-intel mesa lib32-mesa
+```
+für AMD:
+```bash
+aurman -Syu xf86-video-amdgpu mesa lib32-mesa
+```
+
 > **GUI**
 ```bash
 aurman -Syu xorg
-aurman -Syu nvidia nvidia-utils lib32-nvidia-utils
 aurman -Syu gnome gnome-extra
 sudo systemctl enable gdm.service
 aurman -Syu gdm3setup gdm3setup-utils
@@ -497,12 +510,6 @@ sudo chown gdm:gdm /var/lib/gdm/.config/monitors.xml
 - mit WLAN verbinden
 - Audio einrichten
 - Energiemanagement einstellen
-
-> **für Intel Grafik**\
-statt Nvidia-Treiber und -Software
-```bash
-aurman -Syu mesa lib32-mesa xf86-video-intel
-```
 
 > **für Vulkan Unterstützung**
 ```bash
