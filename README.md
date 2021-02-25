@@ -1,29 +1,28 @@
-# ArchLinux Installation
-Dieser Guide basiert auf verschiedenen Informationen folgender Quellen:
- - [ArchWiki-Webseite](https://wiki.archlinux.org/)
- - [ArchLinux Installationsskript](https://github.com/polygamma/arch-script/)
- - [Google Drive Tool Installation](https://github.com/Dishendramishra/linux-setup#google-drive)
+# ArchLinux installation
+This guide is based on various information from these sources:
+- https://wiki.archlinux.org/
+- https://github.com/polygamma/arch-script/
+- https://github.com/Dishendramishra/linux-setup#google-drive
 
-## Vorbereitung
-### Allgemeines
+## Preparation
 
-> **Laden des benötigten Tastaturlayouts:**
+### General
+
+#### Loading of the keyboad layout
 ```bash
 loadkeys de-latin1-nodeadkeys
 ```
-Wird nur für die komfortablere Eingabe auf der Tastatur verwendet.
-Als Standard ist die englische QWERTY-Tastatur eingestellt.
+This is only used for more comfortable input on the keyboard.
+The default is the english QWERTY layout.
 
-> **Prüfen, ob im UEFI-Modus gebootet wurde:**
+#### Checking whether booted in UEFI mode
 ```bash
 ls /sys/firmware/efi/efivars
 ```
-Wenn Einträge vorhanden sind, kann fortgefahren werden.
-Ansonsten wurde im BIOS-Modus gebootet.
+If there are entries, you can continue.
+Otherwise it was booted in BIOS mode.
 
-### Internetverbindung herstellen
-
-> **Netzwerkverbindung herstellen:**
+### Establishing an internet connection
 ```bash
 iwctl
 device list
@@ -31,122 +30,131 @@ station <device> scan
 station <device> get-networks
 station <device> connect <SSID>
 ```
-Das Passwort eingeben und bestätigen.
+Enter the password and confirm. 
 ```bash
 dhcpcd
 ```
 
-> **Internetverbindung prüfen**
+#### Checking the internet connection
 ```bash
 ping 1.1.1.1
 ping google.com
 ```
 
-> **Netzwerkzeit beziehen**
+#### Getting network time
 ```bash
 timedatectl set-ntp true
 timedatectl status
 ```
 
-### Festplatte löschen
-> **Daten auf der Festplatte mit Random-Daten überschreiben**
+### Deleting the hard drive
+Overwriting the present data on the hard drive with random data.
 ```bash
-dd if=/dev/urandom of=/dev/<GerätFP> bs=4096 status=progress
+dd if=/dev/urandom of=/dev/<hard_drive> bs=4096 status=progress
 ```
 
 ## Installation
-### Partitionierung und Dateisysteme
-> **Partitionierung**
-efi Partition (`ef00`), root Partition (`8300`)
+
+### Partitioning
+efi partition (`ef00`), root partition (`8300`)
 ```bash
-gdisk /dev/<GerätFP>
+gdisk /dev/<hard_drive>
 n
 1
-<Enter>
+<enter>
 +512M
 ef00
 n
 2
-<Enter>
-<Enter>
-<Enter>
+<enter>
+<enter>
+<enter>
 w
 ```
-für root Partition:
+
+### File systems
+For the root partition:
 ```bash
-cryptsetup -y -v --type luks1 --cipher aes-xts-plain64 --key-size 512 --hash sha512 --iter-time 2000 --use-urandom luksFormat /dev/<rootPart>
-cryptsetup open /dev/<rootPart> cryptroot
+cryptsetup -y -v --type luks1 --cipher aes-xts-plain64 --key-size 512 --hash sha512 --iter-time 2000 --use-urandom luksFormat /dev/<root_partition>
+cryptsetup open /dev/<root_partition> cryptroot
 mkfs.ext4 /dev/mapper/cryptroot
 mount /dev/mapper/cryptroot /mnt
 ```
-für efi Partition:
+
+For the efi partition:
 ```bash
-mkfs.fat -F32 /dev/<efiPart>
+mkfs.fat -F32 /dev/<efi_partition>
 mkdir /mnt/efi
-mount /dev/<efiPart> /mnt/efi
+mount /dev/<efi_partition> /mnt/efi
 ```
 
-### Installation des Basissystems
-> **Basissystem übertragen**
+### Installation of the base system
+
+#### Transfer the base system
+Install basic packages:
 ```bash
 pacstrap /mnt base linux linux-firmware mkinitcpio dkms linux-headers nano
 ```
 
-> **Mounttable**
+#### File system table
+Generate the filesystem table:
 ```bash
 genfstab /mnt >> /mnt/etc/fstab
 cat /mnt/etc/fstab
 ```
 
-> **root wechseln**
+#### Change root
+Change to the new system as root:
 ```bash
 arch-chroot /mnt
 ```
 
-### Konfiguration des Basissystems
-> **Zeit und Lokalisierung**
+### Configuration of the base system
+
+#### Time and Localization
 ```bash
 ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 hwclock --systohc
 nano /etc/locale.gen
 ```
-einkommentieren von: `en_US.UTF-8 UTF-8` (minimal) und `de_DE.UTF-8 UTF-8`
+
+Uncomment: `en_US.UTF-8 UTF-8` and `de_DE.UTF-8 UTF-8`
 ```bash
 locale-gen
 nano /etc/locale.conf
 ```
-Inhalt: `LANG=de_DE.UTF-8`
+Content: `LANG=de_DE.UTF-8`
 ```bash
 nano /etc/vconsole.conf
 ```
-Inhalt: `KEYMAP=de-latin1-nodeadkeys`
+Content: `KEYMAP=de-latin1-nodeadkeys`
 
-> **Netzwerk**
+#### Network
 ```bash
 nano /etc/hostname
 ```
-Inhalt: `<hostname>`
+Content: the hostname of the computer, referred to as `<hostname>`
 ```bash
 nano /etc/hosts
 ```
-Inhalt:
+Content:
 ```text
 127.0.0.1 localhost
 ::1 localhost
 127.0.1.1 <hostname>.localdomain <hostname>
 ```
-Einrichtung von Netzwerkdiensten
+Installation of network services
 ```bash
 pacman -S iwd systemd-resolvconf
 ```
 ```bash
-exit
+exit # out of chroot
 mkdir /mnt/var/lib/iwd
 cp /var/lib/iwd/<SSID>.<type> /mnt/var/lib/iwd/
-arch-chroot /mnt
+arch-chroot /mnt # enter chroot again
 nano /var/lib/iwd/<SSID>.<type>
 ```
-Inhalt anpassen:
+Change content:
 ```text
 [Security]
 PreSharedKey=<PreSharedKey>
@@ -181,11 +189,11 @@ systemctl enable systemd-networkd.service
 systemctl enable systemd-resolved.service
 ```
 
-> **Initramfs**
+#### Initramfs
 ```bash
 nano /etc/mkinitcpio.conf
 ```
-Inhalt anpassen:
+Change content:
 ```text
 HOOKS=(base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt filesystems fsck)
 COMPRESSION="zstd"
@@ -194,24 +202,24 @@ COMPRESSION="zstd"
 mkinitcpio -p linux
 ```
 
-> **Bootloader GRUB 2**
+#### Bootloader GRUB 2
 ```bash
 pacman -S grub efibootmgr
 lsblk -f
 ```
-`UUID` der verschlüsselten Partition merken `<UUID>`
+Remember the `UUID` of the encrypted partition, referred to as `<UUID>`
 ```bash
 nano /etc/default/grub
 ```
-Inhalt anpassen:
+Change content:
 ```text
 GRUB_TIMEOUT=1
 GRUB_CMDLINE_LINUX="rd.luks.name=<UUID>=cryptroot root=/dev/mapper/cryptroot rd.luks.options=<UUID>=cipher=aes-xts-plain64:sha512,size=512"
 GRUB_ENABLE_CRYPTODISK=y
 ```
 
-> **Keyfile**\
-um nur einmal das Passwort beim Startvorgang angeben zu müssen
+#### Keyfile
+Needed to enter the password only once at bootup.
 ```bash
 dd bs=512 count=4 if=/dev/random of=/crypto_keyfile.bin iflag=fullblock
 chmod 600 /crypto_keyfile.bin
@@ -219,7 +227,7 @@ chmod 600 /boot/initramfs-linux*
 cryptsetup luksAddKey /dev/<luksPart> /crypto_keyfile.bin
 nano /etc/mkinitcpio.conf
 ```
-Inhalt anpassen:
+Change content:
 ```text
 FILES=(/crypto_keyfile.bin)
 ```
@@ -227,43 +235,44 @@ FILES=(/crypto_keyfile.bin)
 mkinitcpio -p linux
 nano /etc/default/grub
 ```
-Inhalt anpassen:
+Change content:
 ```text
 rd.luks.key=<UUID>=/crypto_keyfile.bin
 ```
 
-> **GRUB Installation**
+#### GRUB Installation
 ```bash
 grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
-> **Microcode**
+#### CPU microcode
 ```bash
 pacman -S intel-ucode
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
-> **Root-Password**
+#### Password for root
 ```bash
 passwd
 ```
-Passwort für root festlegen
+Enter the password for the `root` user
 
-> **Erster Neustart**\
-Test für Bootloader und alle installierten Komponenten
+#### First restart
+Tests the bootloader and all main components installed so far.
 ```bash
-exit
+exit # out of chroot
 umount -R /mnt
 reboot
 ```
 
-## Systemkonfiguration
-> **Netzwerkzeit beziehen**
+## System configuration
+
+#### Get the network time
 ```bash
 nano /etc/systemd/timesyncd.conf
 ```
-Inhalt anpassen:
+Change content:
 ```text
 [Time]
 NTP=0.de.pool.ntp.org 1.de.pool.ntp.org 2.de.pool.ntp.org 3.de.pool.ntp.org
@@ -276,11 +285,11 @@ timedatectl timesync-status
 timedatectl show-timesync --all
 ```
 
-> **ArchLinux-Keyring aktulisieren**
+#### Update the archlinux-keyring
 ```bash
 nano /etc/pacman.d/gnupg/gpg.conf
 ```
-Inhalt anpassen:
+Change content:
 ```text
 keyserver hkp://ipv4.pool.sks-keyservers.net:11371
 ```
@@ -290,7 +299,7 @@ pacman-key --init
 pacman-key --populate archlinux
 ```
 
-> **Swapfile einrichten**
+#### Swap file
 ```bash
 fallocate -l 4G /swapfile
 chmod 600 /swapfile
@@ -298,18 +307,18 @@ mkswap /swapfile
 swapon /swapfile
 nano /etc/fstab
 ```
-Inhalt anpassen:
+Change content:
 ```text
 # SWAP
-/swapfile none swap defaults 0 0
+/swapfile	none	swap	defaults	0 0
 ```
 
-> **WLAN Frequenzen und Signalstärke regulieren**
+#### WLAN frequencies and signal strength regulations
 ```bash
 pacman -Syu wireless-regdb
 nano /etc/conf.d/wireless-regdom
 ```
-Anpassen:
+Uncomment your region:
 ```text
 WIRELESS_REGDOM="DE"
 ```
@@ -317,7 +326,7 @@ WIRELESS_REGDOM="DE"
 reboot
 ```
 
-> **Benutzer hinzufügen und sudo einrichten**
+#### Adding users and giving them sudo rights
 ```bash
 useradd -m <username>
 passwd <username>
@@ -325,7 +334,7 @@ ls /home
 pacman -Syu sudo
 EDITOR=nano visudo
 ```
-Inhalt anpassen:
+Change content:
 ```text
 Defaults env_reset
 Defaults editor=/usr/bin/nano, !env_editor
@@ -335,7 +344,7 @@ Defaults lecture=never
 ```bash
 nano /home/<username>/.bashrc
 ```
-Inhalt anpassen:
+Change content:
 ```text
 export EDITOR=nano
 export VISUAL="$EDITOR"
@@ -343,13 +352,13 @@ export VISUAL="$EDITOR"
 ```bash
 reboot
 ```
-mit neuem Benutzer anmelden
+Logon with the new user account
 
-> **32 Bit Packages**
+#### 32-bit packages
 ```bash
 sudo nano /etc/pacman.conf
 ```
-auskommentieren:
+Uncomment:
 ```text
 [multilib]
 Include=/etc/pacman.d/mirrorlist
@@ -358,14 +367,14 @@ Include=/etc/pacman.d/mirrorlist
 pacman -Syyu
 ```
 
-> **Reflector mit pacman Hook**\
-bei pacman mirrorlist Update:
+#### reflector with pacman hook
+##### Triggered on pacman mirrorlist update
 ```bash
 sudo pacman -Syu reflector
 sudo mkdir /etc/pacman.d/hooks
 sudo nano /etc/pacman.d/hooks/mirrorupgrade.hook
 ```
-Inhalt:
+Content:
 ```text
 [Trigger]
 Operation=Upgrade
@@ -377,15 +386,15 @@ When=PostTransaction
 Depends=reflector
 Exec=/bin/sh -c "reflector --country 'Germany' --protocol http --age 1 --score 10 --sort rate --save /etc/pacman.d/mirrorlist; rm -f /etc/pacman.d/mirrorlist.pacnew"
 ```
-Reinstallieren:
+Reinstall:
 ```bash
 sudo pacman -S pacman-mirrorlist
 ```
-bei jedem Boot, wenn Netzwerk aktiv
+##### Triggered on every bootup if network is available
 ```bash
 sudo nano /etc/systemd/system/reflector.service
 ```
-Inhalt:
+Content:
 ```text
 [Unit]
 Description=pacman mirrorlist update via reflector
@@ -401,7 +410,7 @@ RequiredBy=multi-user.target
 sudo systemctl enable reflector.service
 ```
 
-> **AUR (Arch User Repository)**
+#### AUR (Arch User Repository)
 ```bash
 sudo pacman -Syu --needed base-devel git
 curl -O https://github.com/polygamma.gpg
@@ -415,7 +424,7 @@ rm -rf aurman
 mkdir -p ~/.config/aurman/
 sudo nano ~/.config/aurman/aurman_config
 ```
-Inhalt:
+Content:
 ```text
 [miscellaneous]
 devel
@@ -425,18 +434,27 @@ pgp_fetch
 solution_way
 use_ask
 ```
+Update package lists and install "mainline" `aurman` (not `aurman-git`)
 ```bash
 aurman -Syy
 aurman -S aurman
 ```
 
-> **Makepkg optimieren**
+#### Optimize makepkg
 ```bash
 aurman -Syu ccache
 sudo nano /etc/makepkg.conf
 ```
-Inhalt anpassen: `-march=native`, `"$CFLAGS"`, `opt-level=3 -C target-cpu=native`,
-`-j$(nproc)`, `ccache`, `--threads=0`, `.pkg.tar.zst`
+Change the lines according to the following:
+- CFLAGS: `-march=native`
+- CXXFLAGS: `"$CFLAGS"`
+- RUSTFLAGS: `opt-level=3 -C target-cpu=native`
+- MAKEFLAGS: `-j$(nproc)`
+- BUILDENV: `ccache`
+- COMPRESSZST: `--threads=0`
+- PKGEXT: `.pkg.tar.zst`
+
+Overview with all changes:
 ```text
 CFLAGS="-march=native -O2 -pipe -fno-plt"
 CXXFLAGS="$CFLAGS"
@@ -449,50 +467,49 @@ PKGEXT='.pkg.tar.zst'
 ```bash
 sudo nano ~/.bashrc
 ```
-Inhalt erweitern um:
+Add the following:
 ```text
 export PATH="/usr/lib/ccache/bin/:$PATH"
 ```
 ```bash
-exit
+source ~/.bashrc
 ```
-Erneut anmelden
 
-> **Packages downgraden**
+#### Downgrading packages
 ```bash
 aurman -Syu downgrade
 ```
 
-> **USB Infos**
+#### USB information
 ```bash
 aurman -Syu usbutils
 ```
 
-> **Batterie und Thermometer**
+#### Battery and Temperatures
 ```bash
 aurman -Syu acpi
 ```
 
-> **Xorg-Server**
+#### Xorg server
 ```bash
 aurman -Syu xorg-server
 ```
 
-> **Grafiktreiber**\
-für NVIDIA:
+#### Graphics driver
+for NVIDIA:
 ```bash
 aurman -Syu nvidia nvidia-utils lib32-nvidia-utils
 ```
-für Intel:
+for Intel:
 ```bash
 aurman -Syu xf86-video-intel mesa lib32-mesa
 ```
-für AMD:
+for AMD:
 ```bash
 aurman -Syu xf86-video-amdgpu mesa lib32-mesa
 ```
 
-> **GUI**
+#### Desktop environment
 ```bash
 aurman -Syu gnome gnome-extra
 sudo systemctl enable gdm.service
@@ -503,38 +520,34 @@ sudo systemctl enable NetworkManager.service
 aurman -Syu firefox firefox-i18n-de
 reboot
 ```
-Gnome Settings:
-- Region und Sprache: Tastatur auf Deutsch einstellen
-- Bildschirme ausrichten
-  - dann:
+Gnome settings:
+- Region and language: Change keymap accordingly
+- Adjust monitor settings
+  - then do:
 ```bash
 sudo cp ~/.config/monitors.xml /var/lib/gdm/.config/
 sudo chown gdm:gdm /var/lib/gdm/.config/monitors.xml
 ```
-- mit WLAN verbinden
-- Audio einrichten
-- Energiemanagement einstellen
+- Connect with WLAN
+- Change audio
+- Work on energy management settings
 
-> **für Vulkan Unterstützung**
+#### for Vulkan support
 ```bash
 aurman -Syu vulkan-icd-loader lib32-vulkan-icd-loader
 ```
-für Entwicklung zusätzlich:
-```bash
-aurman -Syu vulkan-headers vulkan-validation-layers vulkan-tools
-```
 
-> **Gnome Einstellungen**
+#### Advanced Gnome settings
 ```bash
 aurman -Syu dconf dconf-editor
 ```
-`gsettings` zum Ändern der Einstellungen verwenden
+`gsettings` allows to change Gnome settings via command line
 
-> **IPv6 bei VPN deaktivieren**
+#### Deactivate IPv6 on VPN connection
 ```bash
 sudo nano /etc/NetworkManager/dispatcher.d/10-vpn-ipv6
 ```
-Inhalt anpassen:
+Change content:
 ```text
 #!/bin/sh
 
@@ -548,13 +561,13 @@ case "$2" in
 esac
 ```
 
-> **IPv6 allgemein ausschalten**\
+#### Turn off IPv6 in general
 Alternative:
 ```bash
-ip -link
+ip link
 sudo nano /etc/sysctl.d/40-ipv6.conf
 ```
-für alle Netzwerkkarten neue Zeile, `<nic>` jeweils ersetzen:
+Write for all network interfaces a new row where the placeholder for its identifier is `<nic>`:
 ```text
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.<nic>.disable_ipv6 = 1
@@ -563,11 +576,11 @@ net.ipv6.conf.<nic>.disable_ipv6 = 1
 sudo systemctl restart systemd-sysctl.service
 sudo nano /etc/hosts
 ```
-Inhalt anpassen: `#::1`, alle IPv6-Adressen auskommentieren
+Change content: `#::1`, comment out all IPv6 adresses
 ```bash
 sudo nano /etc/dhcpcd.conf
 ```
-Inhalt anpassen:
+Change content:
 ```text
 noipv6rs
 noipv6
@@ -575,17 +588,18 @@ noipv6
 ```bash
 systemctl edit ntpd.service
 ```
-im erscheinenden Editor:
+Write the following in the appearing editor:
 ```text
 [Service]
 ExecStart=
 ExecStart=/usr/bin/ntpd -4 -g -u ntp:ntp
 ```
+For each file follow the below steps:
 ```bash
 sudo nano /etc/systemd/network/20-wired.network
 sudo nano /etc/systemd/network/25-wireless.network
 ```
-Inhalt jeweils anpassen bzw. hinzufügen:
+Change or add these lines in every file from above:
 ```text
 [Network]
 LinkLocalAddressing=ipv4
@@ -594,12 +608,12 @@ IPv6AcceptRA=no
 ```bash
 /etc/gai.conf
 ```
-Inhalt anpassen:
+Change content:
 ```text
 precedence ::ffff:0:0/96  100
 ```
 
-> **Firewall**
+#### Firewall
 ```bash
 aurman -Syu ufw
 sudo systemctl start ufw.service
@@ -610,7 +624,7 @@ sudo ufw enable
 sudo ufw status
 sudo nano /etc/default/ufw
 ```
-Inhalt anpassen: von `"DROP"` auf
+Change content: from `"DROP"` to
 ```text
 DEFAULT_FORWARD_POLICY "ACCEPT"
 ```
@@ -618,18 +632,18 @@ DEFAULT_FORWARD_POLICY "ACCEPT"
 aurman -Syu gufw
 ```
 
-> **SSD Trim**
+#### Enable TRIM for SSDs
 ```bash
 sudo systemctl start fstrim.service
 sudo systemctl status fstrim.service
 ```
 
-> **Drucker**
+#### Printer driver and PDF
 ```bash
 aurman -Syu cups cups-pdf
 sudo nano /etc/cups/cups-pdf.conf
 ```
-Inhalt anpassen:
+Change content:
 ```text
 Out /home/${USER}
 ```
@@ -638,60 +652,58 @@ sudo systemctl start org.cups.cupsd.service
 sudo systemctl enable org.cups.cupsd.service
 ```
 
-> **Scanner**
+#### Scanner
 ```bash
 aurman -Syu imagescan
 ```
 
-> **Festplatten-Utilities**
+#### Disk utilities
 ```bash
 pacman -Syu gdisk ntfs-3g veracrypt
 ```
 
-> **Passwortcontainer**
+#### Password container
 ```bash
 aurman -Syu keepass
 ```
 
->**Google Drive**
+#### Google Drive
 ```bash
 aurman -Syu grive-git
 ```
-Einrichtung:
+Installation:
  - [Video](https://www.youtube.com/watch?v=TzO8FyGu4U0)
- - [Anleitung](https://github.com/Dishendramishra/linux-setup#google-drive)
+ - [Instructions](https://github.com/Dishendramishra/linux-setup#google-drive)
 ```bash
 grive -a --id <id> --secret <secret>
 <authentication_code>
 ```
 
-> **Bash Completion**
+#### Bash completion
 ```bash
 aurman -Syu bash-completion
 ```
 
-> **Powerline**
+#### Powerline
 ```bash
 aurman -Syu powerline powerline-fonts
 nano ~/.bashrc
 ```
-Inhalt anpassen:
+Change content:
 ```text
 powerline-daemon -q
 POWERLINE_BASH_CONTINUATION=1
 POWERLINE_BASH_SELECT=1
 . /usr/share/powerline/bindings/bash/powerline.sh
 ```
-Shell neustarten und weiteres Customizen
- - [ArchWiki: Powerline](https://wiki.archlinux.org/index.php/Powerline#Customizing)
- - [Powerline Documentation](https://powerline.readthedocs.io/en/master/configuration.html)
+Restart the shell
 
-> **VirtualBox Host**
+#### VirtualBox as a host machine
 ```bash
 aurman -Syu virtualbox virtualbox-guest-iso virtualbox-host-modules-arch virtualbox-ext-oracle
 sudo nano /etc/modules-load.d/virtualbox.conf
 ```
-Inhalt:
+Content:
 ```text
 vboxdrv
 vboxnetadp
@@ -704,21 +716,29 @@ reboot
 ```
 
 ## Design
-- McMojave Theme
-- Capitaine Cursors
-- Numix Circle Icon Theme
-- Numix Folders
+```bash
+aurman -Syu gnome-tweaks
+```
+- Shell and applications: [WhiteSur Theme](https://github.com/vinceliuice/WhiteSur-gtk-theme) (`aur/whitesur-gtk-theme-git`)
+- Cursor: [Capitaine Cursors](https://github.com/keeferrourke/capitaine-cursors) (`community/capitaine-cursors`)
+- Icons: [Numix Circle Icon Theme](https://github.com/numixproject/numix-icon-theme-circle/) (`aur/numix-circle-icon-theme-git`)
+- Icons: [Numix Folders](https://github.com/numixproject/numix-folders) (`aur/numix-folders-git`)
 
-## VirtualBox Guest
-> mit X-Server:
+And several gnome extensions.
+
+## VirtualBox as an ArchLinux guest
+
+### Installation of packages
+- with X-Server
 ```bash
 aurman -Syu virtualbox-guest-utils xf86-video-vmware
 ```
-> ohne X-Server:
+- without X-Server
 ```bash
 aurman -Syu virtualbox-guest-utils-nox
 ```
-> Weiteres
+
+### Further steps
 ```bash
 sudo systemctl enable vboxservice.service
 gpasswd -a <user> vboxsf
@@ -726,36 +746,37 @@ sudo chmod 755 /media
 reboot
 ```
 
-## GRUB in Windows EFI Partition für Multiboot Menü
-Noch nicht abschließend!
-> Boot aus ArchLinux Live-CD
+## GRUB entry in Windows EFI partition for multiboot
+> Not properly tested yet and old!
+
+### Boot from an ArchLinux live image
 ```bash
 loadkeys de-latin1-nodeadkeys
 ls /sys/firmware/efi/efivars
 ip link
-cp /etc/netctl/examples/wireless-wpa-static /etc/netctl/<Netzwerkadapter>-<WLAN-SSID>
-nano /etc/netctl/<Netzwerkadapter>-<WLAN-SSID>
-netctl start <Netzwerkadapter>-<WLAN-SSID>
+cp /etc/netctl/examples/wireless-wpa-static /etc/netctl/<nic>-<WLAN-SSID>
+nano /etc/netctl/<nic>-<WLAN-SSID>
+netctl start <nic>-<WLAN-SSID>
 ping 1.1.1.1
 ```
 
-> EFI Partition mounten und GRUB installieren
+### Mounting the EFI partition and installing GRUB
 ```bash
 fdisk -l
-mount /dev/<efiPart> /mnt
+mount /dev/<efi_partition> /mnt
 ls /mnt
 pacman -Syy grub efibootmgr
 grub-install --target=x86_64-efi --recheck --removable --efi-directory=/mnt --boot-directory=/mnt/EFI --bootloader-id=MENU
 nano /mnt/EFI/grub/grub.cfg
 ```
-Inhalt anpassen:
+Change content:
 ```text
 menuentry "Firmware" {
      fwsetup
 }
 ```
 
-> Neustarten
+### Restart
 ```bash
 umount /mnt
 reboot
