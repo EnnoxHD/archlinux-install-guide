@@ -515,6 +515,11 @@ for AMD:
 aurman -Syu xf86-video-amdgpu mesa lib32-mesa
 ```
 
+#### for Vulkan support
+```bash
+aurman -Syu vulkan-icd-loader lib32-vulkan-icd-loader
+```
+
 #### Desktop environment
 ```bash
 aurman -Syu gnome gnome-extra
@@ -537,11 +542,6 @@ sudo chown gdm:gdm /var/lib/gdm/.config/monitors.xml
 - Connect with WLAN
 - Change audio
 - Work on energy management settings
-
-#### for Vulkan support
-```bash
-aurman -Syu vulkan-icd-loader lib32-vulkan-icd-loader
-```
 
 #### Advanced Gnome settings
 ```bash
