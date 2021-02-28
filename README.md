@@ -492,7 +492,7 @@ aurman -Syu acpi
 
 #### Basic graphics driver
 ```bash
-aurman -Syu xf86-video-vesa
+aurman -Syu xf86-video-fbdev xf86-video-vesa
 ```
 
 #### Xorg server
