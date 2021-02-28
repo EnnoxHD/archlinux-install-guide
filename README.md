@@ -725,10 +725,9 @@ reboot
 ```bash
 aurman -Syu gnome-tweaks
 ```
-- Shell and applications: [WhiteSur Theme](https://github.com/vinceliuice/WhiteSur-gtk-theme) (`aur/whitesur-gtk-theme-git`)
-- Cursor: [Capitaine Cursors](https://github.com/keeferrourke/capitaine-cursors) (`community/capitaine-cursors`)
-- Icons: [Numix Circle Icon Theme](https://github.com/numixproject/numix-icon-theme-circle/) (`aur/numix-circle-icon-theme-git`)
-- Icons: [Numix Folders](https://github.com/numixproject/numix-folders) (`aur/numix-folders-git`)
+- Shell and applications: [WhiteSur-dark-solid-blue](https://github.com/vinceliuice/WhiteSur-gtk-theme) (`aur/whitesur-gtk-theme-git`)
+- Cursor: [Capitaine-cursors](https://github.com/keeferrourke/capitaine-cursors) (`community/capitaine-cursors`)
+- Icons: [Numix-Circle](https://github.com/numixproject/numix-icon-theme-circle/) (`aur/numix-circle-icon-theme-git`) and [Numix-Folders](https://github.com/numixproject/numix-folders) (`aur/numix-folders-git`)
 
 And several gnome extensions.
 
