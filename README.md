@@ -490,6 +490,11 @@ aurman -Syu usbutils
 aurman -Syu acpi
 ```
 
+#### Basic graphics driver
+```bash
+aurman -Syu xf86-video-vesa
+```
+
 #### Xorg server
 ```bash
 aurman -Syu xorg-server
@@ -498,6 +503,7 @@ aurman -Syu xorg-server
 #### Graphics driver
 for NVIDIA:
 ```bash
+# aurman -R mesa
 aurman -Syu nvidia nvidia-utils lib32-nvidia-utils
 ```
 for Intel:
