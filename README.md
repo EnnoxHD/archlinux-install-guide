@@ -549,6 +549,11 @@ aurman -Syu dconf dconf-editor
 ```
 `gsettings` allows to change Gnome settings via command line
 
+#### Fonts
+```bash
+aurman -Syu noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra
+```
+
 #### Deactivate IPv6 on VPN connection
 ```bash
 sudo nano /etc/NetworkManager/dispatcher.d/10-vpn-ipv6
