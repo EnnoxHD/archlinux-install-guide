@@ -520,6 +520,11 @@ aurman -Syu xf86-video-amdgpu mesa lib32-mesa
 aurman -Syu vulkan-icd-loader lib32-vulkan-icd-loader
 ```
 
+#### Fonts
+```bash
+aurman -Syu noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra
+```
+
 #### Desktop environment
 ```bash
 aurman -Syu gnome gnome-extra
@@ -548,11 +553,6 @@ sudo chown gdm:gdm /var/lib/gdm/.config/monitors.xml
 aurman -Syu dconf dconf-editor
 ```
 `gsettings` allows to change Gnome settings via command line
-
-#### Fonts
-```bash
-aurman -Syu noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra
-```
 
 #### Deactivate IPv6 on VPN connection
 ```bash
