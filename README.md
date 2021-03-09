@@ -520,6 +520,11 @@ aurman -Syu xf86-video-amdgpu mesa lib32-mesa
 aurman -Syu vulkan-icd-loader lib32-vulkan-icd-loader
 ```
 
+#### Audio driver
+```bash
+aurman -Syu jack2
+```
+
 #### Fonts
 ```bash
 aurman -Syu noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra
@@ -527,26 +532,48 @@ aurman -Syu noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra
 
 #### Desktop environment
 ```bash
-aurman -Syu gnome gnome-extra
+aurman -Syu gnome # curate applications
+# aurman -Syu gnome-extra # curate applications
 sudo systemctl enable gdm.service
-aurman -Syu gdm3setup gdm3setup-utils
-aurman -Syu nvidia-settings
-aurman -Syu networkmanager networkmanager-openvpn
+aurman -Syu networkmanager # optional: networkmanager-openvpn
 sudo systemctl enable NetworkManager.service
-aurman -Syu firefox firefox-i18n-de
+# consider: networkmanager-iwd (AUR) to remove wpa_supplicant
+sudo nano /etc/NetworkManager/conf.d/wifi_backend.conf
+```
+Change content:
+```text
+[device]
+wifi.backend=iwd
+```
+```bash
 reboot
 ```
-Gnome settings:
+##### GDM
+```bash
+aurman -Syu gdm3setup gdm3setup-utils
+```
+
+##### Gnome settings
 - Region and language: Change keymap accordingly
-- Adjust monitor settings
-  - then do:
+- Connect with WLAN
+- Change audio
+- Work on energy management settings
+
+##### Screen layout
+for NVIDIA (optional):
+```bash
+aurman -Syu nvidia-settings
+```
+In general adjust monitor settings, then do:
 ```bash
 sudo cp ~/.config/monitors.xml /var/lib/gdm/.config/
 sudo chown gdm:gdm /var/lib/gdm/.config/monitors.xml
 ```
-- Connect with WLAN
-- Change audio
-- Work on energy management settings
+
+#### Internet browser
+```bash
+aurman -Syu firefox firefox-i18n-de
+```
 
 #### Advanced Gnome settings
 ```bash
