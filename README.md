@@ -492,24 +492,16 @@ aurman -Syu xf86-video-fbdev xf86-video-vesa
 aurman -Syu xorg-server
 ```
 
-#### Graphics driver
-for NVIDIA:
-```bash
-# aurman -R mesa
-aurman -Syu nvidia nvidia-utils lib32-nvidia-utils
-```
+#### Graphics driver (with Vulkan support)
 for Intel:
 ```bash
 aurman -Syu xf86-video-intel mesa lib32-mesa
+aurman -Syu vulkan-intel lib32-vulkan-intel vulkan-icd-loader lib32-vulkan-icd-loader vulkan-tools
 ```
-for AMD:
+for NVIDIA:
 ```bash
-aurman -Syu xf86-video-amdgpu mesa lib32-mesa
-```
-
-#### for Vulkan support
-```bash
-aurman -Syu vulkan-icd-loader lib32-vulkan-icd-loader
+aurman -Syu nvidia nvidia-utils lib32-nvidia-utils mesa lib32-mesa
+aurman -Syu vulkan-icd-loader lib32-vulkan-icd-loader vulkan-tools
 ```
 
 #### Audio driver
