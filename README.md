@@ -542,10 +542,10 @@ aurman -Syu gdm3setup gdm3setup-utils
 ```
 
 ##### Gnome settings
-- Region and language: Change keymap accordingly
-- Connect with WLAN
-- Change audio
-- Work on energy management settings
+- Activate touchpad "tap to click": `/org/gnome/desktop/peripherals/touchpad/tap-to-click --> true`
+- Activate touchpad "natural scroll": `/org/gnome/desktop/peripherals/touchpad/natural-scroll --> true`
+- Change keymap to "de": `/org/gnome/desktop/input-sources/sources --> [('xkb', 'de')]`
+  (or configure via xorg-server)
 
 ##### Screen layout
 for NVIDIA (optional):
