@@ -53,18 +53,11 @@ dd if=/dev/urandom of=/dev/<hard_drive> bs=4096 status=progress
 ### Partitioning
 efi partition (`ef00`), root partition (`8300`)
 ```bash
-gdisk /dev/<hard_drive>
-n
-1
-<enter>
-+512M
-ef00
-n
-2
-<enter>
-<enter>
-<enter>
-w
+sgdisk --zap-all /dev/<hard_drive>
+sgdisk --new=1:0:+512M /dev/<hard_drive>
+sgdisk --typecode=1:ef00 /dev/<hard_drive>
+sgdisk --new=2:0:0 /dev/<hard_drive>
+sgdisk --typecode=2:8300 /dev/<hard_drive>
 ```
 
 ### File systems
