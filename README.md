@@ -24,15 +24,10 @@ Otherwise it was booted in BIOS mode.
 
 ### Establishing an internet connection
 ```bash
-iwctl
-device list
-station <device> scan
-station <device> get-networks
-station <device> connect <SSID>
-```
-Enter the password and confirm. 
-```bash
-dhcpcd
+iwctl device list
+iwctl station <device> scan
+iwctl station <device> get-networks
+iwctl --passphrase=<password> station <device> connect <SSID>
 ```
 
 #### Checking the internet connection
