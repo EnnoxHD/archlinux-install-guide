@@ -45,6 +45,8 @@ timedatectl status
 ### Deleting the hard drive
 Overwriting the present data on the hard drive with random data.
 ```bash
+lsblk
+blockdev --getbsz <hard_drive> # value for bs parameter in dd command
 dd if=/dev/urandom of=/dev/<hard_drive> bs=4096 status=progress
 ```
 
@@ -52,7 +54,6 @@ dd if=/dev/urandom of=/dev/<hard_drive> bs=4096 status=progress
 
 ### Partitioning
 ```bash
-lsblk
 sgdisk --zap-all /dev/<hard_drive>
 sgdisk --new=1:0:+512M /dev/<hard_drive> # EFI partition
 sgdisk --typecode=1:ef00 /dev/<hard_drive>
