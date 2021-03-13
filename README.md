@@ -65,6 +65,9 @@ sgdisk --typecode=2:8300 /dev/<hard_drive>
 For the root partition:
 ```bash
 cryptsetup -y -v --type luks1 --cipher aes-xts-plain64 --key-size 512 --hash sha512 --iter-time 2000 --use-urandom luksFormat /dev/<root_partition>
+YES
+<passphrase_for_root_partition>
+<passphrase_for_root_partition>
 cryptsetup open /dev/<root_partition> cryptroot
 mkfs.ext4 /dev/mapper/cryptroot
 mount /dev/mapper/cryptroot /mnt
