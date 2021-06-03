@@ -27,7 +27,7 @@ Otherwise it was booted in BIOS mode.
 iwctl device list
 iwctl station <device> scan
 iwctl station <device> get-networks
-iwctl --passphrase=<password> station <device> connect <SSID>
+iwctl --passphrase=<'password'> station <device> connect <SSID>
 ```
 
 #### Checking the internet connection
@@ -46,8 +46,8 @@ timedatectl status
 Overwriting the present data on the hard drive with random data.
 ```bash
 lsblk
-blockdev --getbsz <hard_drive> # value for bs parameter in dd command
-dd if=/dev/urandom of=/dev/<hard_drive> bs=4096 status=progress
+blockdev --getbsz /dev/<drive> # value for bs parameter in dd command
+dd if=/dev/urandom of=/dev/<drive> bs=4096 status=progress
 ```
 
 ## Installation
