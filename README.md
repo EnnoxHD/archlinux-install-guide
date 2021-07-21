@@ -376,7 +376,7 @@ Target=pacman-mirrorlist
 Description=Updating pacman-mirrorlist with reflector and removing pacnew...
 When=PostTransaction
 Depends=reflector
-Exec=/bin/sh -c "reflector --country 'Germany' --protocol http --ipv4 --age 3 --score 10 --sort rate --save /etc/pacman.d/mirrorlist; rm -f /etc/pacman.d/mirrorlist.pacnew"
+Exec=/bin/sh -c "reflector --country 'Germany' --protocol http --ipv4 --age 6 --score 10 --save /etc/pacman.d/mirrorlist; rm -f /etc/pacman.d/mirrorlist.pacnew"
 ```
 Reinstall:
 ```bash
@@ -394,7 +394,7 @@ Wants=network-online.target
 After=network-online.target
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/reflector --country 'Germany' --protocol http --ipv4 --age 3 --score 10 --sort rate --save /etc/pacman.d/mirrorlist
+ExecStart=/usr/bin/reflector --country 'Germany' --protocol http --ipv4 --age 6 --score 10 --save /etc/pacman.d/mirrorlist
 [Install]
 RequiredBy=multi-user.target
 ```
