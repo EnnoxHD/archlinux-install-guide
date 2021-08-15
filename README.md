@@ -685,7 +685,7 @@ pacman -Syu gdisk ntfs-3g veracrypt
 
 #### Password container
 ```bash
-aurman -Syu keepass
+aurman -Syu keepassxc
 ```
 
 #### Google Drive
