@@ -503,6 +503,28 @@ aurman -Syu nvidia nvidia-utils lib32-nvidia-utils mesa lib32-mesa
 aurman -Syu vulkan-icd-loader lib32-vulkan-icd-loader vulkan-tools
 ```
 
+#### Hardware video acceleration (VA-API and VDPAU)
+for NVIDIA:
+```bash
+aurman -Syu libva-vdpau-driver
+sudo nano /etc/environment
+```
+Change content:
+```text
+LIBVA_DRIVER_NAME=vdpau
+VDPAU_DRIVER=nvidia
+```
+Verification:
+```bash
+reboot
+# VA-API
+aurman -Syu libva-utils
+vainfo
+# VDPAU
+aurman -Syu vdpauinfo
+vdpauinfo
+```
+
 #### Audio driver
 ```bash
 aurman -Syu jack2
