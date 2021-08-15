@@ -579,6 +579,23 @@ sudo chown gdm:gdm /var/lib/gdm/.config/monitors.xml
 ```bash
 aurman -Syu firefox firefox-i18n-de
 ```
+Enable hardware video acceleration via VA-API:
+1. Enable hardware video acceleration via VA-API on the system
+2. Enable WebRender in Firefox
+   - in `about:config` with `gfx.webrender.all=true`
+   - in `/etc/environment` with `MOZ_WEBRENDER=1`
+3. Flags in `about:config`
+   - `media.ffmpeg.vaapi.enabled=true`
+   - `media.ffvpx.enabled=false`
+   - `media.rdd-vpx.enabled=false`
+   - `media.navigator.mediadatadecoder_vpx_enabled=true`
+   - for X-Server
+     - `gfx.x11-egl.force-enabled=true`
+	 - `gfx.x11-egl.force-disabled=false`
+4. Environment variables in `/etc/environment`
+   - `MOZ_DISABLE_RDD_SANDBOX=1`
+   - for X-Server
+     - `MOZ_X11_EGL=1`
 
 #### Advanced Gnome settings
 ```bash
