@@ -2,7 +2,6 @@
 This guide is based on various information from these sources:
 - https://wiki.archlinux.org/
 - https://github.com/polygamma/arch-script/
-- https://github.com/Dishendramishra/linux-setup#google-drive
 
 ## Preparation
 
@@ -691,15 +690,12 @@ aurman -Syu keepass
 
 #### Google Drive
 ```bash
-aurman -Syu grive-git
+aurman -Syu grive
+mkdir 'Google Drive'
+cd 'Google Drive'
+grive -a
 ```
-Installation:
- - [Video](https://www.youtube.com/watch?v=TzO8FyGu4U0)
- - [Instructions](https://github.com/Dishendramishra/linux-setup#google-drive)
-```bash
-grive -a --id <id> --secret <secret>
-<authentication_code>
-```
+Go to the URL shown and paste the authentication code.
 
 #### Bash completion
 ```bash
