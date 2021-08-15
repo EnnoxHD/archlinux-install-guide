@@ -700,6 +700,12 @@ Go to the URL shown and paste the authentication code.
 #### Bash completion
 ```bash
 aurman -Syu bash-completion
+nano ~/.inputrc
+```
+Content:
+```text
+$include /etc/inputrc
+set completion-ignore-case on
 ```
 
 #### Powerline
