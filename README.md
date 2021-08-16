@@ -591,7 +591,7 @@ Enable hardware video acceleration via VA-API:
    - `media.navigator.mediadatadecoder_vpx_enabled=true`
    - for X-Server
      - `gfx.x11-egl.force-enabled=true`
-	 - `gfx.x11-egl.force-disabled=false`
+	   - `gfx.x11-egl.force-disabled=false`
 4. Environment variables in `/etc/environment`
    - `MOZ_DISABLE_RDD_SANDBOX=1`
    - for X-Server
