@@ -588,6 +588,7 @@ Enable hardware video acceleration via VA-API:
    - `media.ffmpeg.vaapi.enabled=true`
    - `media.ffvpx.enabled=false`
    - `media.rdd-vpx.enabled=false`
+   - `security.sandbox.content.level=0`
    - `media.navigator.mediadatadecoder_vpx_enabled=true`
    - for X-Server
      - `gfx.x11-egl.force-enabled=true`
