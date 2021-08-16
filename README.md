@@ -513,6 +513,8 @@ Change content:
 ```text
 LIBVA_DRIVER_NAME=vdpau
 VDPAU_DRIVER=nvidia
+# Fix multi GPU issue
+DRI_PRIME=1
 ```
 Verification:
 ```bash
