@@ -717,6 +717,15 @@ aurman -Syu imagescan
 pacman -Syu gdisk ntfs-3g veracrypt
 ```
 
+#### Links to drives
+```bash
+nano ~/.profile
+```
+Content:
+```text
+for dir in $(ls -1d /mnt/*/);do ln -sfn $dir ~/$(basename $dir);done
+```
+
 #### Password container
 ```bash
 aurman -Syu keepassxc
