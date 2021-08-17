@@ -401,9 +401,25 @@ RequiredBy=multi-user.target
 sudo systemctl enable reflector.service
 ```
 
+### Git
+```bash
+sudo pacman -Syu git
+git clone https://github.com/EnnoxHD/dotfiles.git
+cd ./dotfiles
+git switch linux
+cp ./gitconfig ~/.gitconfig
+cd ..
+rm -rf ./dotfiles
+nano ~/.bashrc
+```
+Add content:
+```text
+alias git='LANG=en_US.UTF-8 git'
+```
+
 #### AUR (Arch User Repository)
 ```bash
-sudo pacman -Syu --needed base-devel git
+sudo pacman -Syu --needed base-devel
 curl -O https://github.com/polygamma.gpg
 gpg --import polygamma.gpg
 rm polygamma.gpg
@@ -729,6 +745,12 @@ for dir in $(ls -1d /mnt/*/);do ln -sfn $dir ~/$(basename $dir);done
 #### Password container
 ```bash
 aurman -Syu keepassxc
+```
+
+#### PGP keys
+Import PGP keys with
+```bash
+gpg --import ~/public.pgp
 ```
 
 #### Google Drive
