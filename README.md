@@ -785,6 +785,11 @@ POWERLINE_BASH_CONTINUATION=1
 POWERLINE_BASH_SELECT=1
 . /usr/share/powerline/bindings/bash/powerline.sh
 ```
+Configuration:
+```bash
+cp -r /usr/lib/python3.9/site-packages/powerline/config_files/ ~/.config/powerline/
+nano ~/.config/powerline/themes/shell/default.json
+```
 Restart the shell
 
 #### VirtualBox as a host machine
@@ -831,41 +836,5 @@ aurman -Syu virtualbox-guest-utils-nox
 sudo systemctl enable vboxservice.service
 gpasswd -a <user> vboxsf
 sudo chmod 755 /media
-reboot
-```
-
-## GRUB entry in Windows EFI partition for multiboot
-> Not properly tested yet and old!
-
-### Boot from an ArchLinux live image
-```bash
-loadkeys de-latin1-nodeadkeys
-ls /sys/firmware/efi/efivars
-ip link
-cp /etc/netctl/examples/wireless-wpa-static /etc/netctl/<nic>-<WLAN-SSID>
-nano /etc/netctl/<nic>-<WLAN-SSID>
-netctl start <nic>-<WLAN-SSID>
-ping 1.1.1.1
-```
-
-### Mounting the EFI partition and installing GRUB
-```bash
-fdisk -l
-mount /dev/<efi_partition> /mnt
-ls /mnt
-pacman -Syy grub efibootmgr
-grub-install --target=x86_64-efi --recheck --removable --efi-directory=/mnt --boot-directory=/mnt/EFI --bootloader-id=MENU
-nano /mnt/EFI/grub/grub.cfg
-```
-Change content:
-```text
-menuentry "Firmware" {
-     fwsetup
-}
-```
-
-### Restart
-```bash
-umount /mnt
 reboot
 ```
