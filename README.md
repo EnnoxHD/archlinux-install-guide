@@ -756,6 +756,34 @@ aurman -Syu imagescan
 pacman -Syu gdisk ntfs-3g veracrypt
 ```
 
+### Mount additional (encrypted/RAID) partitions
+Get `PARTUUID`s for normal drive partions via `sudo blkid`.
+Or get `UUID`s for RAID volumes via `sudo mdadm -E --scan`.
+Check out `lsblk` for a more general overview of block devices.
+
+#### Mapping encrypted partitions
+Prepare files for unlocking drives like `sudo nano /etc/<diskname>.password`.
+```bash
+sudo nano /etc/crypttab
+```
+```text
+# <diskname>
+crypt<diskname>    /dev/disk/by-partuuid/<partuuid>    /etc/<diskname>.password    tcrypt,tcrypt-veracrypt,noauto
+# or
+crypt<diskname>    /dev/disk/by-id/md-uuid<uuid>-part<number>    /etc/<diskname>.password    tcrypt,tcrypt-veracrypt,noauto
+```
+Continue with the mounting in `/etc/fstab` for the `/etc/crypttab`-mapped partitions.
+
+#### Normal mounting
+```bash
+sudo nano /etc/fstab
+```
+```text
+# <diskname>
+/dev/mapper/crypt<diskname>    /mnt/<diskname>    ntfs-3g    noauto,x-systemd.automount,uid=<userid>,gid=<groupid>,dmask=022,fmask=133,windows_names    0 0
+```
+
+
 ### Links to drives
 ```bash
 nano ~/.profile
