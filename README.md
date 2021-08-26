@@ -274,6 +274,18 @@ A list of available graphics modes can be shown in the native GRUB command line 
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
+#### Configure RAID arrays
+```bash
+nano /etc/mdadm.conf
+```
+Change content:
+```text
+#DEVICE partitions
+```
+```bash
+sudo mdadm -E --scan >>/etc/mdadm.conf
+```
+
 #### Get the network time
 ```bash
 nano /etc/systemd/timesyncd.conf
