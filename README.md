@@ -260,6 +260,20 @@ reboot
 
 ## System configuration
 
+#### GRUB framebuffer resolution
+```bash
+nano /etc/default/grub
+```
+Change content:
+```text
+GRUB_GFXMODE=1920x1080x32,auto
+GRUB_GFXPAYLOAD_LINUX=text
+```
+A list of available graphics modes can be shown in the native GRUB command line with `videoinfo`.
+```bash
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+```
+
 #### Get the network time
 ```bash
 nano /etc/systemd/timesyncd.conf
