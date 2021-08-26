@@ -186,7 +186,7 @@ nano /etc/mkinitcpio.conf
 ```
 Change content:
 ```text
-HOOKS=(base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt filesystems fsck)
+HOOKS=(base systemd autodetect modconf block keyboard sd-vconsole sd-encrypt filesystems fsck)
 COMPRESSION="zstd"
 ```
 ```bash
@@ -284,6 +284,21 @@ Change content:
 ```
 ```bash
 sudo mdadm -E --scan >>/etc/mdadm.conf
+```
+
+### Configure kernel for early RAID support
+```bash
+nano /etc/mkinitcpio.conf
+```
+Change content:
+```text
+BINARIES=(mdmon)
+# add udev and mdadm_udev in HOOKS
+HOOKS=(base udev systemd autodetect modconf block mdadm_udev keyboard sd-vconsole sd-encrypt filesystems fsck)
+```
+```bash
+mkinitcpio -p linux
+reboot
 ```
 
 ### Get the network time
