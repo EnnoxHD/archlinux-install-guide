@@ -375,7 +375,7 @@ Target=pacman-mirrorlist
 Description=Updating pacman-mirrorlist with reflector and removing pacnew...
 When=PostTransaction
 Depends=reflector
-Exec=/bin/sh -c "reflector --country 'Germany' --protocol http,https --ipv4 --latest 20 --score 10 --save /etc/pacman.d/mirrorlist; rm -f /etc/pacman.d/mirrorlist.pacnew"
+Exec=/bin/sh -c "reflector --country 'Germany' --protocol http --ipv4 --latest 20 --score 10 --save /etc/pacman.d/mirrorlist; rm -f /etc/pacman.d/mirrorlist.pacnew"
 ```
 Reinstall:
 ```bash
