@@ -229,7 +229,7 @@ nano /etc/default/grub
 ```
 Change content:
 ```text
-rd.luks.key=<UUID>=/crypto_keyfile.bin
+GRUB_CMDLINE_LINUX="... rd.luks.key=<UUID>=/crypto_keyfile.bin"
 ```
 
 #### GRUB Installation
