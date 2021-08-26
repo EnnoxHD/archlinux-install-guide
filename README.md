@@ -381,25 +381,6 @@ Reinstall:
 ```bash
 sudo pacman -S pacman-mirrorlist
 ```
-##### Triggered on every bootup if network is available
-```bash
-sudo nano /etc/systemd/system/reflector.service
-```
-Content:
-```text
-[Unit]
-Description=pacman mirrorlist update via reflector
-Wants=network-online.target
-After=network-online.target
-[Service]
-Type=oneshot
-ExecStart=/usr/bin/reflector --country 'Germany' --protocol http,https --ipv4 --latest 20 --score 10 --save /etc/pacman.d/mirrorlist
-[Install]
-RequiredBy=multi-user.target
-```
-```bash
-sudo systemctl enable reflector.service
-```
 
 ### Git
 ```bash
