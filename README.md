@@ -260,7 +260,7 @@ reboot
 
 ## System configuration
 
-#### GRUB framebuffer resolution
+### GRUB framebuffer resolution
 ```bash
 nano /etc/default/grub
 ```
@@ -274,7 +274,7 @@ A list of available graphics modes can be shown in the native GRUB command line 
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
-#### Configure RAID arrays
+### Configure RAID arrays
 ```bash
 nano /etc/mdadm.conf
 ```
@@ -286,7 +286,7 @@ Change content:
 sudo mdadm -E --scan >>/etc/mdadm.conf
 ```
 
-#### Get the network time
+### Get the network time
 ```bash
 nano /etc/systemd/timesyncd.conf
 ```
@@ -303,7 +303,7 @@ timedatectl timesync-status
 timedatectl show-timesync --all
 ```
 
-#### Update the archlinux-keyring
+### Update the archlinux-keyring
 ```bash
 nano /etc/pacman.d/gnupg/gpg.conf
 ```
@@ -317,7 +317,7 @@ pacman-key --init
 pacman-key --populate archlinux
 ```
 
-#### Swap file
+### Swap file
 ```bash
 fallocate -l 4G /swapfile
 chmod 600 /swapfile
@@ -331,7 +331,7 @@ Change content:
 /swapfile	none	swap	defaults	0 0
 ```
 
-#### WLAN frequencies and signal strength regulations
+### WLAN frequencies and signal strength regulations
 ```bash
 pacman -Syu wireless-regdb
 nano /etc/conf.d/wireless-regdom
@@ -344,7 +344,7 @@ WIRELESS_REGDOM="DE"
 reboot
 ```
 
-#### Adding users and giving them sudo rights
+### Adding users and giving them sudo rights
 ```bash
 useradd -m <username>
 passwd <username>
@@ -372,7 +372,7 @@ reboot
 ```
 Logon with the new user account
 
-#### 32-bit packages
+### 32-bit packages
 ```bash
 sudo nano /etc/pacman.conf
 ```
@@ -385,8 +385,8 @@ Include=/etc/pacman.d/mirrorlist
 pacman -Syyu
 ```
 
-#### reflector with pacman hook
-##### Triggered on pacman mirrorlist update
+### reflector with pacman hook
+#### Triggered on pacman mirrorlist update
 ```bash
 sudo pacman -Syu reflector
 sudo mkdir /etc/pacman.d/hooks
@@ -425,7 +425,7 @@ Add content:
 alias git='LANG=en_US.UTF-8 git'
 ```
 
-#### AUR (Arch User Repository)
+### AUR (Arch User Repository)
 ```bash
 sudo pacman -Syu --needed base-devel
 curl -O https://github.com/polygamma.gpg
@@ -455,7 +455,7 @@ aurman -Syy
 aurman -S aurman
 ```
 
-#### Optimize makepkg
+### Optimize makepkg
 ```bash
 aurman -Syu ccache
 sudo nano /etc/makepkg.conf
@@ -490,32 +490,32 @@ export PATH="/usr/lib/ccache/bin/:$PATH"
 source ~/.bashrc
 ```
 
-#### Downgrading packages
+### Downgrading packages
 ```bash
 aurman -Syu downgrade
 ```
 
-#### USB information
+### USB information
 ```bash
 aurman -Syu usbutils
 ```
 
-#### Battery and Temperatures
+### Battery and Temperatures
 ```bash
 aurman -Syu acpi
 ```
 
-#### Basic graphics driver
+### Basic graphics driver
 ```bash
 aurman -Syu xf86-video-fbdev xf86-video-vesa
 ```
 
-#### Xorg server
+### Xorg server
 ```bash
 aurman -Syu xorg-server
 ```
 
-#### Graphics driver (with Vulkan support)
+### Graphics driver (with Vulkan support)
 for Intel:
 ```bash
 aurman -Syu xf86-video-intel mesa lib32-mesa
@@ -527,7 +527,7 @@ aurman -Syu nvidia nvidia-utils lib32-nvidia-utils mesa lib32-mesa
 aurman -Syu vulkan-icd-loader lib32-vulkan-icd-loader vulkan-tools
 ```
 
-#### Hardware video acceleration (VA-API and VDPAU)
+### Hardware video acceleration (VA-API and VDPAU)
 for NVIDIA:
 ```bash
 aurman -Syu libva-vdpau-driver
@@ -543,17 +543,17 @@ aurman -Syu vdpauinfo
 vdpauinfo
 ```
 
-#### Audio driver
+### Audio driver
 ```bash
 aurman -Syu jack2
 ```
 
-#### Fonts
+### Fonts
 ```bash
 aurman -Syu noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra
 ```
 
-#### Desktop environment
+### Desktop environment
 ```bash
 aurman -Syu gnome # curate applications
 # aurman -Syu gnome-extra # curate applications
@@ -571,18 +571,18 @@ wifi.backend=iwd
 ```bash
 reboot
 ```
-##### GDM
+#### GDM
 ```bash
 aurman -Syu gdm3setup gdm3setup-utils
 ```
 
-##### Gnome settings
+#### Gnome settings
 - Activate touchpad "tap to click": `/org/gnome/desktop/peripherals/touchpad/tap-to-click --> true`
 - Activate touchpad "natural scroll": `/org/gnome/desktop/peripherals/touchpad/natural-scroll --> true`
 - Change keymap to "de": `/org/gnome/desktop/input-sources/sources --> [('xkb', 'de')]`
   (or configure via xorg-server)
 
-##### Screen layout
+#### Screen layout
 for NVIDIA (optional):
 ```bash
 aurman -Syu nvidia-settings
@@ -593,7 +593,7 @@ sudo cp ~/.config/monitors.xml /var/lib/gdm/.config/
 sudo chown gdm:gdm /var/lib/gdm/.config/monitors.xml
 ```
 
-#### Internet browser
+### Internet browser
 ```bash
 aurman -Syu firefox firefox-i18n-de
 ```
@@ -616,13 +616,13 @@ Enable hardware video acceleration via VA-API:
    - for X-Server
      - `MOZ_X11_EGL=1`
 
-#### Advanced Gnome settings
+### Advanced Gnome settings
 ```bash
 aurman -Syu dconf dconf-editor
 ```
 `gsettings` allows to change Gnome settings via command line
 
-#### Deactivate IPv6 on VPN connection
+### Deactivate IPv6 on VPN connection
 ```bash
 sudo nano /etc/NetworkManager/dispatcher.d/10-vpn-ipv6
 ```
@@ -640,7 +640,7 @@ case "$2" in
 esac
 ```
 
-#### Turn off IPv6 in general
+### Turn off IPv6 in general
 Alternative:
 ```bash
 ip link
@@ -692,7 +692,7 @@ Change content:
 precedence ::ffff:0:0/96  100
 ```
 
-#### Firewall
+### Firewall
 ```bash
 aurman -Syu ufw
 sudo systemctl start ufw.service
@@ -711,13 +711,13 @@ DEFAULT_FORWARD_POLICY "ACCEPT"
 aurman -Syu gufw
 ```
 
-#### Enable TRIM for SSDs
+### Enable TRIM for SSDs
 ```bash
 sudo systemctl start fstrim.service
 sudo systemctl status fstrim.service
 ```
 
-#### Printer driver and PDF
+### Printer driver and PDF
 ```bash
 aurman -Syu cups cups-pdf
 sudo nano /etc/cups/cups-pdf.conf
@@ -731,17 +731,17 @@ sudo systemctl start org.cups.cupsd.service
 sudo systemctl enable org.cups.cupsd.service
 ```
 
-#### Scanner
+### Scanner
 ```bash
 aurman -Syu imagescan
 ```
 
-#### Disk utilities
+### Disk utilities
 ```bash
 pacman -Syu gdisk ntfs-3g veracrypt
 ```
 
-#### Links to drives
+### Links to drives
 ```bash
 nano ~/.profile
 ```
@@ -750,18 +750,18 @@ Content:
 for dir in $(ls -1d /mnt/*/);do ln -sfn $dir ~/$(basename $dir);done
 ```
 
-#### Password container
+### Password container
 ```bash
 aurman -Syu keepassxc
 ```
 
-#### PGP keys
+### PGP keys
 Import PGP keys with
 ```bash
 gpg --import ~/public.pgp
 ```
 
-#### Google Drive
+### Google Drive
 ```bash
 aurman -Syu grive
 mkdir 'Google Drive'
@@ -769,6 +769,8 @@ cd 'Google Drive'
 grive -a
 ```
 Go to the URL shown and paste the authentication code.
+
+### Enhancing Bash
 
 #### Bash completion
 ```bash
@@ -800,7 +802,7 @@ nano ~/.config/powerline/themes/shell/default.json
 ```
 Restart the shell
 
-#### VirtualBox as a host machine
+### VirtualBox as a host machine
 ```bash
 aurman -Syu virtualbox virtualbox-guest-iso virtualbox-host-modules-arch virtualbox-ext-oracle
 sudo nano /etc/modules-load.d/virtualbox.conf
