@@ -666,7 +666,7 @@ noipv6rs
 noipv6
 ```
 ```bash
-systemctl edit ntpd.service
+sudo systemctl edit ntpd.service
 ```
 Write the following in the appearing editor:
 ```text
