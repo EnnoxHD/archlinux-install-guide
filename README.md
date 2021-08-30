@@ -668,11 +668,22 @@ noipv6
 ```bash
 sudo systemctl edit ntpd.service
 ```
-Write the following in the appearing editor:
+Write the following in the appearing editor and
+change `ExecStart=/usr/bin/ntpd -g -u ntp:ntp` with the `-4` parameter:
 ```text
+[Unit]
+Description=Network Time Service
+After=network.target nss-lookup.target
+Conflicts=systemd-timesyncd.service
+
 [Service]
-ExecStart=
+Type=forking
+PrivateTmp=true
 ExecStart=/usr/bin/ntpd -4 -g -u ntp:ntp
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
 ```
 For each file follow the below steps:
 ```bash
