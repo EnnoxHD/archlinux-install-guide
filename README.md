@@ -500,11 +500,6 @@ export PATH="/usr/lib/ccache/bin/:$PATH"
 source ~/.bashrc
 ```
 
-### Downgrading packages
-```bash
-aurman -Syu downgrade
-```
-
 ### USB information
 ```bash
 aurman -Syu usbutils
