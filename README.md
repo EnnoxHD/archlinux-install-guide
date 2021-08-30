@@ -464,11 +464,6 @@ pgp_fetch
 solution_way
 use_ask
 ```
-Update package lists and install "mainline" `aurman` (not `aurman-git`)
-```bash
-aurman -Syy
-aurman -S aurman
-```
 
 ### Optimize makepkg
 ```bash
