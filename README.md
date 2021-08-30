@@ -749,7 +749,7 @@ aurman -Syu imagescan
 
 ### Disk utilities
 ```bash
-pacman -Syu gdisk ntfs-3g veracrypt
+pacman -Syu gptfdisk ntfs-3g veracrypt
 ```
 
 ### Mount additional (encrypted/RAID) partitions
