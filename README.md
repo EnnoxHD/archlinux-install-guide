@@ -738,8 +738,8 @@ Change content:
 Out /home/${USER}
 ```
 ```bash
-sudo systemctl start org.cups.cupsd.service
-sudo systemctl enable org.cups.cupsd.service
+sudo systemctl start cups.service
+sudo systemctl enable cups.service
 ```
 
 ### Scanner
