@@ -576,10 +576,6 @@ wifi.backend=iwd
 ```bash
 reboot
 ```
-#### GDM
-```bash
-aurman -Syu gdm3setup gdm3setup-utils
-```
 
 #### Gnome settings
 - Activate touchpad "tap to click": `/org/gnome/desktop/peripherals/touchpad/tap-to-click --> true`
