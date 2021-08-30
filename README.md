@@ -207,6 +207,7 @@ Change content:
 GRUB_TIMEOUT=1
 GRUB_CMDLINE_LINUX="rd.luks.name=<UUID>=cryptroot root=/dev/mapper/cryptroot rd.luks.options=<UUID>=cipher=aes-xts-plain64:sha512,size=512"
 GRUB_ENABLE_CRYPTODISK=y
+GRUB_DISABLE_OS_PROBER=true
 GRUB_LANG=en
 ```
 
