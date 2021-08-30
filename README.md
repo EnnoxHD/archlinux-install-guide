@@ -725,8 +725,7 @@ aurman -Syu gufw
 
 ### Enable TRIM for SSDs
 ```bash
-sudo systemctl start fstrim.service
-sudo systemctl status fstrim.service
+sudo systemctl enable fstrim.timer
 ```
 
 ### Printer driver and PDF
