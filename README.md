@@ -210,6 +210,22 @@ GRUB_ENABLE_CRYPTODISK=y
 GRUB_DISABLE_OS_PROBER=true
 GRUB_LANG=en
 ```
+Hook for updating the GRUB configuration after a kernel upgrade:
+```bash
+nano /etc/pacman.d/hooks/linuxupgrade.hook
+```
+Content:
+```text
+[Trigger]
+Operation=Upgrade
+Type=Package
+Target=linux
+[Action]
+Description=Updating GRUB configuration after kernel upgrade...
+When=PostTransaction
+Depends=grub
+Exec=/bin/sh -c "grub-mkconfig -o /boot/grub/grub.cfg"
+```
 
 #### Keyfile
 Needed to enter the password only once at bootup.
