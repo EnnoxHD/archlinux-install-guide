@@ -553,6 +553,11 @@ aurman -Syu vulkan-icd-loader lib32-vulkan-icd-loader vulkan-tools
 for NVIDIA:
 ```bash
 aurman -Syu libva-vdpau-driver
+sudo nano /etc/environment
+```
+Add:
+```text
+VDPAU_DRIVER=nvidia
 ```
 Verification:
 ```bash
