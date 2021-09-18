@@ -341,7 +341,7 @@ nano /etc/pacman.d/gnupg/gpg.conf
 ```
 Change content:
 ```text
-keyserver hkp://ipv4.pool.sks-keyservers.net:11371
+keyserver hkp://keyserver.ubuntu.com
 ```
 ```bash
 pacman -Syyu archlinux-keyring
@@ -475,7 +475,7 @@ Content:
 ```text
 [miscellaneous]
 devel
-keyserver=hkp://ipv4.pool.sks-keyservers.net:11371
+keyserver=hkp://keyserver.ubuntu.com
 noedit
 pgp_fetch
 solution_way
