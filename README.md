@@ -793,12 +793,15 @@ crypt<diskname>    /dev/disk/by-id/md-uuid<uuid>-part<number>    /etc/<diskname>
 Continue with the mounting in `/etc/fstab` for the `/etc/crypttab`-mapped partitions.
 
 #### Normal mounting
+Get the user id `uid` and the group id `gid` of the current user with the `id` command.
+In general on a single-user machine this should be `uid=1000` and `gid=1000`.
 ```bash
+id
 sudo nano /etc/fstab
 ```
 ```text
 # <diskname>
-/dev/mapper/crypt<diskname>    /mnt/<diskname>    ntfs-3g    noauto,x-systemd.automount,uid=<userid>,gid=<groupid>,dmask=022,fmask=133,windows_names    0 0
+/dev/mapper/crypt<diskname>    /mnt/<diskname>    ntfs-3g    noauto,x-systemd.automount,uid=1000,gid=1000,dmask=0022,fmask=0033,windows_names    0 0
 ```
 
 
