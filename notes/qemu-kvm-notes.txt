@@ -1,0 +1,239 @@
+KVM     |-> kernel based virtualization
+        |-> hypervisor in the linux kernel
+        |-> uses CPU extensions for virtualization
+        |-> generally used with QEMU
+        - Check for hardware support and BIOS configuration:
+            `LC_ALL=C lscpu | grep Virtualization` -> VT-x or AMD-V
+            (Alternative: `grep -E --color=auto 'vmx|svm|0xc0f' /proc/cpuinfo` -> vmx, svm, 0xc0f highlighted)
+        - Check for kernel support:
+            - General support:
+                `zgrep CONFIG_KVM /proc/config.gz` -> kvm and kvm_amd / kvm_intel are either y or m
+            - Check for automatic loading:
+                `lsmod | grep kvm` -> returns at least kvm and kvm_amd / kvm_intel
+        - Optional: Nested virtualization
+            |-> useful for e.g. Docker/WSL2 in Windows
+            - Kernel module configuration:
+                - Options:
+                    - Instant: `modprobe -r kvm_intel` and `modprobe kvm_intel nested=1`
+                    - Permanent: /etc/modprobe.d/kvm_intel.conf: `options kvm_intel nested=1`
+                - Verify: `systool -m kvm_intel -v | grep nested`
+            - On VM creation enable host-passthrough for the CPU:
+                - Options:
+                    - QEMU: `-cpu host`
+                    - virt-manager: CPU: `host-passthrough`
+                    - virsh: `<cpu mode='host-passthrough' check='partial'/>`
+                - Validation in Linux guest: `grep -E --color=auto 'vmx|svm' /proc/cpuinfo`
+        - Optional: Huge Pages
+            |-> Performance optimized memory management on the host
+            - Check if `/dev/hugepages` exists
+            - Make an entry in `/etc/fstab`:
+                `hugetlbfs /dev/hugepages hugetlbfs mode=01770,gid=kvm 0 0`
+            - Configure amount of hugepages
+                - Get the default hugepage size: `grep Hugepagesize /proc/meminfo` (2 MB)
+                - 16 GB -> 8192 hugepages of 2 MB each
+                - In `/etc/sysctl.d/40-hugepage.conf` set the number of pages via `vm.nr_hugepages = 8192`
+                - restart the system
+            - Verify
+                - `grep HugePages /proc/meminfo`
+            - Use the hugepages with a QEMU VM
+                - specify `-mem-path /dev/hugepages`
+
+QEMU    |-> emulator and hypervisor
+        |-> uses KVM
+        |-> Variants
+        |   - full-system emulation
+        |       - primarily for non-Linux guests
+        |       - qemu command e.g. `qemu-system-x86_64`
+        |       - target architecture == host architecture --> speedup with: KVM
+        |   - usermode emulation
+        |       - only for Linux guests
+        |       - requires `qemu-arch-extra` to be installed
+        |       - see https://wiki.archlinux.org/title/QEMU#Details_on_packages_offered_in_Arch_Linux
+        |       - qemu command `qemu-x86_64`
+        - Install `qemu` (only `qemu-system-x86_64` architecture)
+        - Create a system
+            - Hard disk image
+                - create
+                    - raw: byte-by-byte full pysical drive, for performance
+                    - qcow2: virtual hard disk growing, snapshotting feature
+                        - e.g. `qemu-img create -f qcow2 image_file 4G`
+                    - overlay image file: keep backing image and derive mutations
+                - resize
+                    - e.g. `qemu-img resize disk_image +10G` to increase the image by 10 GB
+                    - in guest system enlarge the partition
+                - convert
+                    - e.g. `qemu-img convert -f raw -O qcow2 input.img output.qcow2`
+            - memory
+                - e.g. `-m 2G` parameter for 2 GB RAM
+            - boot order
+                - e.g. `-boot order=x` where `x` is some letter for a device
+                - e.g. `-boot menu=on` for a boot menu
+        - Run a system
+            - e.g. `qemu-system-x86_64 options disk_image`
+                - [all options](https://man.archlinux.org/man/qemu.1)
+                - Release mouse pointer from qemu window `Ctrl+Alt+g`
+            - enable KVM
+                - option `-enable-kvm` (alternatives: `-machine accel=kvm` or `-accel kvm`)
+                - cpu model `host` requires KVM
+                - check if enabled in VM: in QEMU Monitor `info kvm`
+            - enable IOMMU
+                - see IOMMU section
+                - optional emulation of iommu device (do not use for pci passthrough on intel)
+                    - add `-device intel-iommu` for emulation -> diables pci-passthrough on intel
+                    - e.g. `qemu-system-x86_64 -enable-kvm -machine q35 -device intel-iommu -cpu host`
+        - share data between host and guest
+            - /Network
+            | - via network service: nfs, smb, nbd, http, ftp, ssh
+            | - host at IP `10.0.2.2`
+            | - host cannot access services on VMs by default -> use tap networking with qemu
+            - /Port forwarding
+                - IPv4 only
+                - port forwarding from host to guest (e.g. SSH)
+                    - :60022 host with :22 on guest -> e.g. `-nic user,hostfwd=tcp::60022-:22`
+                    - from host connect with `ssh guest-user@127.0.0.1 -p 60022`
+                    - multiple: e.g. `-nic user,hostfwd=tcp::60022-:22,hostfwd=tcp::5900-:5900`
+            - /SSHFS can be used to mount the guest's filesystem on the host
+                - https://wiki.archlinux.org/title/SSHFS
+            - Setup samba share
+                |-> qemu allows only a single directory
+                |-> use symbolic links instead
+                - Install `samba`
+                - start the vm with the `smb` option like `-nic user,id=nic0,smb=shared_dir_path`
+                - on the guest the share is available on `\\10.0.2.4\qemu`
+            - /filesystem passthrough and virtfs (virtio-9p)
+                | - https://wiki.qemu.org/Documentation/9psetup
+                | - Plan 9 over Virtio (virtio-9p-device), network protocol
+                | - Linux guests only
+                | - older standard
+            -> file sharing via virtio-fs
+                | - see https://wiki.archlinux.org/title/QEMU#Host_file_sharing_with_virtiofsd
+                | - https://qemu-stsquad.readthedocs.io/en/docs-next/tools/virtiofsd.html
+                | - https://libvirt.org/kbase/virtiofs.html
+                | - https://virtio-fs.gitlab.io/howto-windows.html
+                | - http://www.secfs.net/winfsp/
+                | - newer standard
+                - host: `virtiofsd --socket-path=/tmp/vhost-fs.sock -o source=/path/to/shared/dir`
+                - host: `qemu ... -chardev socket,id=char0,path=/tmp/vhost-fs.sock -device vhost-user-fs-pci,chardev=char0,tag=myfs`
+                - guest: `mount -t virtiofs myfs /mnt`
+                - DAX (direct access via shared memory)
+                - Libvirt configuration (`hugepage`-backed, also `memfd` or 'file-backed' possible)
+                    - share ```text
+                        <domain>
+                            ...
+                            <memoryBacking>
+                                <hugepages>
+                                    <page size='2' unit='M'/>
+                                </hugepages>
+                                <access mode='shared'/>
+                            </memoryBacking>
+                            ...
+                            <devices>
+                                ...
+                                <filesystem type='mount' accessmode='passthrough'>
+                                    <driver type='virtiofs'/>
+                                    <source dir='/host_path'/>
+                                    <target dir='mount_tag'/>
+                                </filesystem>
+                                ...
+                            </devices>
+                        </domain>
+                        ```
+                        - memory configuration: https://libvirt.org/kbase/virtiofs.html#other-options-for-vhost-user-memory-setup
+                            - `virsh allocpages 2M 8192` -> 16 GB hugepage memory
+                            - see https://www.libvirt.org/manpages/virsh.html#allocpages
+                - Mounting on Linux guest: `mount -t virtiofs mount_tag /mnt/mount/path`
+                - Mounting on Windows guest:
+                    | - Video Guide: https://www.youtube.com/watch?v=j1n_QvHD7uc
+                    | - https://virtio-fs.gitlab.io/howto-windows.html
+                    - Install Windows on a VM
+                    - Install WinFsp->Core (http://www.secfs.net/winfsp/)
+                    - Install virtio-fs PCI device driver via Device management
+                        - Mass Storage Controller -> Update driver -> From Local
+                        - choose the viofs driver from virtio-win ISO and continue
+                    - Install a `VirtioFsSvc` service on Windows
+                        - Copy the /viofs/w10/amd64/* files from the virtio-win ISO to a VM local path, e.g. `C:\virtiofs`
+                        - Admin Cmd:
+                            - Create a service with: `sc create VirtioFsSvc binpath="C:\virtiofs\virtiofs.exe" start=auto depend="WinFsp.Launcher/VirtioFsDrv" DisplayName="Virtio FS Service"`
+                            - Manually start: `sc start VirtioFsSvc`
+                            - Configuring the mount letter
+                                - use the `-m <Z:>` parameter for changing the mount letter
+                                - see https://github.com/virtio-win/kvm-guest-drivers-windows/wiki/VirtIOFS:-A-shared-file-system
+                                - or change it in the Registry via `HKLM\Software\VirtIO-FS\MountPoint`
+            - /Mounting a partition of the guest on the host
+            - /Using an entire physical disk device inside the VM
+        - networking
+            | - https://wiki.archlinux.org/title/QEMU#Networking
+            | - use virtio / tap and bridges for better performance, not user-mode networking or vde
+            - For Windows install the virtio drivers (https://wiki.archlinux.org/title/QEMU#Installing_virtio_drivers)
+            - using virtio for networking: ```text
+                <interface type='network'>
+                    ...
+                    <model type='virtio' />
+                </interface>
+                ```
+            - tap networking with virtio: `-device virtio-net,netdev=network0 -netdev tap,id=network0,ifname=tap0,script=no,downscript=no`
+            - vhost
+                | - in-kernel virtio devices for KVM
+                | - vhost-net driver emulates virtio-net in the host kernel
+                | - data in kernel, feature negotiation in userspace together with QEMU
+                | - partial emulation of a virtio PCI adapter
+                | - experimental: vhost-blk, vhost-scsi
+                - check if kernel module is running: `lsmod | grep vhost_net`
+                - evtl. /etc/modulesload.d/vhost_net.conf: `vhost_net` if not loaded at boot time (or kernel parameter)
+                - add `...,vhost=on` for additional performance
+            - TODO: "Host-only networking" etc.
+                - create a bridge (here with iproute2, also possible with https://wiki.archlinux.org/title/Systemd-networkd#Bridge_interface)
+                    - Create: `ip link add name br0 type bridge`
+                    - `ip link set br0 up`
+                    - `ip link set eth0 up`
+                    - `ip link set eth0 master br0`
+                    - Show all bridges: `bridge link`
+                    - Add IP: `ip address add dev br0 192.168.66.66/24`
+                    - Remove: `ip link set eth0 nomaster`
+                    - `ip link set eth0 down`
+                    - `ip link delete br0 type bridge`
+                - QEMU Bridge Helper: https://wiki.qemu.org/Features/HelperNetworking
+                - in `/etc/qemu/bridge.conf` type `allow br0`
+                - check `/etc/qemu/` has `755` permissions
+                - use the bridge with e.g. `-nic bridge,br=br0,model=virtio-net-pci`
+        - drive io with virtio
+            - For Windows install the virtio drivers (https://wiki.archlinux.org/title/QEMU#Installing_virtio_drivers)
+            - using disk io via virtio: ```text
+                <disk type='...' device='disk'>
+                    ...
+                    <target dev='vda' bus='virtio'/>
+                </disk>
+                ```
+            - remove any <address .../> in there to allow correct regenerating this entries
+
+OVMF
+
+IOMMU
+    - kernel param `intel_iommu=on` for remapping io
+    - https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#Setting_up_IOMMU
+    - https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#Isolating_the_GPU
+
+Virtio  |-> Para-virtualization
+        |-> fast and efficient communication to host devices via guest drivers
+        |-> API
+        |-> between hypervisor and guest
+        |-> List of devices:
+        |   - network (virtio-net)
+        |   - block (virtio-blk)
+        |   - controller (virtio-scsi)
+        |   - serial (virtio-serial)
+        |   - balloon (virtio-balloon)
+        - Check for kernel support in guest:
+            - General support:
+                `zgrep VIRTIO /proc/config.gz`
+            - Check for automatic loading:
+                `lsmod | grep virtio`
+
+Libvirt |-> Virtual machine management
+    | - XML Schema: https://libvirt.org/format.html
+
+VMM (virt-manager)
+
+Looking Glass
+
+Cockpit
