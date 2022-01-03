@@ -546,9 +546,9 @@ aurman -Syu vulkan-intel lib32-vulkan-intel vulkan-icd-loader lib32-vulkan-icd-l
 for NVIDIA:
 ```bash
 # for newer cards:
-aurman -Syu nvidia nvidia-utils lib32-nvidia-utils mesa lib32-mesa
+aurman -Syu nvidia nvidia-utils opencl-nvidia lib32-nvidia-utils lib32-opencl-nvidia mesa lib32-mesa
 # for older cards (requires DKMS):
-aurman -Syu nvidia-470xx-dkms nvidia-470xx-utils opencl-nvidia-470xx lib32-nvidia-470xx-utils lib32-opencl-nvidia-470xx
+aurman -Syu nvidia-470xx-dkms nvidia-470xx-utils opencl-nvidia-470xx lib32-nvidia-470xx-utils lib32-opencl-nvidia-470xx mesa lib32-mesa
 # for Vulkan support:
 aurman -Syu vulkan-icd-loader lib32-vulkan-icd-loader vulkan-tools
 ```
