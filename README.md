@@ -545,7 +545,11 @@ aurman -Syu vulkan-intel lib32-vulkan-intel vulkan-icd-loader lib32-vulkan-icd-l
 ```
 for NVIDIA:
 ```bash
+# for newer cards:
 aurman -Syu nvidia nvidia-utils lib32-nvidia-utils mesa lib32-mesa
+# for older cards (requires DKMS):
+aurman -Syu nvidia-470xx-dkms nvidia-470xx-utils opencl-nvidia-470xx lib32-nvidia-470xx-utils lib32-opencl-nvidia-470xx
+# for Vulkan support:
 aurman -Syu vulkan-icd-loader lib32-vulkan-icd-loader vulkan-tools
 ```
 
@@ -608,7 +612,10 @@ reboot
 #### Screen layout
 for NVIDIA (optional):
 ```bash
+# for newer cards:
 aurman -Syu nvidia-settings
+# for older cards:
+aurman -Syu nvidia-470xx-settings
 ```
 In general adjust monitor settings, then do:
 ```bash
