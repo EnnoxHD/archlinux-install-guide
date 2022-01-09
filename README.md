@@ -873,23 +873,6 @@ nano ~/.config/powerline/themes/shell/default.json
 ```
 Restart the shell
 
-### VirtualBox as a host machine
-```bash
-aurman -Syu virtualbox virtualbox-guest-iso virtualbox-host-modules-arch virtualbox-ext-oracle
-sudo nano /etc/modules-load.d/virtualbox.conf
-```
-Content:
-```text
-vboxdrv
-vboxnetadp
-vboxnetflt
-vboxpci
-```
-```bash
-gpasswd -a <user> vboxusers
-reboot
-```
-
 ## Design
 ```bash
 aurman -Syu gnome-tweaks
