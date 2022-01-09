@@ -1,15 +1,4 @@
-KVM     |-> kernel based virtualization
-        |-> hypervisor in the linux kernel
-        |-> uses CPU extensions for virtualization
-        |-> generally used with QEMU
-        - Check for hardware support and BIOS configuration:
-            `LC_ALL=C lscpu | grep Virtualization` -> VT-x or AMD-V
-            (Alternative: `grep -E --color=auto 'vmx|svm|0xc0f' /proc/cpuinfo` -> vmx, svm, 0xc0f highlighted)
-        - Check for kernel support:
-            - General support:
-                `zgrep CONFIG_KVM /proc/config.gz` -> kvm and kvm_amd / kvm_intel are either y or m
-            - Check for automatic loading:
-                `lsmod | grep kvm` -> returns at least kvm and kvm_amd / kvm_intel
+KVM
         - Optional: Nested virtualization
             |-> useful for e.g. Docker/WSL2 in Windows
             - Kernel module configuration:
