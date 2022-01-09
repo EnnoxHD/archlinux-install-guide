@@ -882,23 +882,3 @@ aurman -Syu gnome-tweaks
 - Icons: [Numix-Circle](https://github.com/numixproject/numix-icon-theme-circle/) (`aur/numix-circle-icon-theme-git`) and [Numix-Folders](https://github.com/numixproject/numix-folders) (`aur/numix-folders-git`)
 
 And several gnome extensions.
-
-## VirtualBox as an ArchLinux guest
-
-### Installation of packages
-- with X-Server
-```bash
-aurman -Syu virtualbox-guest-utils xf86-video-vmware
-```
-- without X-Server
-```bash
-aurman -Syu virtualbox-guest-utils-nox
-```
-
-### Further steps
-```bash
-sudo systemctl enable vboxservice.service
-gpasswd -a <user> vboxsf
-sudo chmod 755 /media
-reboot
-```
