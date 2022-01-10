@@ -12,20 +12,6 @@ KVM
                     - virt-manager: CPU: `host-passthrough`
                     - virsh: `<cpu mode='host-passthrough' check='partial'/>`
                 - Validation in Linux guest: `grep -E --color=auto 'vmx|svm' /proc/cpuinfo`
-        - Optional: Huge Pages
-            |-> Performance optimized memory management on the host
-            - Check if `/dev/hugepages` exists
-            - Make an entry in `/etc/fstab`:
-                `hugetlbfs /dev/hugepages hugetlbfs mode=01770,gid=kvm 0 0`
-            - Configure amount of hugepages
-                - Get the default hugepage size: `grep Hugepagesize /proc/meminfo` (2 MB)
-                - 16 GB -> 8192 hugepages of 2 MB each
-                - In `/etc/sysctl.d/40-hugepage.conf` set the number of pages via `vm.nr_hugepages = 8192`
-                - restart the system
-            - Verify
-                - `grep HugePages /proc/meminfo`
-            - Use the hugepages with a QEMU VM
-                - specify `-mem-path /dev/hugepages`
 
 QEMU    |-> emulator and hypervisor
         |-> uses KVM
