@@ -1,18 +1,3 @@
-KVM
-        - Optional: Nested virtualization
-            |-> useful for e.g. Docker/WSL2 in Windows
-            - Kernel module configuration:
-                - Options:
-                    - Instant: `modprobe -r kvm_intel` and `modprobe kvm_intel nested=1`
-                    - Permanent: /etc/modprobe.d/kvm_intel.conf: `options kvm_intel nested=1`
-                - Verify: `systool -m kvm_intel -v | grep nested`
-            - On VM creation enable host-passthrough for the CPU:
-                - Options:
-                    - QEMU: `-cpu host`
-                    - virt-manager: CPU: `host-passthrough`
-                    - virsh: `<cpu mode='host-passthrough' check='partial'/>`
-                - Validation in Linux guest: `grep -E --color=auto 'vmx|svm' /proc/cpuinfo`
-
 QEMU    |-> emulator and hypervisor
         |-> uses KVM
         |-> Variants

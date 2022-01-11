@@ -69,3 +69,46 @@ See `HugePages_Total` value in the output for the amount of huge pages the syste
 
 ### Usage with QEMU
 Specify `-mem-path /dev/hugepages` on the QEMU command line.
+
+## Optional: Nested virtualization
+- useful for Docker or WSL2 on Windows
+
+### Configure kernel module
+Use one of the following configuration steps:
+- Volatile configuration:
+  ```bash
+  modprobe -r kvm_intel
+  modprobe kvm_intel nested=1
+  ```
+- Permanent configuration (depending on CPU):
+  - in `/etc/modprobe.d/kvm_intel.conf` configure:
+  ```text
+  options kvm_intel nested=1
+  ```
+  - in `/etc/modprobe.d/kvm_amd.conf` configure:
+  ```text
+  options kvm_amd nested=1
+  ```
+
+### Verify on host
+Use the following command:
+```bash
+systool -m kvm_intel -v | grep nested
+```
+The output should be `nested = "Y"`.
+
+### Usage with QEMU
+On VM creation enable host-passthrough for the CPU:
+- QEMU commandline: `-cpu host`
+- Virtual Machine Manager: `CPU` configuration `host-passthrough`
+- virsh:
+  ```xml
+  <cpu mode='host-passthrough' check='partial'/>
+  ```
+
+### Verify in Linux guest
+Use the following command:
+```bash
+grep -E --color=auto 'vmx|svm' /proc/cpuinfo
+```
+The output should contain hightlighted `vmx` or `svm` flags for every available CPU core.
