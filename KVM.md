@@ -29,7 +29,7 @@ Use the following command:
 ```bash
 zgrep CONFIG_KVM /proc/config.gz
 ```
-In the output check that `kvm` and (depending on the CPU) either `kvm_amd` or `kvm_intel` are all listed as `y` or `m`.
+In the output check that `CONFIG_KVM` and (depending on the CPU) either `CONFIG_KVM_AMD` or `CONFIG_KVM_INTEL` are all listed as `y` or `m`.
 
 ### Check for automatic module loading
 Use the following command:
