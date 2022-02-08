@@ -208,6 +208,8 @@ Virtio  |-> Para-virtualization
 
 Libvirt |-> Virtual machine management
     | - XML Schema: https://libvirt.org/format.html
+    | - https://wiki.archlinux.org/title/Libvirt
+    - start libvirtd.service and virtlogd.service / enable libvirtd.service only
 
 VMM (virt-manager)
 
