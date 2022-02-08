@@ -16,7 +16,7 @@ QEMU    |-> emulator and hypervisor
                 - create
                     - raw: byte-by-byte full pysical drive, for performance
                     - qcow2: virtual hard disk growing, snapshotting feature
-                        - e.g. `qemu-img create -f qcow2 image_file 4G`
+                        - e.g. `qemu-img create -f qcow2 image_file 40G`
                     - overlay image file: keep backing image and derive mutations
                 - resize
                     - e.g. `qemu-img resize disk_image +10G` to increase the image by 10 GB
