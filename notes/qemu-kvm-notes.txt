@@ -156,6 +156,23 @@ QEMU    |-> emulator and hypervisor
                 - in `/etc/qemu/bridge.conf` type `allow br0`
                 - check `/etc/qemu/` has `755` permissions
                 - use the bridge with e.g. `-nic bridge,br=br0,model=virtio-net-pci`
+            - simple NAT over WLAN interface
+              ```xml
+              <network>
+                  <name>default</name>
+                  <uuid>c5afe893-c0cb-468f-9a84-e5f0ca9e2f14</uuid>
+                  <forward dev='wlan0' mode='nat'>
+                      <interface dev='wlan0'/>
+                  </forward>
+                  <bridge name='virbr0' stp='on' delay='0'/>
+                  <mac address='52:54:00:62:c7:2d'/>
+                  <ip address='192.168.122.1' netmask='255.255.255.0'>
+                      <dhcp>
+                          <range start='192.168.122.2' end='192.168.122.254'/>
+                      </dhcp>
+                  </ip>
+              </network>
+              ```
         - drive io with virtio
             - For Windows install the virtio drivers (https://wiki.archlinux.org/title/QEMU#Installing_virtio_drivers)
             - using disk io via virtio: ```text
