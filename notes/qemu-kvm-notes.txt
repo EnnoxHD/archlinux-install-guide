@@ -141,7 +141,7 @@ QEMU    |-> emulator and hypervisor
                 - check if kernel module is running: `lsmod | grep vhost_net`
                 - evtl. /etc/modulesload.d/vhost_net.conf: `vhost_net` if not loaded at boot time (or kernel parameter)
                 - add `...,vhost=on` for additional performance
-            - TODO: "Host-only networking" etc.
+            - "Host-only networking"
                 - create a bridge (here with iproute2, also possible with https://wiki.archlinux.org/title/Systemd-networkd#Bridge_interface)
                     - Create: `ip link add name br0 type bridge`
                     - `ip link set br0 up`
