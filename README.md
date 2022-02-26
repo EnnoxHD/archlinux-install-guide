@@ -758,18 +758,7 @@ sudo systemctl enable fstrim.timer
 ```
 
 ### Printer driver and PDF
-```bash
-aurman -Syu cups cups-pdf
-sudo nano /etc/cups/cups-pdf.conf
-```
-Change content:
-```text
-Out /home/${USER}
-```
-```bash
-sudo systemctl start cups.service
-sudo systemctl enable cups.service
-```
+See [CUPS](CUPS.md).
 
 ### Scanner
 ```bash
