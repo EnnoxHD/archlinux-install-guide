@@ -1,6 +1,6 @@
 # CUPS
 - is a printing service
-- allows for PDF output printing
+- allows for virtual PDF printing
 
 ## Install
 ```bash
@@ -10,6 +10,12 @@ aurman -Syu cups cups-pdf
 ### Optional: 32-bit support
 ```bash
 aurman -Syu lib32-libcups
+```
+
+## Start service
+```bash
+sudo systemctl start cups.service
+sudo systemctl enable cups.service
 ```
 
 ## Configure
@@ -23,11 +29,34 @@ Change content:
 Out /home/${USER}/Downloads
 ```
 
-### Add the pdf printer
-Use [http://localhost:631/](http://localhost:631/) to add/configure printers.
+### Add virtual pdf printer
+1. Go to [http://localhost:631/](http://localhost:631/)
+1. Go to `Administration` and click on `Add printer`
+1. Login on the website as the `root` user
+1. Choose `CUPS-PDF` in the `Local printers` group and click `Next`
+1. Set the name and description and click `Next`
+    - `Name`: `cups-pdf`
+    - `Description`: `cups-pdf`
+    - `Location`: leave empty
+    - `Connection`: `cups-pdf:/`
+    - `Share`: `[ ]`
+1. Choose the manifacturer and model and click `Add printer`
+    - `Manifacturer`: `Generic` and click `Next`
+    - `Model`: `Generic CUPS-PDF Printer (w/ options) (en)`
 
-## Start service
-```bash
-sudo systemctl start cups.service
-sudo systemctl enable cups.service
-```
+### Configure virtual pdf printer
+1. Open the GNOME Control Center and go to `Printers`
+1. Unlock the settings page
+1. On the printer named `cups-pdf` go to the options and set the following
+    - `Page Setup`
+        - `Pages per Sheet`: `1`
+        - `Rotation`: `Portrait`
+        - `Page Size`: `A4`
+    - `Image Quality`
+        - `Resolution`: `300 DPI`
+    - `Extra`
+        - `PDF version`: `1.5`
+        - `Truncate output filename to`: `64 Characters`
+        - `Label outputfiles`: `Label only untitled documents with job-id`
+        - `Prefer title from`: `Title in postscript document`
+        - `Log level`: `Debug, error and status messages`
