@@ -527,6 +527,13 @@ aurman -Syu usbutils
 aurman -Syu acpi
 ```
 
+### ACPI support
+```bash
+aurman -Syu acpid
+sudo systemctl enable acpid.service
+sudo systemctl start acpid.service
+```
+
 ### Basic graphics driver
 ```bash
 aurman -Syu xf86-video-fbdev xf86-video-vesa
