@@ -101,7 +101,7 @@ The output should be `nested = "Y"`.
 On VM creation enable host-passthrough for the CPU:
 - QEMU commandline: `-cpu host`
 - Virtual Machine Manager: `CPU` configuration `host-passthrough`
-- virsh:
+- libvirt:
   ```xml
   <cpu mode='host-passthrough' check='partial'/>
   ```
