@@ -247,6 +247,20 @@ IOMMU
                 - `Section "Screen"`
                     - add e.g. `Option "nvidiaXineramaInfoOrder" "DFP-0,DFP-2"` (https://manpages.debian.org/stretch/nvidia-xconfig/nvidia-xconfig.1.en.html)
                     - add e.g. `Option "metamodes" "DFP-2: nvidia-auto-select +0+0 {Rotation=left, ForceCompositionPipeline=On, ForceFullCompositionPipeline=On}, DFP-0: nvidia-auto-select +1080+840 {ForceCompositionPipeline=On, ForceFullCompositionPipeline=On}"`
+            - isolate the GPU Framebuffer
+                - Linux may use the framebuffer of the GPU in the boot process even though vfio grabs the device afterwards the device may be busy
+                - Result: VM boots an grabs the GPU but no correct output is given (black/white background and some colored dots)
+                - Solution: ```bash
+                            sudo nano /etc/default/grub
+                            ```
+                            deactivate the use of the GPU framebuffer in EFI mode
+                            ```text
+                            GRUB_CMDLINE_LINUX_DEFAULT="... video=efifb:off"
+                            ```
+                            rebuild GRUB configuration:
+                            ```bash
+                            sudo grub-mkconfig -o /boot/grub/grub.cfg
+                            ```
         - Setting up an VM
             - TODO (https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#Setting_up_an_OVMF-based_guest_virtual_machine)
 
