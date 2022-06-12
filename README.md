@@ -878,3 +878,16 @@ aurman -Syu gnome-tweaks
 - Icons: [Numix-Circle](https://github.com/numixproject/numix-icon-theme-circle/) (`aur/numix-circle-icon-theme-git`) and [Numix-Folders](https://github.com/numixproject/numix-folders) (`aur/numix-folders-git`)
 
 And several gnome extensions.
+
+## Additional software
+
+### VLC
+Install vlc media player via
+```bash
+aurman -Syu vlc
+```
+After installation start vlc and go to the preferences -> Interface section -> Embed video in interface:
+- uncheck, save
+- check, save
+
+Possible preferences bug: see https://superuser.com/a/126528, #48
