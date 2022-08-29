@@ -226,6 +226,22 @@ When=PostTransaction
 Depends=grub
 Exec=/bin/sh -c "grub-mkconfig -o /boot/grub/grub.cfg"
 ```
+Hook for updating the GRUB installation and configuration after an upgrade:
+```bash
+nano /etc/pacman.d/hooks/grubupdate.hook
+```
+Content:
+```text
+[Trigger]
+Operation=Upgrade
+Type=Package
+Target=grub
+[Action]
+Description=Updating GRUB installation and configuration after upgrade...
+When=PostTransaction
+Depends=grub
+Exec=/bin/sh -c "grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB && grub-mkconfig -o /boot/grub/grub.cfg"
+```
 
 #### Keyfile
 Needed to enter the password only once at bootup.
