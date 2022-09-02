@@ -228,7 +228,7 @@ Exec=/bin/sh -c "grub-mkconfig -o /boot/grub/grub.cfg"
 ```
 Hook for updating the GRUB installation and configuration after an upgrade:
 ```bash
-nano /etc/pacman.d/hooks/grubupdate.hook
+nano /etc/pacman.d/hooks/grubupgrade.hook
 ```
 Content:
 ```text
