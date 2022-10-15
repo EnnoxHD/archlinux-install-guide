@@ -3,6 +3,11 @@ This guide is based on various information from these sources:
 - https://wiki.archlinux.org/
 - https://github.com/polygamma/arch-script/
 
+Small hack: Enlarge ArchWiki sites (with a js bookmark)
+```javascript
+javascript:function changeMaxWidth(byid,name,value){if(byid){document.getElementById(name).style.maxWidth=value;}else{var elements=document.getElementsByClassName(name);var i;for(i=0;i<elements.length;i++){elements[i].style.maxWidth=value;}}};function run(){changeMaxWidth(false,"mw-page-container","100%");changeMaxWidth(false,"mw-workspace-container","100%");changeMaxWidth(false,"mw-content-container","100%");changeMaxWidth(false,"mw-article-toolbar-container","100%");changeMaxWidth(true,"searchform","100%");document.getElementById("p-search").children[0].style.margin="auto";};run();
+```
+
 ## Preparation
 
 ### General
