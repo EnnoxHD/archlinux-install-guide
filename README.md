@@ -933,3 +933,11 @@ Install android platform tools and add the user `<username>` to the group `adbus
 aurman -Syu android-tools
 sudo gpasswd -a <username> adbusers
 ```
+
+### Command for shredding files
+Add a function to the `.bashrc`:
+```bash
+function shred {
+  /usr/bin/shred "$1" && rm "$1"
+}
+```
