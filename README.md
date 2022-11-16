@@ -920,6 +920,13 @@ After installation start vlc and go to the preferences -> Interface section -> E
 
 Possible preferences bug: see https://superuser.com/a/126528, #48
 
+### MTP
+Install MTP and add the user `<username>` to the group `uucp`:
+```bash
+aurman -Syu libmtp
+sudo gpasswd -a <username> uucp
+```
+
 ### ADB
 Install android platform tools and add the user `<username>` to the group `adbusers`:
 ```bash
