@@ -919,3 +919,10 @@ After installation start vlc and go to the preferences -> Interface section -> E
 - check, save
 
 Possible preferences bug: see https://superuser.com/a/126528, #48
+
+### ADB
+Install android platform tools and add the user `<username>` to the group `adbusers`:
+```bash
+aurman -Syu android-tools
+sudo gpasswd -a <username> adbusers
+```
