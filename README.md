@@ -674,13 +674,6 @@ Enable hardware video acceleration via VA-API:
    - for X-Server
      - `MOZ_X11_EGL=1`
 
-### Gnome extensions
-```bash
-aurman -Syu gnome-browser-connector
-```
-Firefox browser extension:
-https://addons.mozilla.org/de/firefox/addon/gnome-shell-integration
-
 ### Advanced Gnome settings
 ```bash
 aurman -Syu dconf dconf-editor
@@ -905,9 +898,30 @@ aurman -Syu gnome-tweaks
 - Cursor: [Capitaine-cursors](https://github.com/keeferrourke/capitaine-cursors) (`community/capitaine-cursors`)
 - Icons: [Numix-Circle](https://github.com/numixproject/numix-icon-theme-circle/) (`aur/numix-circle-icon-theme-git`) and [Numix-Folders](https://github.com/numixproject/numix-folders) (`aur/numix-folders-git`)
 
-And several gnome extensions.
-
 ## Additional software
+
+### Gnome extensions
+```bash
+aurman -Syu gnome-browser-connector
+```
+Firefox browser extension:
+https://addons.mozilla.org/de/firefox/addon/gnome-shell-integration
+
+Used extensions:
+
+```bash
+aurman -Syu gnome-shell-extension-dash-to-dock
+aurman -Syu gnome-shell-extension-multi-monitors-add-on-git
+```
+and
+- Just Perfection
+- No overview at start-up
+- Removable Drive Menu
+- Remove Alt+Tab Delay v2
+- Sound Input & Outout Device Chooser
+- Tiling Assistant
+- Tray Icons: Reloaded
+- User Themes
 
 ### VLC
 Install vlc media player via
