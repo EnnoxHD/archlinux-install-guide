@@ -674,6 +674,13 @@ Enable hardware video acceleration via VA-API:
    - for X-Server
      - `MOZ_X11_EGL=1`
 
+### Gnome extensions
+```bash
+aurman -Syu gnome-browser-connector
+```
+Firefox browser extension:
+https://addons.mozilla.org/de/firefox/addon/gnome-shell-integration
+
 ### Advanced Gnome settings
 ```bash
 aurman -Syu dconf dconf-editor
