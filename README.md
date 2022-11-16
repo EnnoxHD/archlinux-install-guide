@@ -617,7 +617,7 @@ aurman -Syu noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra
 aurman -Syu gnome # curate applications
 # aurman -Syu gnome-extra # curate applications
 sudo systemctl enable gdm.service
-aurman -Syu networkmanager # optional: networkmanager-openvpn
+aurman -Syu networkmanager
 sudo systemctl enable NetworkManager.service
 # consider: networkmanager-iwd (AUR) to remove wpa_supplicant
 sudo nano /etc/NetworkManager/conf.d/wifi_backend.conf
