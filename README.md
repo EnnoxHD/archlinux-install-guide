@@ -867,8 +867,41 @@ POWERLINE_BASH_SELECT=1
 ```
 Configuration:
 ```bash
-cp -r /usr/lib/python3.9/site-packages/powerline/config_files/ ~/.config/powerline/
+mkdir -p ~/.config/powerline/themes/shell/
+cp /usr/lib/python3.10/site-packages/powerline/config_files/themes/shell/default.json ~/.config/powerline/themes/shell/
 nano ~/.config/powerline/themes/shell/default.json
+```
+Changes based on:
+- https://powerline.readthedocs.io/en/latest/configuration/segments/common.html#module-powerline.segments.common.time
+- https://strftime.org/
+
+Changes:
+```diff
+ 			{
+ 				"function": "powerline.segments.shell.mode"
+ 			},
++			{
++				"function": "powerline.segments.common.time.date",
++				"args": {
++					"format": "%H:%M:%S",
++					"istime": true
++				},
++				"priority": 5,
++				"draw_hard_divider": false,
++				"after": " "
++			},
+ 			{
+ 				"function": "powerline.segments.common.net.hostname",
+ 				"priority": 10
+ 			},
+ 			{
+ 				"function": "powerline.segments.common.env.user",
+-				"priority": 30
++				"priority": 30,
++				"before": " "
+ 			},
+ 			{
+ 				"function": "powerline.segments.common.env.virtualenv",
 ```
 Restart the shell
 
