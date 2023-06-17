@@ -947,6 +947,10 @@ After installation start vlc and go to the preferences -> Interface section -> E
 
 Possible preferences bug: see https://superuser.com/a/126528, #48
 
+Additionally check the following if vlc crashes on playback:
+Go to preferences -> Show settings: all -> Video - Output module -> Video output module: VDPAU-Output,
+then save
+
 ### MTP
 Install MTP and add the user `<username>` to the group `uucp`:
 ```bash
