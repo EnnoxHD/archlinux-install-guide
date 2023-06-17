@@ -762,6 +762,11 @@ DEFAULT_FORWARD_POLICY "ACCEPT"
 aurman -Syu gufw
 ```
 
+### Bluetooth
+```bash
+sudo systemctl enable bluetooth.service
+```
+
 ### Enable TRIM for SSDs
 ```bash
 sudo systemctl enable fstrim.timer
