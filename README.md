@@ -925,15 +925,13 @@ https://addons.mozilla.org/de/firefox/addon/gnome-shell-integration
 Used extensions:
 
 ```bash
-aurman -Syu gnome-shell-extension-dash-to-dock
 aurman -Syu gnome-shell-extension-multi-monitors-add-on-git
 ```
 and
+- Dash to Dock
 - Just Perfection
 - No overview at start-up
 - Removable Drive Menu
-- Remove Alt+Tab Delay v2
-- Sound Input & Outout Device Chooser
 - Tiling Assistant
 - Tray Icons: Reloaded
 - User Themes
