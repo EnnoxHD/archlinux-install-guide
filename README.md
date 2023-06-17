@@ -968,3 +968,29 @@ function shred {
   /usr/bin/shred "$1" && rm "$1"
 }
 ```
+
+### Eclipse IDE
+Install the IDE:
+```bash
+aurman -Syu eclipse-java
+```
+Add an alias to the `.bashrc`:
+```bash
+alias eclipse='GTK_THEME=Adwaita:dark eclipse'
+```
+Add a pacman hook for updating the `eclipse.desktop` file:
+```bash
+sudo nano /etc/pacman.d/hooks/eclipseupgrade.hook
+```
+Content:
+```text
+[Trigger]
+Operation=Upgrade
+Type=Package
+Target=eclipse-java
+[Action]
+Description=Updating eclipse.desktop file after upgrade...
+When=PostTransaction
+Depends=sed
+Exec=/bin/sh -c "sed -i 's/\(Exec=\)\(.*\)/\1env GTK_THEME=Adwaita:dark \2/' /usr/share/applications/eclipse.desktop"
+```
