@@ -1003,3 +1003,9 @@ When=PostTransaction
 Depends=sed
 Exec=/bin/sh -c "sed -i 's/\(Exec=\)\(.*\)/\1env GTK_THEME=Adwaita:dark \2/' /usr/share/applications/eclipse.desktop"
 ```
+
+To resolve shortcut conflicts under Gnome go into the dconf editor to configure the following:
+```text
+/org/gnome/desktop/wm/keybindings/switch-to-workspace-down = ['']
+/org/gnome/desktop/wm/keybindings/switch-to-workspace-up = ['']
+```
