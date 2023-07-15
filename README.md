@@ -1,9 +1,8 @@
 # ArchLinux installation
-This guide is based on various information from these sources:
-- https://wiki.archlinux.org/
-- https://github.com/polygamma/arch-script/
+This guide is based on various information from the official [ArchLinux Wiki](https://wiki.archlinux.org/).
 
-Small hack: Enlarge ArchWiki sites (with a js bookmark)
+A small hack for reading the wiki on bigger screens:\
+Enlarge the content area and arrange several elements on the sites with the following js bookmark:
 ```javascript
 javascript:function changeMaxWidth(byid,name,value){if(byid){document.getElementById(name).style.maxWidth=value;}else{var elements=document.getElementsByClassName(name);var i;for(i=0;i<elements.length;i++){elements[i].style.maxWidth=value;}}};function run(){changeMaxWidth(false,"mw-page-container","100%");changeMaxWidth(false,"mw-content-container","100%");changeMaxWidth(false,"mw-article-toolbar-container","100%");changeMaxWidth(true,"searchform","100%");document.getElementById("p-search").children[1].style.margin="auto";};run();
 ```
