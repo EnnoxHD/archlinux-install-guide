@@ -777,7 +777,7 @@ See [CUPS](CUPS.md).
 
 ### Scanner
 ```bash
-aurman -Syu imagescan
+aurman -Syu sane simple-scan
 ```
 
 ### Disk utilities

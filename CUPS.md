@@ -60,3 +60,11 @@ Out /home/${USER}/Downloads
         - `Label outputfiles`: `Label only untitled documents with job-id`
         - `Prefer title from`: `Title in postscript document`
         - `Log level`: `Debug, error and status messages`
+
+### Add printer
+- Model: Canon PIXMA TS5355a
+
+1. Install driver `aurman -Syu canon-pixma-ts5055-complete`
+1. Run `cnijlgmon3` to get the printer address, e.g. `cnijbe2://Canon/?port=usb&serial=01DE95`
+1. For available printer models search in `/usr/share/cups/model/*.ppd`
+1. Run `sudo lpadmin -p cups-Canon_TS5355a -m canonts5300.ppd -v 'cnijbe2://Canon/?port=usb&serial=01DE95' -E` to add the printer to the cups configuration
