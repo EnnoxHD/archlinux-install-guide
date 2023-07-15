@@ -836,15 +836,6 @@ Import PGP keys with
 gpg --import ~/public.pgp
 ```
 
-### Google Drive
-```bash
-aurman -Syu grive
-mkdir 'Google Drive'
-cd 'Google Drive'
-grive -a
-```
-Go to the URL shown and paste the authentication code.
-
 ### Enhancing Bash
 
 #### Bash completion
