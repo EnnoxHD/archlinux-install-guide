@@ -170,13 +170,6 @@ mkdir /mnt/var/lib/iwd
 cp /var/lib/iwd/<SSID>.<type> /mnt/var/lib/iwd/
 arch-chroot /mnt # enter chroot again
 nano /var/lib/iwd/<SSID>.<type>
-```
-Change content:
-```text
-[Security]
-PreSharedKey=<PreSharedKey>
-```
-```bash
 mkdir /etc/iwd
 nano /etc/iwd/main.conf
 ```
@@ -185,20 +178,6 @@ nano /etc/iwd/main.conf
 EnableNetworkConfiguration=true
 [Network]
 NameResolvingService=systemd
-```
-```bash
-nano /etc/systemd/network/ethernet.network
-```
-```text
-[Match]
-Name=en*
-[Network]
-DHCP=yes
-LinkLocalAddressing=no
-IPv6AcceptRA=no
-IPv6PrivacyExtensions=true
-[DHCP]
-Anonymize=true
 ```
 ```bash
 systemctl enable iwd.service
@@ -222,7 +201,9 @@ mkinitcpio -p linux
 #### Bootloader GRUB 2
 ```bash
 pacman -S grub efibootmgr
-lsblk -f
+exit # out of chroot
+lsblk -f # get UUID
+arch-chroot /mnt # enter chroot again
 ```
 Remember the `UUID` of the encrypted partition, referred to as `<UUID>`
 ```bash
@@ -330,7 +311,7 @@ GRUB_GFXPAYLOAD_LINUX=text
 ```
 A list of available graphics modes can be shown in the native GRUB command line with `videoinfo`.
 ```bash
-sudo grub-mkconfig -o /boot/grub/grub.cfg
+grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
 ### Configure RAID arrays
