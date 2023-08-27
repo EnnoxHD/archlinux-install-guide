@@ -323,7 +323,7 @@ Change content:
 #DEVICE partitions
 ```
 ```bash
-sudo mdadm -E --scan >>/etc/mdadm.conf
+mdadm -E --scan >>/etc/mdadm.conf
 ```
 
 ### Configure kernel for early RAID support
@@ -364,12 +364,12 @@ nano /etc/pacman.d/gnupg/gpg.conf
 ```
 Change content:
 ```text
-keyserver hkp://keyserver.ubuntu.com
+keyserver hkps://keyserver.ubuntu.com
 ```
 ```bash
 pacman -Syyu archlinux-keyring
 pacman-key --init
-pacman-key --populate archlinux
+pacman-key --populate
 ```
 
 ### Swap file
@@ -378,11 +378,12 @@ fallocate -l 4G /swapfile
 chmod 600 /swapfile
 mkswap /swapfile
 swapon /swapfile
+swaplabel /swapfile >> /etc/fstab
 nano /etc/fstab
 ```
 Change content:
 ```text
-# SWAP
+# UUID=<swapfile-uuid>
 /swapfile	none	swap	defaults	0 0
 ```
 
@@ -498,7 +499,7 @@ Content:
 ```text
 [miscellaneous]
 devel
-keyserver=hkp://keyserver.ubuntu.com
+keyserver=hkps://keyserver.ubuntu.com
 noedit
 pgp_fetch
 solution_way
