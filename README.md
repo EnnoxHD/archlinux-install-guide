@@ -440,10 +440,19 @@ sudo nano /etc/pacman.conf
 Uncomment:
 ```text
 [multilib]
-Include=/etc/pacman.d/mirrorlist
+Include = /etc/pacman.d/mirrorlist
 ```
 ```bash
-pacman -Syyu
+sudo pacman -Syyu
+```
+
+### Parallel pacman downloads
+```bash
+sudo nano /etc/pacman.conf
+```
+Uncomment:
+```text
+ParallelDownloads = 5
 ```
 
 ### reflector with pacman hook
