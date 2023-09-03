@@ -387,6 +387,11 @@ Change content:
 /swapfile	none	swap	defaults	0 0
 ```
 
+### Enable TRIM for SSDs
+```bash
+systemctl enable fstrim.timer
+```
+
 ### WLAN frequencies and signal strength regulations
 ```bash
 pacman -Syu wireless-regdb
@@ -413,7 +418,7 @@ Change content:
 Defaults env_reset
 Defaults editor=/usr/bin/nano, !env_editor
 Defaults lecture=never
-<username> ALL=(ALL) ALL
+<username> ALL=(ALL:ALL) ALL
 ```
 ```bash
 nano /home/<username>/.bashrc
@@ -768,11 +773,6 @@ aurman -Syu gufw
 ### Bluetooth
 ```bash
 sudo systemctl enable bluetooth.service
-```
-
-### Enable TRIM for SSDs
-```bash
-sudo systemctl enable fstrim.timer
 ```
 
 ### Printer driver and PDF
