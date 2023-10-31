@@ -455,11 +455,8 @@ Uncomment:
 ParallelDownloads = 5
 ```
 
-### reflector with pacman hook
-#### Triggered on pacman mirrorlist update
+### Hook for changing the preferred mirrors after a pacman-mirrorlist upgrade
 ```bash
-sudo pacman -Syu reflector
-sudo mkdir /etc/pacman.d/hooks
 sudo nano /etc/pacman.d/hooks/mirrorupgrade.hook
 ```
 Content:
@@ -469,10 +466,12 @@ Operation=Upgrade
 Type=Package
 Target=pacman-mirrorlist
 [Action]
-Description=Updating pacman-mirrorlist with reflector and removing pacnew...
+Description=Updating pacman mirrorlist, using preferred mirrors and removing pacnew...
 When=PostTransaction
-Depends=reflector
-Exec=/bin/sh -c "reflector --country 'Germany' --protocol http --ipv4 --latest 20 --score 10 --save /etc/pacman.d/mirrorlist; rm -f /etc/pacman.d/mirrorlist.pacnew"
+Depends=curl
+Depends=sed
+Depends=grep
+Exec=/bin/sh -c "curl -o /etc/pacman.d/mirrorlist https://archlinux.org/mirrorlist/all/https/; sed -i '/\(mirror\.f4st\.host\|mirror\.netcologne\.de\)/s/^#//g' /etc/pacman.d/mirrorlist; grep ^[^#].* /etc/pacman.d/mirrorlist; rm -f /etc/pacman.d/mirrorlist.pacnew"
 ```
 Reinstall:
 ```bash
