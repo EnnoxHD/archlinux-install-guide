@@ -547,6 +547,18 @@ gpg --edit-key <key-id>
 ```
 Then `trust` > `5` > `y` > `quit`.
 
+### Git-Credential-Manager
+```bash
+aurman -Syu git-credential-manager-core git-credential-manager-core-extras
+pass init <key-id>
+nano ~/.bashrc
+```
+Add content:
+```text
+export GPG_TTY=$(tty)
+```
+Work with a repository to add the credentials (e.g. personal access token) to the `~/.password-store` of pass.
+
 ### Optimize makepkg
 ```bash
 aurman -Syu ccache
