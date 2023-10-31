@@ -526,6 +526,27 @@ Reinstall:
 aurman -Syu aurman
 ```
 
+### Transfer GPG keys from another device
+Get your existing GPG public/private keypair identified by `<key-id>`:
+```bash
+gpg --list-keys
+gpg --output public.gpg --export <key-id>
+gpg --list-secret-keys
+gpg --output private.key --export-secret-key <key-id>
+```
+Safely transfer and import them to the new device.
+```bash
+gpg --import public.gpg
+gpg --import private.key
+```
+Trust your own key:
+```bash
+gpg --list-keys
+gpg --list-secret-keys
+gpg --edit-key <key-id>
+```
+Then `trust` > `5` > `y` > `quit`.
+
 ### Optimize makepkg
 ```bash
 aurman -Syu ccache
