@@ -478,20 +478,23 @@ Reinstall:
 sudo pacman -S pacman-mirrorlist
 ```
 
-### Git
+### Git and gitconfig
 ```bash
-sudo pacman -Syu git
+sudo pacman -Syu git gnupg pass
 git clone https://github.com/EnnoxHD/dotfiles.git
-cd ./dotfiles
-git switch linux
-cp ./gitconfig ~/.gitconfig
-cd ..
+cd ./dotfiles/linux
+chmod +x copy.sh
+./copy.sh
+cd ~
 rm -rf ./dotfiles
 nano ~/.bashrc
 ```
 Add content:
 ```text
 alias git='LANG=en_US.UTF-8 git'
+```
+```bash
+source ~/.bashrc
 ```
 
 ### AUR (Arch User Repository)
