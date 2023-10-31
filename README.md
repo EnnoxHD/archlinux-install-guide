@@ -561,34 +561,37 @@ Work with a repository to add the credentials (e.g. personal access token) to th
 
 ### Optimize makepkg
 ```bash
-aurman -Syu ccache
+aurman -Syu ccache mold
 sudo nano /etc/makepkg.conf
 ```
 Change the lines according to the following:
-- CFLAGS: `-march=native`
-- CXXFLAGS: `"$CFLAGS"`
-- RUSTFLAGS: `opt-level=3 -C target-cpu=native`
-- MAKEFLAGS: `-j$(nproc)`
-- BUILDENV: `ccache`
-- COMPRESSZST: `--threads=0`
-- PKGEXT: `.pkg.tar.zst`
-
-Overview with all changes:
-```text
-CFLAGS="-march=native -O2 -pipe -fno-plt"
-CXXFLAGS="$CFLAGS"
-RUSTFLAGS="-C opt-level=3 -C target-cpu=native"
-MAKEFLAGS="-j$(nproc)"
-BUILDENV=(!distcc color ccache check !sign)
-COMPRESSZST=(zstd -c -z -q - --threads=0)
-PKGEXT='.pkg.tar.zst'
+```diff
+-CFLAGS="-march=x86-64 -mtune=generic -O2 -pipe -fno-plt -fexceptions \
++CFLAGS="-march=native -O2 -pipe -fno-plt -fexceptions \
+        -Wp,-D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security \
+        -fstack-clash-protection -fcf-protection"
+ ...
+-LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
++LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now,-fuse-ld=mold"
+ ...
+-#RUSTFLAGS="-C opt-level=2"
++RUSTFLAGS="-C opt-level=3 -C target-cpu=native -C link-arg=-fuse-ld=mold"
+ ...
+-#MAKEFLAGS="-j2"
++MAKEFLAGS="-j$(nproc)"
+ ...
+-BUILDENV=(!distcc color !ccache check !sign)
++BUILDENV=(!distcc color ccache check !sign)
+ ...
+-COMPRESSZST=(zstd -c -z -q -)
++COMPRESSZST=(zstd -c -z -q --threads=0 -)
 ```
 ```bash
 sudo nano ~/.bashrc
 ```
 Add the following:
 ```text
-export PATH="/usr/lib/ccache/bin/:$PATH"
+export PATH="/usr/lib/ccache/bin:$PATH"
 ```
 ```bash
 source ~/.bashrc
