@@ -499,7 +499,7 @@ source ~/.bashrc
 
 ### AUR (Arch User Repository)
 ```bash
-sudo pacman -Syu --needed base-devel
+sudo pacman -Syu base-devel
 curl -O https://github.com/polygamma.gpg
 gpg --import polygamma.gpg
 rm polygamma.gpg
@@ -509,7 +509,7 @@ makepkg --cleanbuild --install --syncdeps --needed --noconfirm --clean
 cd ..
 rm -rf aurman
 mkdir -p ~/.config/aurman/
-sudo nano ~/.config/aurman/aurman_config
+nano ~/.config/aurman/aurman_config
 ```
 Content:
 ```text
@@ -520,6 +520,10 @@ noedit
 pgp_fetch
 solution_way
 use_ask
+```
+Reinstall:
+```bash
+aurman -Syu aurman
 ```
 
 ### Optimize makepkg
