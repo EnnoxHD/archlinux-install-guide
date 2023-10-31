@@ -587,7 +587,7 @@ Change the lines according to the following:
 +COMPRESSZST=(zstd -c -z -q --threads=0 -)
 ```
 ```bash
-sudo nano ~/.bashrc
+nano ~/.bashrc
 ```
 Add the following:
 ```text
