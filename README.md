@@ -691,10 +691,14 @@ reboot
 ```
 
 #### Gnome settings
-- Activate touchpad "tap to click": `/org/gnome/desktop/peripherals/touchpad/tap-to-click --> true`
-- Activate touchpad "natural scroll": `/org/gnome/desktop/peripherals/touchpad/natural-scroll --> true`
-- Change keymap to "de": `/org/gnome/desktop/input-sources/sources --> [('xkb', 'de')]`
-  (or configure via xorg-server)
+```bash
+aurman -Syu dconf-editor
+```
+```bash
+gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
+gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
+gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'de')]" # or configure via Xorg
+```
 
 #### Screen layout
 for NVIDIA (optional):
@@ -714,12 +718,6 @@ sudo chown gdm:gdm /var/lib/gdm/.config/monitors.xml
 ```bash
 aurman -Syu firefox firefox-i18n-de
 ```
-
-### Advanced Gnome settings
-```bash
-aurman -Syu dconf dconf-editor
-```
-`gsettings` allows to change Gnome settings via command line
 
 ### Deactivate IPv6 on VPN connection
 ```bash
@@ -1049,8 +1047,8 @@ Depends=sed
 Exec=/bin/sh -c "sed -i 's/\(Exec=\)\(.*\)/\1env GTK_THEME=Adwaita:dark \2/' /usr/share/applications/eclipse.desktop"
 ```
 
-To resolve shortcut conflicts under Gnome go into the dconf editor to configure the following:
-```text
-/org/gnome/desktop/wm/keybindings/switch-to-workspace-down = ['']
-/org/gnome/desktop/wm/keybindings/switch-to-workspace-up = ['']
+To resolve shortcut conflicts under Gnome configure the following:
+```bash
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down "['']"
+gesttings set org.gnome.desktop.wm.keybindings switch-to-workspace-up "['']"
 ```
