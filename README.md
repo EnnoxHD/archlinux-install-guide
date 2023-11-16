@@ -619,25 +619,43 @@ sudo systemctl start acpid.service
 aurman -Syu xf86-video-fbdev xf86-video-vesa
 ```
 
-### Xorg server
+### Xorg server (with mesa and vulkan)
 ```bash
-aurman -Syu xorg-server
+aurman -Syu mesa lib32-mesa vulkan-icd-loader lib32-vulkan-icd-loader
+aurman -Syu xorg-server xorg-apps
 ```
 
-### Graphics driver (with Vulkan support)
+### Graphics driver (and vulkan tools)
 for Intel:
 ```bash
-aurman -Syu xf86-video-intel mesa lib32-mesa
-aurman -Syu vulkan-intel lib32-vulkan-intel vulkan-icd-loader lib32-vulkan-icd-loader vulkan-tools
+# for newer cards (Gen 10 and newer):
+aurman -Syu intel-media-driver
+# enable GuC and HuC
+sudo nano /etc/modprobe.d/i915.conf
+# options i915 enable_guc=3
+sudo mkinitcpio -p linux
+# reboot and check dmesg output for GuC and HuC
+
+# for older cards (Gen 2 to Gen 9):
+aurman -Syu xf86-video-intel
+
+# for vulkan support on Intel:
+aurman -Syu vulkan-intel lib32-vulkan-intel
 ```
 for NVIDIA:
+
+see [General Codenames](https://nouveau.freedesktop.org/CodeNames.html#generalcodenames)
 ```bash
-# for newer cards:
-aurman -Syu nvidia nvidia-utils opencl-nvidia lib32-nvidia-utils lib32-opencl-nvidia mesa lib32-mesa
-# for older cards (requires DKMS):
-aurman -Syu nvidia-470xx-dkms nvidia-470xx-utils opencl-nvidia-470xx lib32-nvidia-470xx-utils lib32-opencl-nvidia-470xx mesa lib32-mesa
-# for Vulkan support:
-aurman -Syu vulkan-icd-loader lib32-vulkan-icd-loader vulkan-tools
+# for newer cards (Maxwell and newer):
+aurman -Syu nvidia nvidia-utils lib32-nvidia-utils opencl-nvidia lib32-opencl-nvidia
+
+# for older cards (Kepler, requires DKMS):
+aurman -Syu nvidia-470xx-dkms nvidia-470xx-utils lib32-nvidia-470xx-utils opencl-nvidia-470xx lib32-opencl-nvidia-470xx
+```
+
+Vulkan tools:
+```bash
+aurman -Syu vulkan-tools
 ```
 
 ### Hardware video acceleration (VA-API and VDPAU)
