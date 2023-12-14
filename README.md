@@ -627,7 +627,8 @@ aurman -Syu xorg-server xorg-apps
 
 ### Graphics driver (and vulkan tools)
 for Intel:
-[Values for `enable_guc`](https://wiki.archlinux.org/title/Intel_graphics#Enable_GuC_/_HuC_firmware_loading):
+
+see [Values for](https://wiki.archlinux.org/title/Intel_graphics#Enable_GuC_/_HuC_firmware_loading) `enable_guc`:
 |enable_guc value|GuC Submission|HuC Firmware Loading|Default for platforms|Supported on platforms|
 |---|---|---|---|---|
 |0|no |no |Tiger Lake, Rocket Lake, and Pre-Gen12|All|
