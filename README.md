@@ -900,12 +900,6 @@ for dir in $(ls -1d /mnt/*/);do ln -sfn $dir ~/$(basename $dir);done
 aurman -Syu keepassxc
 ```
 
-### PGP keys
-Import PGP keys with
-```bash
-gpg --import ~/public.pgp
-```
-
 ### Enhancing Bash
 
 #### Bash completion
