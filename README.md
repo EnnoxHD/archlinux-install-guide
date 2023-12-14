@@ -1051,6 +1051,19 @@ function shred {
 }
 ```
 
+### YubiKey
+Management:
+```bash
+aurman -Syu yubikey-manager yubikey-manager-qt
+```
+Make sure `pcscd.service` is enabled.
+Status info for a YubiKey version 5 via `ykman info`.
+
+Authenticator App:
+```bash
+aurman -Syu yubico-authenticator-bin
+```
+
 ### Eclipse IDE
 Install the IDE:
 ```bash
