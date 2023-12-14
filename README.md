@@ -1064,6 +1064,12 @@ Authenticator App:
 aurman -Syu yubico-authenticator-bin
 ```
 
+### FIDO2 / U2F and WebAuthn
+```bash
+aurman -Syu libfido2
+```
+WebAuthn test site: https://demo.yubico.com/webauthn-technical/registration
+
 ### Eclipse IDE
 Install the IDE:
 ```bash
