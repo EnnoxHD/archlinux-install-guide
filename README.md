@@ -1068,5 +1068,5 @@ Exec=/bin/sh -c "sed -i 's/\(Exec=\)\(.*\)/\1env GTK_THEME=Adwaita:dark \2/' /us
 To resolve shortcut conflicts under Gnome configure the following:
 ```bash
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down "['']"
-gesttings set org.gnome.desktop.wm.keybindings switch-to-workspace-up "['']"
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up "['']"
 ```
