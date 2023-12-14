@@ -627,6 +627,14 @@ aurman -Syu xorg-server xorg-apps
 
 ### Graphics driver (and vulkan tools)
 for Intel:
+[Values for `enable_guc`](https://wiki.archlinux.org/title/Intel_graphics#Enable_GuC_/_HuC_firmware_loading):
+|enable_guc value|GuC Submission|HuC Firmware Loading|Default for platforms|Supported on platforms|
+|---|---|---|---|---|
+|0|no |no |Tiger Lake, Rocket Lake, and Pre-Gen12|All|
+|1|yes|no |-|Alder Lake-P (Mobile) and newer|
+|2|no |yes|Alder Lake-S (Desktop)|Gen9 and newer|
+|3|yes|yes|Alder Lake-P (Mobile) and newer|Alder Lake-P (Mobile) and newer|
+
 ```bash
 # for newer cards (Gen 10 and newer):
 aurman -Syu intel-media-driver
