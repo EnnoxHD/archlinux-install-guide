@@ -741,6 +741,17 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/or
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ binding '<Super>r'
 ```
 
+#### Fractional Scaling (HiDPI)
+Logout and switch to another console
+```bash
+aurman -S mutter-x11-scaling
+# manual intervention required, reinstall mutter dependants
+aurman -S gdm gnome-shell gnome-shell-extensions
+gsettings set org.gnome.mutter experimental-features "['x11-randr-fractional-scaling']"
+```
+Login and set the scaling in the settings.
+An error might occur, just restart.
+
 #### Screen layout
 for NVIDIA (optional):
 ```bash
