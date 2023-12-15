@@ -624,6 +624,10 @@ aurman -Syu xf86-video-fbdev xf86-video-vesa
 aurman -Syu mesa lib32-mesa vulkan-icd-loader lib32-vulkan-icd-loader
 aurman -Syu xorg-server xorg-apps
 ```
+Set the keyboard layout:
+```bash
+sudo localectl --no-convert set-x11-keymap de
+```
 
 ### Graphics driver (and vulkan tools)
 for Intel:
@@ -724,7 +728,6 @@ aurman -Syu dconf-editor
 ```bash
 gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
 gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
-gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'de')]" # or configure via Xorg
 ```
 
 #### Gnome custom keybindings
