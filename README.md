@@ -1012,6 +1012,9 @@ aurman -Syu gnome-tweaks
 
 ## Additional software
 
+### Hardware platform
+- [TUXEDO](TUXEDO.md)
+
 ### Gnome extensions
 ```bash
 aurman -Syu gnome-browser-connector
