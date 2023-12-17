@@ -433,19 +433,6 @@ reboot
 ```
 Logon with the new user account
 
-### 32-bit packages
-```bash
-sudo nano /etc/pacman.conf
-```
-Uncomment:
-```text
-[multilib]
-Include = /etc/pacman.d/mirrorlist
-```
-```bash
-sudo pacman -Syyu
-```
-
 ### Parallel pacman downloads
 ```bash
 sudo nano /etc/pacman.conf
@@ -621,7 +608,7 @@ aurman -Syu xf86-video-fbdev xf86-video-vesa
 
 ### Xorg server (with mesa and vulkan)
 ```bash
-aurman -Syu mesa lib32-mesa vulkan-icd-loader lib32-vulkan-icd-loader
+aurman -Syu mesa vulkan-icd-loader
 aurman -Syu xorg-server xorg-apps
 ```
 Set the keyboard layout:
@@ -653,17 +640,17 @@ sudo mkinitcpio -p linux
 aurman -Syu xf86-video-intel
 
 # for vulkan support on Intel:
-aurman -Syu vulkan-intel lib32-vulkan-intel
+aurman -Syu vulkan-intel
 ```
 for NVIDIA:
 
 see [General Codenames](https://nouveau.freedesktop.org/CodeNames.html#generalcodenames)
 ```bash
 # for newer cards (Maxwell and newer):
-aurman -Syu nvidia nvidia-utils lib32-nvidia-utils opencl-nvidia lib32-opencl-nvidia
+aurman -Syu nvidia nvidia-utils opencl-nvidia
 
 # for older cards (Kepler, requires DKMS):
-aurman -Syu nvidia-470xx-dkms nvidia-470xx-utils lib32-nvidia-470xx-utils opencl-nvidia-470xx lib32-opencl-nvidia-470xx
+aurman -Syu nvidia-470xx-dkms nvidia-470xx-utils opencl-nvidia-470xx
 ```
 
 Vulkan tools:
