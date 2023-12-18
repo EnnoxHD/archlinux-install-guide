@@ -679,9 +679,10 @@ aurman -Syu vdpauinfo
 vdpauinfo
 ```
 
-### Audio driver
+### Audio server and multimedia session manager
 ```bash
-aurman -Syu jack2
+aurman -Syu pipewire libpipewire pipewire-session-manager wireplumber libwireplumber
+aurman -Syu pipewire-audio pipewire-jack pipewire-pulse pipewire-alsa
 ```
 
 ### Fonts
