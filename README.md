@@ -315,31 +315,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
 ### Configure RAID arrays
-```bash
-nano /etc/mdadm.conf
-```
-Change content:
-```text
-#DEVICE partitions
-```
-```bash
-mdadm -E --scan >>/etc/mdadm.conf
-```
-
-### Configure kernel for early RAID support
-```bash
-nano /etc/mkinitcpio.conf
-```
-Change content:
-```text
-BINARIES=(mdmon)
-# add udev and mdadm_udev in HOOKS
-HOOKS=(base udev systemd autodetect modconf block mdadm_udev keyboard sd-vconsole sd-encrypt filesystems fsck)
-```
-```bash
-mkinitcpio -p linux
-reboot
-```
+See [RAID](RAID.md).
 
 ### Get the network time
 ```bash
@@ -799,10 +775,10 @@ aurman -Syu sane simple-scan
 pacman -Syu gptfdisk ntfs-3g veracrypt
 ```
 
-### Mount additional (encrypted/RAID) partitions
+### Mount additional (encrypted) partitions
 Get `PARTUUID`s for normal drive partions via `sudo blkid`.
-Or get `UUID`s for RAID volumes via `sudo mdadm -E --scan`.
 Check out `lsblk` for a more general overview of block devices.
+For RAID support, see [RAID: Mount additional (encrypted) RAID volumes](RAID.md#mount-additional-encrypted-raid-volumes).
 
 #### Mapping encrypted partitions
 Prepare files for unlocking drives like `sudo nano /etc/<diskname>.password`.
@@ -812,8 +788,6 @@ sudo nano /etc/crypttab
 ```text
 # <diskname>
 crypt<diskname>    /dev/disk/by-partuuid/<partuuid>    /etc/<diskname>.password    tcrypt,tcrypt-veracrypt,noauto
-# or
-crypt<diskname>    /dev/disk/by-id/md-uuid<uuid>-part<number>    /etc/<diskname>.password    tcrypt,tcrypt-veracrypt,noauto
 ```
 Continue with the mounting in `/etc/fstab` for the `/etc/crypttab`-mapped partitions.
 
@@ -828,7 +802,6 @@ sudo nano /etc/fstab
 # <diskname>
 /dev/mapper/crypt<diskname>    /mnt/<diskname>    ntfs-3g    noauto,x-systemd.automount,uid=1000,gid=1000,dmask=0022,fmask=0033,windows_names    0 0
 ```
-
 
 ### Links to drives
 ```bash
