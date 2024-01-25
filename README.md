@@ -994,3 +994,8 @@ To resolve shortcut conflicts under Gnome configure the following:
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down "['']"
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up "['']"
 ```
+
+### JavaFX SceneBuilder
+```bash
+aurman -Syu javafx-scenebuilder
+```
