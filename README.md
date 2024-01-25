@@ -963,6 +963,12 @@ aurman -Syu libfido2
 ```
 WebAuthn test site: https://demo.yubico.com/webauthn-technical/registration
 
+### Java
+```bash
+aurman -Syu jdk-openjdk openjdk-doc openjdk-src
+archlinux-java status
+```
+
 ### Eclipse IDE
 Install the IDE:
 ```bash
