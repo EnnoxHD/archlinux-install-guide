@@ -891,6 +891,12 @@ aurman -Syu gnome-tweaks
 ### Hardware platform
 - [TUXEDO](TUXEDO.md)
 
+### Additional Gnome settings
+```bash
+gsettings set org.gnome.shell favorite-apps "['org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'firefox.desktop', 'org.keepassxc.KeePassXC.desktop']"
+```
+
+
 ### Gnome extensions
 ```bash
 aurman -Syu gnome-browser-connector
