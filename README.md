@@ -729,6 +729,22 @@ sudo cp ~/.config/monitors.xml /var/lib/gdm/.config/
 sudo chown gdm:gdm /var/lib/gdm/.config/monitors.xml
 ```
 
+### Pinentry program for GPG-agent
+Configure which Pinentry program is used by GPG:
+ - default:  `/usr/bin/pinentry-curses`
+ - fallback: `/usr/bin/pinentry-tty`
+ - Gnome prompt:
+   - `echo "pinentry-program /usr/bin/pinentry-gnome3" > ~/.gnupg/gpg-agent.conf`
+ - Qt window:
+   - dependencies: `aurman -Syu qt5-x11extras kwayland5`
+   - `echo "pinentry-program /usr/bin/pinentry-qt" > ~/.gnupg/gpg-agent.conf`
+ - other available
+
+Reload the agent after configuration:
+```bash
+gpg-connect-agent reloadagent /bye
+```
+
 ### Internet browser
 ```bash
 aurman -Syu firefox firefox-i18n-de
