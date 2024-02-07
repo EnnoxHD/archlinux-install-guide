@@ -533,7 +533,7 @@ Change the lines according to the following:
 -LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
 +LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now,-fuse-ld=mold"
  ...
--#RUSTFLAGS="-C opt-level=2"
+-#RUSTFLAGS=""
 +RUSTFLAGS="-C opt-level=3 -C target-cpu=native -C link-arg=-fuse-ld=mold"
  ...
 -#MAKEFLAGS="-j2"
@@ -541,9 +541,6 @@ Change the lines according to the following:
  ...
 -BUILDENV=(!distcc color !ccache check !sign)
 +BUILDENV=(!distcc color ccache check !sign)
- ...
--COMPRESSZST=(zstd -c -z -q -)
-+COMPRESSZST=(zstd -c -z -q --threads=0 -)
 ```
 ```bash
 nano ~/.bashrc
