@@ -729,17 +729,51 @@ aurman -Syu ufw
 sudo systemctl start ufw.service
 sudo systemctl enable ufw.service
 sudo ufw default deny
-sudo ufw limit ssh
 sudo ufw enable
 sudo ufw status
+
+# GUI frontend
+aurman -Syu gufw
+```
+
+### Firewall: SSH settings
+```bash
+sudo ufw limit ssh
+sudo ufw reload
+```
+
+### Firewall: VPN settings
+
+#### Filter rules
+To allow IP forwarding in every case:
+```bash
 sudo nano /etc/default/ufw
 ```
 Change content: from `"DROP"` to
 ```text
 DEFAULT_FORWARD_POLICY "ACCEPT"
 ```
+
+To allow IP forwarding only for a specific `<adapter>`, e.g. `wg0`:
 ```bash
-aurman -Syu gufw
+sudo nano /etc/ufw/before.rules
+```
+Add these lines after `# End required lines`:
+```text
+# allow all on <adapter>
+-A ufw-before-forward -i <adapter> -j ACCEPT
+-A ufw-before-forward -o <adapter> -j ACCEPT
+```
+
+#### Setup IP forwarding
+```bash
+sudo nano /etc/ufw/sysctl.conf
+```
+Uncomment the following lines:
+```text
+net/ipv4/ip_forward=1
+net/ipv6/conf/default/forwarding=1
+net/ipv6/conf/all/forwarding=1
 ```
 
 ### Bluetooth
