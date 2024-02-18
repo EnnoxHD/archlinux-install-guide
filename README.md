@@ -1,30 +1,6 @@
 # ArchLinux installation
 This guide is based on various information from the official [ArchLinux Wiki](https://wiki.archlinux.org/).
 
-A small hack for reading the wiki on bigger screens:\
-Enlarge the content area and arrange several elements on the sites with the following JS bookmark:
-```javascript
-javascript:function changeMaxWidth(name,value){var elements=document.getElementsByClassName(name);var i;for(i=0;i<elements.length;i++){elements[i].style.maxWidth=value;}};function run(){changeMaxWidth("vector-header-container","100%");changeMaxWidth("mw-page-container","100%");changeMaxWidth("mw-content-container","100%");document.getElementById("content").style.display="block";document.getElementsByClassName("vector-typeahead-search-container")[0].style.margin="auto";};run();
-```
-The formatted JS part:
-```javascript
-function changeMaxWidth(name, value) {
-	var elements = document.getElementsByClassName(name);
-	var i;
-	for(i = 0; i < elements.length; i++) {
-		elements[i].style.maxWidth = value;
-	}
-};
-function run() {
-	changeMaxWidth("vector-header-container", "100%");
-	changeMaxWidth("mw-page-container", "100%");
-	changeMaxWidth("mw-content-container", "100%");
-	document.getElementById("content").style.display = "block";
-	document.getElementsByClassName("vector-typeahead-search-container")[0].style.margin = "auto";
-};
-run();
-```
-
 ## Preparation
 
 ### General
