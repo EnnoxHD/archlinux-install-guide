@@ -586,6 +586,9 @@ aurman -Syu xf86-video-intel
 
 # for vulkan support on Intel:
 aurman -Syu vulkan-intel
+
+# for intel_gpu_top:
+aurman -Syu intel-gpu-tools
 ```
 for NVIDIA:
 
