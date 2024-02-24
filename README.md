@@ -635,7 +635,7 @@ aurman -Syu pipewire-audio pipewire-jack pipewire-pulse pipewire-alsa
 
 ### Fonts
 ```bash
-aurman -Syu noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra
+aurman -Syu noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-jetbrains-mono
 ```
 
 ### Desktop environment
