@@ -1,5 +1,10 @@
 # RAID
 
+## Install software
+```bash
+aurman -Syu mdadm
+```
+
 ## Configure RAID arrays
 ```bash
 nano /etc/mdadm.conf
