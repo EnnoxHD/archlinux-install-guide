@@ -163,9 +163,17 @@ nano /etc/mkinitcpio.conf
 ```
 Change content:
 ```text
-HOOKS=(base systemd autodetect modconf kms block keyboard sd-vconsole sd-encrypt filesystems fsck)
+HOOKS=(base systemd autodetect microcode modconf kms keyboard sd-vconsole sd-encrypt block filesystems fsck)
 COMPRESSION="zstd"
 ```
+```bash
+nano /etc/mkinitcpio.d/linux.preset
+```
+Comment `ALL_microcode` out (deprecated):
+```text
+#ALL_microcode=(/boot/*-ucode.img)
+```
+Build:
 ```bash
 mkinitcpio -p linux
 ```
