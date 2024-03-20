@@ -511,14 +511,16 @@ Change the lines according to the following:
 ```diff
 -CFLAGS="-march=x86-64 -mtune=generic -O2 -pipe -fno-plt -fexceptions \
 +CFLAGS="-march=native -O2 -pipe -fno-plt -fexceptions \
-        -Wp,-D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security \
-        -fstack-clash-protection -fcf-protection"
+         -Wp,-D_FORTIFY_SOURCE=3 -Wformat -Werror=format-security \
+         -fstack-clash-protection -fcf-protection \
+         -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer"
  ...
--LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
-+LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now,-fuse-ld=mold"
+-LDFLAGS="-Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now \
++LDFLAGS="-Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now,-fuse-ld=mold \
+          -Wl,-z,pack-relative-relocs"
  ...
--#RUSTFLAGS=""
-+RUSTFLAGS="-C opt-level=3 -C target-cpu=native -C link-arg=-fuse-ld=mold"
+-RUSTFLAGS="-Cforce-frame-pointers=yes"
++RUSTFLAGS="-Copt-level=3 -Ctarget-cpu=native -Clink-arg=-fuse-ld=mold -Cforce-frame-pointers=yes"
  ...
 -#MAKEFLAGS="-j2"
 +MAKEFLAGS="-j$(nproc)"
