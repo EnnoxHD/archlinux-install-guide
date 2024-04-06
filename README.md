@@ -722,7 +722,7 @@ Configure which Pinentry program is used by GPG:
  - Gnome prompt:
    - `echo "pinentry-program /usr/bin/pinentry-gnome3" > ~/.gnupg/gpg-agent.conf`
  - Qt window:
-   - dependencies: `aurman -Syu qt5-x11extras kwayland5`
+   - dependencies: `aurman -Syu qt5-x11extras kwayland5 qt6-base`
    - `echo "pinentry-program /usr/bin/pinentry-qt" > ~/.gnupg/gpg-agent.conf`
  - other available
 
