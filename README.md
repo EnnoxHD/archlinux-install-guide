@@ -1033,7 +1033,7 @@ archlinux-java status
 ### Eclipse IDE
 Install the IDE:
 ```bash
-aurman -Syu eclipse-java
+aurman -Syu eclipse-java-bin
 ```
 Add an alias to the `.bashrc`:
 ```bash
@@ -1048,7 +1048,7 @@ Content:
 [Trigger]
 Operation=Upgrade
 Type=Package
-Target=eclipse-java
+Target=eclipse-java-bin
 [Action]
 Description=Updating eclipse.desktop file after upgrade...
 When=PostTransaction
