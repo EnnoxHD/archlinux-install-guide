@@ -414,7 +414,7 @@ When=PostTransaction
 Depends=curl
 Depends=sed
 Depends=grep
-Exec=/bin/sh -c "curl -o /etc/pacman.d/mirrorlist https://archlinux.org/mirrorlist/all/https/; sed -i '/\(mirror\.f4st\.host\|mirror\.netcologne\.de\)/s/^#//g' /etc/pacman.d/mirrorlist; grep ^[^#].* /etc/pacman.d/mirrorlist; rm -f /etc/pacman.d/mirrorlist.pacnew"
+Exec=/bin/sh -c "curl -o /etc/pacman.d/mirrorlist https://archlinux.org/mirrorlist/all/https/; sed -i '/\(mirrors\.n-ix\.net\|mirror\.netcologne\.de\)/s/^#//g' /etc/pacman.d/mirrorlist; grep ^[^#].* /etc/pacman.d/mirrorlist; rm -f /etc/pacman.d/mirrorlist.pacnew"
 ```
 Reinstall:
 ```bash
