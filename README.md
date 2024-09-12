@@ -719,11 +719,12 @@ sudo chown gdm:gdm /var/lib/gdm/.config/monitors.xml
 Configure which Pinentry program is used by GPG:
  - default:  `/usr/bin/pinentry-curses`
  - fallback: `/usr/bin/pinentry-tty`
+ - GTK window:
+   - dependencies: `aurman -Syu gtk3`
+   - `echo "pinentry-program /usr/bin/pinentry-gtk" > ~/.gnupg/gpg-agent.conf`
  - Gnome prompt:
+   - dependencies: `aurman -Syu gcr`
    - `echo "pinentry-program /usr/bin/pinentry-gnome3" > ~/.gnupg/gpg-agent.conf`
- - Qt window:
-   - dependencies: `aurman -Syu qt5-x11extras kwayland5 qt6-base`
-   - `echo "pinentry-program /usr/bin/pinentry-qt" > ~/.gnupg/gpg-agent.conf`
  - other available
 
 Reload the agent after configuration:
