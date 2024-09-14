@@ -519,14 +519,19 @@ Change the lines according to the following:
 +LDFLAGS="-Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now,-fuse-ld=mold \
           -Wl,-z,pack-relative-relocs"
  ...
--RUSTFLAGS="-Cforce-frame-pointers=yes"
-+RUSTFLAGS="-Copt-level=3 -Ctarget-cpu=native -Clink-arg=-fuse-ld=mold -Cforce-frame-pointers=yes"
- ...
 -#MAKEFLAGS="-j2"
 +MAKEFLAGS="-j$(nproc)"
  ...
 -BUILDENV=(!distcc color !ccache check !sign)
 +BUILDENV=(!distcc color ccache check !sign)
+```
+```bash
+sudo nano /etc/makepkg.conf.d/rust.conf
+```
+Change the lines according to the following:
+```diff
+-RUSTFLAGS="-Cforce-frame-pointers=yes"
++RUSTFLAGS="-Copt-level=3 -Ctarget-cpu=native -Clink-arg=-fuse-ld=mold -Cforce-frame-pointers=yes"
 ```
 ```bash
 nano ~/.bashrc
