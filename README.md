@@ -1072,3 +1072,26 @@ gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up "['']"
 ```bash
 aurman -Syu javafx-scenebuilder
 ```
+
+### MediathekView
+```bash
+aurman -Syu mediathekview
+```
+
+Add a pacman hook for updating the `mediathekview` file in case of Hi-DPI Monitors:
+```bash
+sudo nano /etc/pacman.d/hooks/mediathekviewupgrade.hook
+```
+Content:
+```text
+[Trigger]
+Operation=Upgrade
+Type=Package
+Target=mediathekview
+[Action]
+Description=Updating mediathekview file after upgrade...
+When=PostTransaction
+Depends=sed
+Exec=/bin/sh -c "sed -i 's/\(.*-jar .*\)/  -Dsun.java2d.uiScale=2\n\1/' /usr/bin/mediathekview"
+```
+
