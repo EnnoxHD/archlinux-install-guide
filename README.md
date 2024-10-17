@@ -88,7 +88,7 @@ pacstrap /mnt base linux linux-firmware mkinitcpio dkms linux-headers nano
 #### File system table
 Generate the filesystem table:
 ```bash
-genfstab /mnt >> /mnt/etc/fstab
+genfstab -U /mnt >> /mnt/etc/fstab
 cat /mnt/etc/fstab
 ```
 
