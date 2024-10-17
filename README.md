@@ -1094,3 +1094,10 @@ Depends=sed
 Exec=/bin/sh -c "sed -i 's/\(.*-jar .*\)/  -Dsun.java2d.uiScale=2\n\1/' /usr/bin/mediathekview"
 ```
 
+## Advanced topics
+
+### VM
+- [KVM](KVM.md)
+- [IOMMU](IOMMU.md)
+- [QEMU](QEMU.md)
+
