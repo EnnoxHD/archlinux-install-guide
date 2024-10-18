@@ -2,6 +2,11 @@
 
 ## Hardware platform
 
+### NVMe
+```bash
+aurman -Syu nvme-cli
+```
+
 ### Tuxedo
 ```bash
 aurman -Syu tuxedo-drivers-dkms
