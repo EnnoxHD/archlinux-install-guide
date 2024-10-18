@@ -100,6 +100,25 @@ aurman -Syu libfido2
 ```
 WebAuthn test site: https://demo.yubico.com/webauthn-technical/registration
 
+## VSCodium
+```bash
+aurman -Syu vscodium-bin vscodium-bin-marketplace vscodium-bin-features
+# reinstall to be sure that the 'product.json' is patched by the hooks
+aurman -Syu vscodium-bin
+```
+
+### Alias
+```bash
+nano ~/.bashrc
+```
+```text
+alias code='vscodium'
+```
+
+### Extensions
+- [GitHub Markdown Preview (Matt Bierner)](https://marketplace.visualstudio.com/items?itemName=bierner.github-markdown-preview)
+- [Python (Microsoft)](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
+
 ## Java
 ```bash
 aurman -Syu jdk-openjdk openjdk-doc openjdk-src
