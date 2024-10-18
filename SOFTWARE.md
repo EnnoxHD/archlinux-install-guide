@@ -1,9 +1,63 @@
 # Additional software
 
 ## Hardware platform
-- [TUXEDO](TUXEDO.md)
 
-## Additional Gnome settings
+### Tuxedo
+```bash
+aurman -Syu tuxedo-drivers-dkms
+aurman -Syu tuxedo-control-center-bin
+aurman -Syu tuxedo-touchpad-switch
+sudo systemctl enable tccd.service
+sudo systemctl enable tccd-sleep.service
+```
+
+### MTP
+Install MTP and add the current user to the group `uucp`:
+```bash
+aurman -Syu libmtp
+sudo gpasswd -a $USER uucp
+```
+
+### ADB
+Install android platform tools and add the current user to the group `adbusers`:
+```bash
+aurman -Syu android-tools
+sudo gpasswd -a $USER adbusers
+```
+
+## Security related
+
+### Command for shredding files
+Add a function to the `.bashrc`:
+```bash
+function shred {
+  /usr/bin/shred "$1" && rm "$1"
+}
+```
+
+### YubiKey
+Management:
+```bash
+aurman -Syu yubikey-manager yubikey-manager-qt
+```
+Make sure `pcscd.service` is enabled.
+Status info for a YubiKey version 5 via `ykman info`.
+
+Authenticator App:
+```bash
+aurman -Syu yubico-authenticator-bin
+```
+
+### FIDO2 / U2F and WebAuthn
+```bash
+aurman -Syu libfido2
+```
+WebAuthn test site: https://demo.yubico.com/webauthn-technical/registration
+
+
+## Desktop Environment
+
+### Additional Gnome settings
 ```bash
 # favorite apps
 gsettings set org.gnome.shell favorite-apps "['org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'firefox.desktop', 'org.keepassxc.KeePassXC.desktop']"
@@ -23,7 +77,7 @@ gsettings set "org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/prof
 gsettings set "org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$(profile=$(gsettings get org.gnome.Terminal.ProfilesList default); echo ${profile:1:-1})/" use-theme-colors false
 ```
 
-## Gnome extensions
+### Gnome extensions
 ```bash
 aurman -Syu gnome-browser-connector
 ```
@@ -39,7 +93,9 @@ Used extensions:
 - Tray Icons: Reloaded
 - User Themes
 
-## VLC
+## Multimedia
+
+### VLC
 Install vlc media player via
 ```bash
 aurman -Syu vlc
@@ -54,60 +110,43 @@ Additionally check the following if vlc crashes on playback:
 Go to preferences -> Show settings: all -> Video - Output module -> Video output module: VDPAU-Output,
 then save
 
-## Tenacity
+### Tenacity
 ```bash
 aurman -Syu tenacity
 ```
 
-## MTP
-Install MTP and add the user `<username>` to the group `uucp`:
+### MediathekView
 ```bash
-aurman -Syu libmtp
-sudo gpasswd -a <username> uucp
+aurman -Syu mediathekview
 ```
 
-## ADB
-Install android platform tools and add the user `<username>` to the group `adbusers`:
+Add a pacman hook for updating the `mediathekview` file in case of Hi-DPI Monitors:
 ```bash
-aurman -Syu android-tools
-sudo gpasswd -a <username> adbusers
+sudo nano /etc/pacman.d/hooks/mediathekviewupgrade.hook
+```
+Content:
+```text
+[Trigger]
+Operation=Upgrade
+Type=Package
+Target=mediathekview
+[Action]
+Description=Updating mediathekview file after upgrade...
+When=PostTransaction
+Depends=sed
+Exec=/bin/sh -c "sed -i 's/\(.*-jar .*\)/  -Dsun.java2d.uiScale=2\n\1/' /usr/bin/mediathekview"
 ```
 
-## Command for shredding files
-Add a function to the `.bashrc`:
-```bash
-function shred {
-  /usr/bin/shred "$1" && rm "$1"
-}
-```
+## Development and Editors
 
-## YubiKey
-Management:
-```bash
-aurman -Syu yubikey-manager yubikey-manager-qt
-```
-Make sure `pcscd.service` is enabled.
-Status info for a YubiKey version 5 via `ykman info`.
-
-Authenticator App:
-```bash
-aurman -Syu yubico-authenticator-bin
-```
-
-## FIDO2 / U2F and WebAuthn
-```bash
-aurman -Syu libfido2
-```
-WebAuthn test site: https://demo.yubico.com/webauthn-technical/registration
-
-## VSCodium
+### VSCodium
 ```bash
 aurman -Syu vscodium-bin vscodium-bin-marketplace vscodium-bin-features
 # reinstall to be sure that the 'product.json' is patched by the hooks
 aurman -Syu vscodium-bin
 ```
 
-### Alias
+#### Alias
 ```bash
 nano ~/.bashrc
 ```
@@ -115,17 +154,24 @@ nano ~/.bashrc
 alias code='vscodium'
 ```
 
-### Extensions
+#### Extensions
 - [GitHub Markdown Preview (Matt Bierner)](https://marketplace.visualstudio.com/items?itemName=bierner.github-markdown-preview)
 - [Python (Microsoft)](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
 
-## Java
+### Java
 ```bash
 aurman -Syu jdk-openjdk openjdk-doc openjdk-src
+# optional: latest LTS release
+aurman -Syu jdk21-openjdk openjdk21-doc openjdk21-src
+
+# status
 archlinux-java status
+
+# optional: set active default Java version
+sudo archlinux-java set java-21-openjdk
 ```
 
-## Eclipse IDE
+### Eclipse IDE
 Install the IDE:
 ```bash
 aurman -Syu eclipse-java-bin
@@ -157,30 +203,8 @@ gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down "['']"
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up "['']"
 ```
 
-## JavaFX SceneBuilder
+### JavaFX SceneBuilder
 ```bash
 aurman -Syu javafx-scenebuilder
-```
-
-## MediathekView
-```bash
-aurman -Syu mediathekview
-```
-
-Add a pacman hook for updating the `mediathekview` file in case of Hi-DPI Monitors:
-```bash
-sudo nano /etc/pacman.d/hooks/mediathekviewupgrade.hook
-```
-Content:
-```text
-[Trigger]
-Operation=Upgrade
-Type=Package
-Target=mediathekview
-[Action]
-Description=Updating mediathekview file after upgrade...
-When=PostTransaction
-Depends=sed
-Exec=/bin/sh -c "sed -i 's/\(.*-jar .*\)/  -Dsun.java2d.uiScale=2\n\1/' /usr/bin/mediathekview"
 ```
 
