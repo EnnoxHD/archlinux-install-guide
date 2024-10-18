@@ -1,6 +1,6 @@
 # IOMMU
 IOMMU allows for PCIe device isolation on a low level and therefore it's possible to use these devices in VM applications.
-For example some one may isolate a second GPU for dedicated use inside a VM.
+For example one may isolate a second GPU for dedicated use inside a VM.
 
 ## Enable IOMMU
 Use the kernel parameter `intel_iommu=on` on Intel CPUs to enable IOMMU and the remapping of I/O.
