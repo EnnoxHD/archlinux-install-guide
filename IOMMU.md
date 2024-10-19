@@ -80,6 +80,7 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 ### Bind vfio-pci via pci address
 In the case where multiple identical devices are present (e.g. NVMe drives) a script `/usr/local/bin/vfio-pci-override.sh` is needed to identify the device(s) by pci address.
 There are prepared scripts in this repository (see `scripts/vfio-pci-override-*.sh`) that may be used.
+Example pci addresses: `0000:03:00.0` and `0000:03:00.1`.
 
 ```bash
 sudo mv scripts/vfio-pci-override-*.sh /usr/local/bin/vfio-pci-override.sh
@@ -119,14 +120,18 @@ HOOKS=(... modconf ...)
 sudo mkinitcpio -p linux
 ```
 
-### Verify via device id
-Reboot and check with:
+### Verify
+Reboot and check:
 ```bash
 dmesg | grep -i vfio
 
-# for each device id
+# via device id
 lspci -nnk -d 10de:1b06
 lspci -nnk -d 10de:10ef
+
+# via pci address
+lspci -nnk -s 0000:03:00.0
+lspci -nnk -s 0000:03:00.1
 ```
 
 ## GPU passthrough
