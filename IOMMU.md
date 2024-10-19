@@ -64,7 +64,8 @@ If other devices appear in the targeted group together with the desired device t
 First enable IOMMU, then isolate the device and bind it via vfio.
 
 ### Bind vfio-pci via device id
-Example device ids: `10de:1b06` and `10de:10ef`
+Binding via device id is only suitable if no other identical device is present.
+Example device ids: `10de:1b06` and `10de:10ef`.
 ```bash
 sudo nano /etc/default/grub
 ```
@@ -74,6 +75,29 @@ GRUB_CMD_LINE_DEFAULT="... vfio-pci.ids=10de:1b06,10de:10ef"
 ```
 ```bash
 sudo grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+### Bind vfio-pci via pci address
+In the case where multiple identical devices are present (e.g. NVMe drives) a script `/usr/local/bin/vfio-pci-override.sh` is needed to identify the device(s) by pci address.
+See: https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#Using_identical_guest_and_host_GPUs
+
+```bash
+sudo nano /etc/mkinitcpio.conf
+```
+```text
+FILES=(... /usr/local/bin/vfio-pci-override.sh)
+
+# ensure 'modconf' hook is present
+HOOKS=(... modconf ...)
+```
+```bash
+sudo nano /etc/modprobe.d/vfio.conf
+```
+```text
+install vfio-pci /usr/local/bin/vfio-pci-override.sh
+```
+```bash
+sudo mkinitcpio -p linux
 ```
 
 ### Load vfio-pci early
@@ -91,7 +115,7 @@ HOOKS=(... modconf ...)
 sudo mkinitcpio -p linux
 ```
 
-### Verify
+### Verify via device id
 Reboot and check with:
 ```bash
 dmesg | grep -i vfio
