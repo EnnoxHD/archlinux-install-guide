@@ -52,9 +52,9 @@ The targeted device may provide multiple functions such as video and audio capab
 Output example for a specific IOMMU group and the targeted GPU device on PCI location `01:00` with it's two functions and a CPU related `PCI bridge` device:
 ```text
 IOMMU Group 1:
-    00:01.0 PCI bridge: Intel Corporation Xeon E3-1200 v2/3rd Gen Core processor PCI Express Root Port (rev 09)
-	01:00.0 VGA compatible controller: NVIDIA Corporation GM107 [GeForce GTX 750] (rev a2)
-	01:00.1 Audio device: NVIDIA Corporation Device 0fbc (rev a1)
+  00:01.0 PCI bridge: Intel Corporation Xeon E3-1200 v2/3rd Gen Core processor PCI Express Root Port (rev 09)
+  01:00.0 VGA compatible controller: NVIDIA Corporation GM107 [GeForce GTX 750] (rev a2)
+  01:00.1 Audio device: NVIDIA Corporation Device 0fbc (rev a1)
 ```
 
 If other devices appear in the targeted group together with the desired device to isolate, one may otherwise use the
@@ -79,9 +79,13 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 ### Bind vfio-pci via pci address
 In the case where multiple identical devices are present (e.g. NVMe drives) a script `/usr/local/bin/vfio-pci-override.sh` is needed to identify the device(s) by pci address.
-See: https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#Using_identical_guest_and_host_GPUs
+There are prepared scripts in this repository (see `scripts/vfio-pci-override-*.sh`) that may be used.
 
 ```bash
+sudo mv scripts/vfio-pci-override-*.sh /usr/local/bin/vfio-pci-override.sh
+# modify and configure the script
+sudo nano /usr/local/bin/vfio-pci-override.sh
+
 sudo nano /etc/mkinitcpio.conf
 ```
 ```text
