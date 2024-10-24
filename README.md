@@ -655,8 +655,7 @@ aurman -Syu noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-jetb
 
 ### Desktop environment
 ```bash
-aurman -Syu gnome # curate applications
-# aurman -Syu gnome-extra # curate applications
+aurman -Syu gnome gnome-extra
 sudo systemctl enable gdm.service
 aurman -Syu networkmanager
 sudo systemctl enable NetworkManager.service
