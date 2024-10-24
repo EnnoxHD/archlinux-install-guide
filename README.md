@@ -658,7 +658,8 @@ aurman -Syu noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-jetb
 aurman -Syu gnome gnome-extra
 sudo systemctl enable gdm.service
 aurman -Syu networkmanager
-sudo systemctl enable NetworkManager.service
+sudo disable --now wpa_supplicant.service
+sudo mask wpa_supplicant.service
 sudo nano /etc/NetworkManager/conf.d/wifi_backend.conf
 ```
 Change content:
@@ -667,6 +668,7 @@ Change content:
 wifi.backend=iwd
 ```
 ```bash
+sudo systemctl enable NetworkManager.service
 reboot
 ```
 
