@@ -658,8 +658,8 @@ aurman -Syu noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-jetb
 aurman -Syu gnome gnome-extra
 sudo systemctl enable gdm.service
 aurman -Syu networkmanager
-sudo disable --now wpa_supplicant.service
-sudo mask wpa_supplicant.service
+sudo systemctl disable --now wpa_supplicant.service
+sudo systemctl mask wpa_supplicant.service
 sudo nano /etc/NetworkManager/conf.d/wifi_backend.conf
 ```
 Change content:
