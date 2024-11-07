@@ -98,6 +98,8 @@ Used extensions:
 - Tray Icons: Reloaded
 - User Themes
 
+## Office
+
 ### Thunderbird
 ```bash
 aurman -Syu thunderbird thunderbird-i18n-de
