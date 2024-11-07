@@ -98,6 +98,16 @@ Used extensions:
 - Tray Icons: Reloaded
 - User Themes
 
+### Thunderbird
+```bash
+aurman -Syu thunderbird thunderbird-i18n-de
+# spell checking
+aurman -Syu hunspell hunspell-en_US hunspell-de
+```
+Extensions for Exchange compatibility:
+- [Provider für Exchange ActiveSync](https://addons.thunderbird.net/de/thunderbird/addon/eas-4-tbsync/)
+- [TbSync](https://addons.thunderbird.net/de/thunderbird/addon/tbsync/)
+
 ## Multimedia
 
 ### VLC
