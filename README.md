@@ -817,14 +817,17 @@ Get `PARTUUID`s for normal drive partions via `sudo blkid`.
 Check out `lsblk` for a more general overview of block devices.
 For RAID support, see [RAID: Mount additional (encrypted) RAID volumes](RAID.md#mount-additional-encrypted-raid-volumes).
 
-#### Mapping encrypted partitions
-Prepare files with the password as content for unlocking partitions like:
+#### Prepare password files for opening encrypted partitions
+Prepare files with the encryption password as their content for opening partitions:
 ```bash
 sudo nano /etc/<partname>.password
 
+# change file ownership and permissions
 sudo chown root:root /etc/<partname>.password
 sudo chmod 600 /etc/<partname>.password
 ```
+
+#### Mapping encrypted partitions
 Edit `/etc/crypttab` for opening partitions:
 ```bash
 sudo nano /etc/crypttab
@@ -835,7 +838,7 @@ crypt<partname>    /dev/disk/by-partuuid/<partuuid>    /etc/<partname>.password 
 ```
 Continue with the mounting in `/etc/fstab` for the `/etc/crypttab`-mapped partitions.
 
-#### Normal mounting
+#### Mounting NTFS partitions
 Get the user id `uid` and the group id `gid` of the current user with the `id` command.
 In general on a single-user machine this should be `uid=1000` and `gid=1000`.
 ```bash
@@ -845,6 +848,36 @@ sudo nano /etc/fstab
 ```text
 # <partname>
 /dev/mapper/crypt<partname>    /mnt/<partname>    ntfs-3g    noauto,x-systemd.automount,uid=1000,gid=1000,dmask=0022,fmask=0033,windows_names    0 0
+```
+
+### Mount remote shares
+
+#### Prepare credential files for mounting remote shares
+Prepare files with the credentials for the remote shares:
+```bash
+sudo nano /etc/<sharename>.credentials
+```
+Add the username and password for the remote share:
+```text
+username=<username>
+password=<password>
+```
+```bash
+# change file ownership and permissions
+sudo chown root:root /etc/<sharename>.credentials
+sudo chmod 600 /etc/<sharename>.credentials
+```
+
+#### Mounting remote shares like CIFS/SMB
+Get the user id `uid` and the group id `gid` of the current user with the `id` command.
+In general on a single-user machine this should be `uid=1000` and `gid=1000`.
+```bash
+id
+sudo nano /etc/fstab
+```
+```text
+# <sharename>
+//<server>/<sharename>    /mnt/<sharename>    cifs    noauto,x-systemd.automount,x-systemd.mount-timeout=5,_netdev,nofail,credentials=/etc/<sharename>.credentials,uid=1000,forceuid,gid=1000,forcegid    0 0
 ```
 
 ### Links to drives
