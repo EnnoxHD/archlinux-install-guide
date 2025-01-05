@@ -818,13 +818,20 @@ Check out `lsblk` for a more general overview of block devices.
 For RAID support, see [RAID: Mount additional (encrypted) RAID volumes](RAID.md#mount-additional-encrypted-raid-volumes).
 
 #### Mapping encrypted partitions
-Prepare files for unlocking drives like `sudo nano /etc/<diskname>.password`.
+Prepare files with the password as content for unlocking partitions like:
+```bash
+sudo nano /etc/<partname>.password
+
+sudo chown root:root /etc/<partname>.password
+sudo chmod 600 /etc/<partname>.password
+```
+Edit `/etc/crypttab` for opening partitions:
 ```bash
 sudo nano /etc/crypttab
 ```
 ```text
-# <diskname>
-crypt<diskname>    /dev/disk/by-partuuid/<partuuid>    /etc/<diskname>.password    tcrypt,tcrypt-veracrypt,noauto
+# <partname>
+crypt<partname>    /dev/disk/by-partuuid/<partuuid>    /etc/<partname>.password    tcrypt,tcrypt-veracrypt,noauto
 ```
 Continue with the mounting in `/etc/fstab` for the `/etc/crypttab`-mapped partitions.
 
@@ -836,8 +843,8 @@ id
 sudo nano /etc/fstab
 ```
 ```text
-# <diskname>
-/dev/mapper/crypt<diskname>    /mnt/<diskname>    ntfs-3g    noauto,x-systemd.automount,uid=1000,gid=1000,dmask=0022,fmask=0033,windows_names    0 0
+# <partname>
+/dev/mapper/crypt<partname>    /mnt/<partname>    ntfs-3g    noauto,x-systemd.automount,uid=1000,gid=1000,dmask=0022,fmask=0033,windows_names    0 0
 ```
 
 ### Links to drives
