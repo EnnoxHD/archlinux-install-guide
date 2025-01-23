@@ -36,17 +36,22 @@ reboot
 Get `UUID`s for RAID volumes via `sudo mdadm -E --scan`.
 Check out `lsblk` for a more general overview of block devices.
 
+### Prepare password files for opening encrypted partitions
+Continue with [README: Prepare password files for opening encrypted partitions](README.md#prepare-password-files-for-opening-encrypted-partitions)
+and come back for the following sections.
+
 ### Mapping encrypted partitions
-Prepare files for unlocking drives like `sudo nano /etc/<diskname>.password`.
+Edit `/etc/crypttab` for opening partitions:
 ```bash
 sudo nano /etc/crypttab
 ```
+Use the RAID volume `UUID` to locate the correct array:
 ```text
-# <diskname>
-crypt<diskname>    /dev/disk/by-id/md-uuid<uuid>-part<number>    /etc/<diskname>.password    tcrypt,tcrypt-veracrypt,noauto
+# <partname>
+crypt<partname>    /dev/disk/by-id/md-uuid<uuid>-part<number>    /etc/<partname>.password    tcrypt,tcrypt-veracrypt,noauto
 ```
 Continue with the mounting in `/etc/fstab` for the `/etc/crypttab`-mapped partitions.
 
 ### Normal mounting
-See [README: Normal mountig](README.md#normal-mounting)
+See e.g. [README: Mounting NTFS partitions](README.md#mounting-ntfs-partitions).
 
