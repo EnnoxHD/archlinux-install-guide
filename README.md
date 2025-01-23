@@ -877,7 +877,7 @@ sudo nano /etc/fstab
 ```
 ```text
 # <sharename>
-//<server>/<sharename>    /mnt/<sharename>    cifs    noauto,x-systemd.automount,x-systemd.mount-timeout=5,_netdev,nofail,credentials=/etc/<sharename>.credentials,uid=1000,forceuid,gid=1000,forcegid    0 0
+//<server>/<sharename>    /mnt/<sharename>    cifs    noauto,x-systemd.automount,x-systemd.mount-timeout=1,_netdev,nofail,vers=3.1.1,credentials=/etc/<sharename>.credentials,uid=1000,forceuid,gid=1000,forcegid    0 0
 ```
 The additional mount options are:
 - No automatic mount at boot time
@@ -885,6 +885,7 @@ The additional mount options are:
 - Defined timeout in case of network issues
 - Wait for the network device and a general connection
 - Do not report failures
+- Set the used protocol version
 - Credential files are used instead of the options for user and password
 - General mapping of uid and gid
 
