@@ -558,8 +558,39 @@ aurman -Syu acpi
 ```bash
 aurman -Syu acpid
 sudo systemctl enable acpid.service
-sudo systemctl start acpid.service
+reboot
 ```
+
+### PCIe Errors
+Check for PCIe Advanced Error Reports (AER) or some general advice on configuration:
+```bash
+sudo dmesg | grep -C5 -i error
+sudo dmesg | grep -C5 -i aer
+sudo dmesg | grep -C5 -i aspm
+```
+Maybe even a line like `ACPI FADT declares the system doesn't support PCIe ASPM, so disable it` occours
+or correctable errors from the AER like this are reported:
+```text
+[    0.500131] pcieport 0000:00:1c.4: AER: Correctable error message received from 0000:00:1c.4
+[    0.500137] pcieport 0000:00:1c.4: PCIe Bus Error: severity=Correctable, type=Physical Layer, (Receiver ID)
+[    0.500139] pcieport 0000:00:1c.4:   device [8086:a294] error status/mask=00000001/00002000
+[    0.500140] pcieport 0000:00:1c.4:    [ 0] RxErr                  (First)
+```
+In such cases disabling PCIe ASPM might help.
+
+#### Disable PCIe ASPM
+```bash
+sudo nano /etc/default/grub
+```
+To turn off PCIe Active System Power Management add:
+```text
+GRUB_CMDLINE_LINUX=...pcie_aspm=off
+```
+```bash
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+reboot
+```
+Recheck `dmesg` outputs afterwards.
 
 ### Basic graphics driver
 ```bash
