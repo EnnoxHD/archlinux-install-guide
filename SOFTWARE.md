@@ -112,6 +112,11 @@ Extensions for Exchange compatibility:
 - [Provider für Exchange ActiveSync](https://addons.thunderbird.net/de/thunderbird/addon/eas-4-tbsync/)
 - [TbSync](https://addons.thunderbird.net/de/thunderbird/addon/tbsync/)
 
+### LibreOffice
+```bash
+aurman -Syu libreoffice-fresh
+```
+
 ## Multimedia
 
 ### VLC
