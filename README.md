@@ -878,7 +878,7 @@ sudo nano /etc/fstab
 ```
 ```text
 # <partname>
-/dev/mapper/crypt<partname>    /mnt/<partname>    ntfs-3g    noauto,x-systemd.automount,uid=1000,gid=1000,dmask=0022,fmask=0033,windows_names    0 0
+/dev/mapper/crypt<partname>    /mnt/<partname>    ntfs3    noauto,x-systemd.automount,uid=1000,gid=1000,umask=0022,windows_names    0 0
 ```
 
 ### Mount remote shares
