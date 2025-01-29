@@ -967,6 +967,7 @@ nano ~/.bashrc
 ```
 Change content:
 ```text
+# powerline
 powerline-daemon -q
 POWERLINE_BASH_CONTINUATION=1
 POWERLINE_BASH_SELECT=1
@@ -975,7 +976,7 @@ POWERLINE_BASH_SELECT=1
 Configuration:
 ```bash
 mkdir -p ~/.config/powerline/themes/shell/
-cp /usr/lib/python3.10/site-packages/powerline/config_files/themes/shell/default.json ~/.config/powerline/themes/shell/
+cp /usr/lib/python3.x/site-packages/powerline/config_files/themes/shell/default.json ~/.config/powerline/themes/shell/
 nano ~/.config/powerline/themes/shell/default.json
 ```
 Changes based on:
