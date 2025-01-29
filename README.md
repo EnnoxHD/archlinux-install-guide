@@ -832,6 +832,12 @@ net/ipv6/conf/default/forwarding=1
 net/ipv6/conf/all/forwarding=1
 ```
 
+### Firmware updates
+```bash
+aurman -Syu fwupd udisks2 gnome-firmware
+echo 'EspLocation=/efi' | sudo tee -a /etc/fwupd/fwupd.conf
+```
+
 ### Bluetooth
 ```bash
 sudo systemctl enable bluetooth.service
