@@ -660,11 +660,12 @@ aurman -Syu vulkan-tools
 ### Hardware video acceleration (VA-API and VDPAU)
 for NVIDIA:
 ```bash
-aurman -Syu libva-vdpau-driver
+aurman -Syu libvdpau libva-nvidia-driver
 sudo nano /etc/environment
 ```
 Add:
 ```text
+LIBVA_DRIVER_NAME=nvidia
 VDPAU_DRIVER=nvidia
 ```
 Verification:
