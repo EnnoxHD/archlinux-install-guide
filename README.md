@@ -544,6 +544,11 @@ export PATH="/usr/lib/ccache/bin:$PATH"
 source ~/.bashrc
 ```
 
+### Man pages
+```bash
+aurman -Syu man-db
+```
+
 ### USB information
 ```bash
 aurman -Syu usbutils
