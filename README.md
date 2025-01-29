@@ -775,6 +775,7 @@ gpg-connect-agent reloadagent /bye
 ### Internet browser
 ```bash
 aurman -Syu firefox firefox-i18n-de
+aurman -Syu chromium
 ```
 
 ### Firewall
