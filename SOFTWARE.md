@@ -114,7 +114,7 @@ Extensions for Exchange compatibility:
 
 ### LibreOffice
 ```bash
-aurman -Syu libreoffice-fresh
+aurman -Syu libreoffice-fresh libreoffice-fresh-de
 ```
 
 ## Multimedia
