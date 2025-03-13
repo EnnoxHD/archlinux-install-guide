@@ -159,7 +159,7 @@ Exec=/bin/sh -c "sed -i 's/\(.*-jar .*\)/  -Dsun.java2d.uiScale=2\n\1/' /usr/bin
 ```
 
 ```bash
-aurman -Syu mediathekview
+aurman -Syu mediathekview-xdg
 ```
 
 ## Development and Editors
