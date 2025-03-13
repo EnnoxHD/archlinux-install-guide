@@ -82,6 +82,8 @@ gsettings set "org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/prof
 gsettings set "org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$(profile=$(gsettings get org.gnome.Terminal.ProfilesList default); echo ${profile:1:-1})/" use-theme-colors false
 # reset gnome app-picker layout (overview)
 gsettings set org.gnome.shell app-picker-layout "[]"
+# add minimize and maximize buttons on windows
+gsettings set org.gnome.desktop.wm.preferences button-layout "'appmenu:minimize,maximize,close'"
 ```
 
 ### Gnome extensions
