@@ -84,6 +84,9 @@ gsettings set "org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/prof
 gsettings set org.gnome.shell app-picker-layout "[]"
 # add minimize and maximize buttons on windows
 gsettings set org.gnome.desktop.wm.preferences button-layout "'appmenu:minimize,maximize,close'"
+# disable software updates via Gnome Software
+gsettings set org.gnome.software allow-updates false
+gsettings set org.gnome.software download-updates false
 ```
 
 ### Gnome extensions
