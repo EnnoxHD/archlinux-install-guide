@@ -530,8 +530,8 @@ sudo nano /etc/makepkg.conf.d/rust.conf
 ```
 Change the lines according to the following:
 ```diff
--RUSTFLAGS="-Cforce-frame-pointers=yes"
-+RUSTFLAGS="-Copt-level=3 -Ctarget-cpu=native -Clink-arg=-fuse-ld=mold -Cforce-frame-pointers=yes"
+-RUSTFLAGS="-C force-frame-pointers=yes"
++RUSTFLAGS="-C opt-level=3 -C target-cpu=native -C link-arg=-fuse-ld=mold -C force-frame-pointers=yes"
 ```
 ```bash
 nano ~/.bashrc
