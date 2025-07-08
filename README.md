@@ -79,6 +79,15 @@ mount /dev/<efi_partition> /mnt/efi
 
 ### Installation of the base system
 
+#### Change package mirror
+```bash
+nano /etc/pacman.d/mirrorlist
+```
+Add an entry at the top:
+```
+Server = https://mirror.netcologne.de/archlinux/$repo/os/$arch
+```
+
 #### Transfer the base system
 Install basic packages:
 ```bash
