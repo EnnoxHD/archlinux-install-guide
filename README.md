@@ -201,6 +201,7 @@ GRUB_LANG=en
 ```
 Hook for updating the GRUB installation and configuration after an upgrade:
 ```bash
+mkdir /etc/pacman.d/hooks
 nano /etc/pacman.d/hooks/grubupgrade.hook
 ```
 Content:
