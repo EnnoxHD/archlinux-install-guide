@@ -247,7 +247,11 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 #### CPU microcode
 ```bash
+# For Intel:
 pacman -S intel-ucode
+# For AMD:
+pacman -S amd-ucode
+
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
