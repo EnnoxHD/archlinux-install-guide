@@ -127,7 +127,7 @@ aurman -Syu libreoffice-fresh libreoffice-fresh-de
 ### VLC
 Install vlc media player via
 ```bash
-aurman -Syu vlc
+aurman -Syu vlc vlc-plugins-all
 ```
 After installation start vlc and go to the preferences -> Interface section -> Embed video in interface:
 - uncheck, save
