@@ -171,7 +171,7 @@ aurman -Syu mediathekview-xdg
 
 ### VSCodium
 ```bash
-aurman -Syu vscodium-bin vscodium-bin-marketplace vscodium-bin-features
+aurman -Syu vscodium-bin vscodium-bin-marketplace
 # reinstall to be sure that the 'product.json' is patched by the hooks
 aurman -Syu vscodium-bin
 ```
