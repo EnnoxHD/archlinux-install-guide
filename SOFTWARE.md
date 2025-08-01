@@ -202,30 +202,9 @@ sudo archlinux-java set java-21-openjdk
 ```
 
 ### Eclipse IDE
-Add a pacman hook for updating the `eclipse.desktop` file:
-```bash
-sudo nano /etc/pacman.d/hooks/eclipseupgrade.hook
-```
-Content:
-```text
-[Trigger]
-Operation=Install
-Operation=Upgrade
-Type=Package
-Target=eclipse-java-bin
-[Action]
-Description=Updating eclipse.desktop file after upgrade...
-When=PostTransaction
-Depends=sed
-Exec=/bin/sh -c "sed -i 's/\(Exec=\)\(.*\)/\1env GTK_THEME=Adwaita:dark \2/' /usr/share/applications/eclipse.desktop"
-```
 Install the IDE:
 ```bash
 aurman -Syu eclipse-java-bin
-```
-Add an alias to the `.bashrc`:
-```bash
-alias eclipse='GTK_THEME=Adwaita:dark eclipse'
 ```
 
 To resolve shortcut conflicts under Gnome configure the following:
