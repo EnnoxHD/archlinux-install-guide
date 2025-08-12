@@ -223,3 +223,30 @@ aurman -Syu ibus
 aurman -Syu javafx-scenebuilder
 ```
 
+## AI
+### Ollama
+Install Ollama (https://ollama.com/):
+```bash
+aurman -Syu cuda ollama ollama-cuda ollama-docs
+```
+
+Start Ollama and pull a model (https://ollama.com/library):
+```bash
+sudo systemctl start ollama.service
+ollama pull gpt-oss:20b
+# ollama pull gpt-oss:120b
+```
+
+### Open-WebUI
+Install Open-WebUI:
+```bash
+aurman -Syu open-webui
+```
+
+Start via:
+```bash
+sudo systemctl start open-webui.service
+```
+
+Open a webbrowser and go to http://localhost:8080.
+Register an admin account and configure the local connection to the Ollama instance on http://localhost:11434. For this go to Admin-Profile > Administration > Settings > Connections > Ollama-API, paste the URL and save.
