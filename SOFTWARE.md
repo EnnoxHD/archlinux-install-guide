@@ -87,6 +87,8 @@ gsettings set org.gnome.desktop.wm.preferences button-layout "'appmenu:minimize,
 # disable software updates via Gnome Software
 gsettings set org.gnome.software allow-updates false
 gsettings set org.gnome.software download-updates false
+# enable seconds in topbar
+gsettings set org.gnome.desktop.interface clock-show-seconds true
 ```
 
 ### Gnome extensions
