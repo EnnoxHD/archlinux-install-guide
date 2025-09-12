@@ -213,11 +213,6 @@ gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down "['']"
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up "['']"
 ```
 
-**Workaround** for crashes due to [issue #7438](https://gitlab.gnome.org/GNOME/gtk/-/issues/7438):
-```bash
-aurman -Syu ibus
-```
-
 ### JavaFX SceneBuilder
 ```bash
 aurman -Syu javafx-scenebuilder
