@@ -193,14 +193,14 @@ alias code='vscodium'
 ### Java
 ```bash
 aurman -Syu jdk-openjdk openjdk-doc openjdk-src
-# optional: latest LTS release
+# optional: latest (older) LTS release
 aurman -Syu jdk21-openjdk openjdk21-doc openjdk21-src
 
 # status
 archlinux-java status
 
 # optional: set active default Java version
-sudo archlinux-java set java-21-openjdk
+sudo archlinux-java set java-25-openjdk
 ```
 
 ### Eclipse IDE
