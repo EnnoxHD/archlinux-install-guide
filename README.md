@@ -724,14 +724,15 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/or
 ```
 
 #### Fractional Scaling (HiDPI)
+Under Wayland just reset any `experimental-features` for `org.gnome.mutter` as the defaults are already correct
+and allow for fractional scaling.
 ```bash
-aurman -S mutter-x11-scaling gnome-keybindings-x11-scaling gnome-control-center-x11-scaling
-# manual intervention may be required, reinstall mutter dependants
-aurman -S gdm gnome-shell gnome-shell-extensions gnome-browser-connector
-gsettings set org.gnome.mutter experimental-features "['x11-randr-fractional-scaling']"
+gsettings reset org.gnome.mutter experimental-features
+
+# defaults:
+# gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer', 'variable-refresh-rate', 'xwayland-native-scaling']"
 ```
-An error might occur after package installation, just restart.
-Enable fractional scaling in the control center and set the desired scaling factor.
+Set the desired factional scaling factor in the control center.
 
 #### Screen layout
 for NVIDIA (optional):
