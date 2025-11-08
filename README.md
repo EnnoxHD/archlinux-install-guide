@@ -172,7 +172,7 @@ nano /etc/mkinitcpio.conf
 ```
 Change content:
 ```text
-HOOKS=(base systemd autodetect microcode modconf kms keyboard sd-vconsole sd-encrypt block filesystems fsck)
+HOOKS=(base systemd autodetect microcode modconf kms keyboard sd-vconsole block sd-encrypt filesystems fsck)
 COMPRESSION="zstd"
 ```
 Build:

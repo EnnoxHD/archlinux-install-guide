@@ -25,7 +25,7 @@ Change content:
 ```text
 BINARIES=(mdmon)
 # add udev and mdadm_udev in HOOKS
-HOOKS=(base udev systemd autodetect modconf kms block mdadm_udev keyboard sd-vconsole sd-encrypt filesystems fsck)
+HOOKS=(base udev systemd autodetect microcode modconf kms keyboard sd-vconsole block mdadm_udev sd-encrypt filesystems fsck)
 ```
 ```bash
 mkinitcpio -p linux
