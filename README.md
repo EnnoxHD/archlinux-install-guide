@@ -508,13 +508,23 @@ Change the lines according to the following:
  ...
 -LDFLAGS="-Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now \
 +LDFLAGS="-Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now,-fuse-ld=mold \
-          -Wl,-z,pack-relative-relocs"
+         -Wl,-z,pack-relative-relocs"
  ...
 -#MAKEFLAGS="-j2"
 +MAKEFLAGS="-j$(nproc)"
  ...
 -BUILDENV=(!distcc color !ccache check !sign)
 +BUILDENV=(!distcc color ccache check !sign)
+```
+```bash
+sudo nano /etc/makepkg.conf.d/fortran.conf
+```
+Change the lines according to the following:
+```diff
+-FFLAGS="-march=x86-64 -mtune=generic -O2 -pipe -fno-plt \
++FFLAGS="-march=native -O2 -pipe -fno-plt \
+         -Wp,-D_FORTIFY_SOURCE=3 -fstack-clash-protection -fcf-protection \
+         -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer"
 ```
 ```bash
 sudo nano /etc/makepkg.conf.d/rust.conf
