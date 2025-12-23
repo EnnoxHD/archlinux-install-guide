@@ -646,11 +646,10 @@ for NVIDIA:
 
 see [General Codenames](https://nouveau.freedesktop.org/CodeNames.html#generalcodenames)
 ```bash
-# for newer cards (Maxwell and newer):
-aurman -Syu nvidia nvidia-utils opencl-nvidia
-
-# for older cards (Kepler, requires DKMS):
-aurman -Syu nvidia-470xx-dkms nvidia-470xx-utils opencl-nvidia-470xx
+# for newer cards (Turing 1600 through Blackwell 5000 and newer, recommended)
+aurman -Syu nvidia-open nvidia-utils opencl-nvidia
+# for older cards (Maxwell 900 through Ada Lovelace 4000, requires DKMS):
+aurman -Syu nvidia-580xx-dkms nvidia-580xx-utils opencl-nvidia-580xx
 ```
 
 Vulkan tools:
@@ -750,7 +749,7 @@ for NVIDIA (optional):
 # for newer cards:
 aurman -Syu nvidia-settings
 # for older cards:
-aurman -Syu nvidia-470xx-settings
+aurman -Syu nvidia-580xx-settings
 ```
 In general adjust monitor settings, then do:
 ```bash
