@@ -483,7 +483,7 @@ Then `trust` > `5` > `y` > `quit`.
 
 ### Git-Credential-Manager
 ```bash
-aurman -Syu git-credential-manager git-credential-manager-extras
+aurman -Syu git-credential-manager-bin
 pass init <key-id>
 nano ~/.bashrc
 ```
