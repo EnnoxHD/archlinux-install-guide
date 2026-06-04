@@ -854,7 +854,7 @@ aurman -Syu sane simple-scan
 
 ### Disk utilities
 ```bash
-pacman -Syu gptfdisk dosfstools ntfs-3g veracrypt
+pacman -Syu gptfdisk dosfstools ntfs-3g ntfsprogs veracrypt
 ```
 
 ### Mount additional (encrypted) partitions
