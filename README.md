@@ -286,6 +286,83 @@ A list of available graphics modes can be shown in the native GRUB command line 
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
+### GRUB standalone menu
+The GRUB standalone feature is used to create a GRUB menu for dual boot systems or other use cases
+that require the boot menu to be available before the encrypted partition is unlocked.
+
+Look for EFI partition UUIDs and create a custom `grub.cfg` file for the actual menu:
+```bash
+lsblk -f
+sudo mkdir /efi/EFI/MENU
+sudo nano /efi/EFI/MENU/grub.cfg
+```
+Example for a dual boot system with some alternative bootloader paths for the `Windows` entry:
+```text
+set timeout=5
+set default=0
+
+menuentry 'Arch Linux' {
+    search --fs-uuid --set=root <UUID-A>
+    chainloader /EFI/GRUB/grubx64.efi
+}
+
+menuentry 'Windows' {
+    search --fs-uuid --set=root <UUID-B>
+#   chainloader /EFI/Boot/bootx64.efi
+#   chainloader /EFI/Microsoft/Boot/bootmgfw.efi
+    chainloader /EFI/VeraCrypt/DcsBoot.efi
+}
+
+menuentry 'System shutdown' {
+    halt
+}
+
+menuentry 'System restart' {
+    reboot
+}
+
+menuentry 'UEFI firmware settings' {
+    fwsetup
+}
+```
+
+Build a standalone GRUB with an embedded configuration pointing to the external `grub.cfg` next to it:
+```bash
+echo 'configfile ${cmdpath}/grub.cfg' > /tmp/grub.cfg
+sudo grub-mkstandalone --format=x86_64-efi --modules='part_gpt part_msdos' --locales='en@quot' --themes='' -o '/efi/EFI/MENU/grubx64_standalone.efi' '/boot/grub/grub.cfg=/tmp/grub.cfg' -v
+rm /tmp/grub.cfg
+```
+
+Look for disk name and partition number of the `/efi` directory and add a boot entry for the new menu:
+```bash
+lsblk
+EFI_SOURCE="$(findmnt -no SOURCE /efi)"
+EFI_DISK_NAME="$(lsblk -no PKNAME $EFI_SOURCE)"
+EFI_PART_NUM="$(lsblk -no PARTN $EFI_SOURCE)"
+sudo efibootmgr --create --disk /dev/$EFI_DISK_NAME --part $EFI_PART_NUM --loader '\EFI\MENU\grubx64_standalone.efi' --label 'MENU' --unicode
+```
+
+Change the boot order and active entries via UEFI or with the `efibootmgr` tool.
+The new `MENU` entry should be sufficient if the configuration covers all intended purposes.
+**Do not remove** the original entries in case something does not work and a fallback is needed!
+Only disable them at maximum. Some OSes even restore EFI boot entries if they do not find their own.
+
+GRUB upgrade hook for the standalone menu:
+```bash
+sudo nano /etc/pacman.d/hooks/grubupgrademenu.hook
+```
+```text
+[Trigger]
+Operation=Upgrade
+Type=Package
+Target=grub
+[Action]
+Description=Updating GRUB standalone menu after upgrade...
+When=PostTransaction
+Depends=grub
+Exec=/bin/sh -c "echo 'configfile ${cmdpath}/grub.cfg' > /tmp/grub.cfg && grub-mkstandalone --format=x86_64-efi --modules='part_gpt part_msdos' --locales='en@quot' --themes='' -o '/efi/EFI/MENU/grubx64_standalone.efi' '/boot/grub/grub.cfg=/tmp/grub.cfg' && rm /tmp/grub.cfg"
+```
+
 ### Configure RAID arrays
 See [RAID](RAID.md).
 
