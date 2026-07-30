@@ -253,6 +253,7 @@ pacman -S intel-ucode
 # For AMD:
 pacman -S amd-ucode
 
+mkinitcpio -p linux
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
