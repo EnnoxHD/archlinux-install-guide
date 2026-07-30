@@ -214,7 +214,7 @@ Target=grub
 Description=Updating GRUB installation and configuration after upgrade...
 When=PostTransaction
 Depends=grub
-Exec=/bin/sh -c "grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB && grub-mkconfig -o /boot/grub/grub.cfg"
+Exec=/bin/sh -c "grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB --no-nvram && grub-mkconfig -o /boot/grub/grub.cfg"
 ```
 
 #### Keyfile
@@ -241,7 +241,8 @@ GRUB_CMDLINE_LINUX="... rd.luks.key=<UUID>=/crypto_keyfile.bin"
 
 #### GRUB Installation
 ```bash
-grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
+grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB --no-nvram
+efibootmgr --create --disk /dev/<hard_drive> --part <efi_part_number> --loader '\EFI\GRUB\grubx64.efi' --label 'GRUB' --unicode
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
