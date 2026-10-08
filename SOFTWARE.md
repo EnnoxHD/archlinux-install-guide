@@ -90,6 +90,13 @@ gsettings set org.gnome.software download-updates false
 gsettings set org.gnome.desktop.interface clock-show-seconds true
 ```
 
+## Design
+```bash
+aurman -Syu gnome-tweaks
+```
+- Cursor: [Breeze-Cursors](https://invent.kde.org/plasma/breeze) (`extra/breeze-cursors`)
+- Icons: [Numix-Circle](https://github.com/numixproject/numix-icon-theme-circle/) (`aur/numix-circle-icon-theme-git`) and [Numix-Folders](https://github.com/numixproject/numix-folders) (`aur/numix-folders-git`)
+
 ### Gnome extensions
 ```bash
 aurman -Syu gnome-extensions-app gnome-browser-connector
