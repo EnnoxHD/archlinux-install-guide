@@ -1098,7 +1098,7 @@ Restart the shell
 ```bash
 aurman -Syu gnome-tweaks
 ```
-- Cursor: [Capitaine-cursors](https://github.com/keeferrourke/capitaine-cursors) (`community/capitaine-cursors`)
+- Cursor: [Capitaine-cursors](https://github.com/keeferrourke/capitaine-cursors) (`extra/capitaine-cursors`)
 - Icons: [Numix-Circle](https://github.com/numixproject/numix-icon-theme-circle/) (`aur/numix-circle-icon-theme-git`) and [Numix-Folders](https://github.com/numixproject/numix-folders) (`aur/numix-folders-git`)
 
 ## Additional software
