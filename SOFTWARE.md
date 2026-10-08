@@ -97,14 +97,16 @@ aurman -Syu gnome-extensions-app gnome-browser-connector
 Firefox browser extension:
 https://addons.mozilla.org/de/firefox/addon/gnome-shell-integration
 
-Used extensions:
-- Dash to Dock
-- Just Perfection
-- No overview at start-up
+Used [default extensions](https://gitlab.gnome.org/GNOME/gnome-shell-extensions):
 - Removable Drive Menu
-- Tiling Assistant
-- Tray Icons: Reloaded
 - User Themes
+
+Used additional extensions:
+- [Dash to Dock](https://extensions.gnome.org/extension/307/dash-to-dock/)
+- [Just Perfection](https://extensions.gnome.org/extension/3843/just-perfection/)
+- [Tiling Assistant](https://extensions.gnome.org/extension/3733/tiling-assistant/)
+- [Status Tray](https://extensions.gnome.org/extension/9164/status-tray/)
+
 
 ## Office
 
