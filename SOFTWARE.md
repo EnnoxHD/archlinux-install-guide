@@ -92,7 +92,7 @@ gsettings set org.gnome.desktop.interface clock-show-seconds true
 
 ### Gnome extensions
 ```bash
-aurman -Syu gnome-browser-connector
+aurman -Syu gnome-extensions-app gnome-browser-connector
 ```
 Firefox browser extension:
 https://addons.mozilla.org/de/firefox/addon/gnome-shell-integration
