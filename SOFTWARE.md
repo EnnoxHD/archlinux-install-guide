@@ -99,7 +99,7 @@ aurman -Syu gnome-tweaks
 
 ### Gnome extensions
 ```bash
-aurman -Syu gnome-extensions-app gnome-browser-connector
+aurman -Syu gnome-shell-extensions gnome-extensions-app gnome-browser-connector
 ```
 Firefox browser extension:
 https://addons.mozilla.org/de/firefox/addon/gnome-shell-integration
